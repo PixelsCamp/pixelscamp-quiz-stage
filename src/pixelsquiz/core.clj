@@ -4,7 +4,7 @@
 (require '[clojure.spec :as s])
 (require '[reduce-fsm :as fsm])
 (require '[clojure.core.async :as async
-           :refer [>! <! >!! <!! go chan buffer close! thread
+           :refer [>! <! >!! <!! go go-loop chan buffer close! thread
                     alts! alts!! timeout]])
 (require '[clojure.edn :as edn])
 
@@ -31,45 +31,42 @@
   )
 
 (defn show-question
-  [acc event from-state to-state]
-  answer
+  [world event from-state to-state]
+  (<! (-> world :stage :main-display) (:question world))
   )
 
-(defn show-question
-  [answer ])
-
-(defmacro e-t
-  [t]
-  `{:kind ~t)
 
 (defn question-fsm 
-  [question events]
+  [question events stage]
   (let [timeout-chan (chan)
         question-fsm (fsm/fsm-inc [
                            [:start {}
-                            (e-t :start-timer) -> {:action (partial buzz-timer timeout-chan) } :pre-question
-                            (e-t :show-question) -> {:action show-question} :wait-buzz]
+                            {:kind :start-timer} -> {:action (partial buzz-timer timeout-chan) } :pre-question
+                            {:kind :show-question} -> {:action show-question} :wait-buzz]
                            [:wait-buzz {}
-                            (e-t :buzz-timeout) -> :wait-options
-                            (e-t :buzz-pressed) -> :right-or-wrong]
+                            {:kind :buzz-timeout} -> :wait-options
+                            {:kind :buzz-pressed} -> :right-or-wrong]
                            [:pre-question {}
-                            (e-t :show-question) -> :wait-buzz]
+                            {:kind :show-question} -> :wait-buzz]
                            [:right-or-wrong {}
-                            (e-t :select-right) -> :show-results
-                            (e-t :select-wrong) -> :wait-options]
+                            {:kind :select-right} -> :show-results
+                            {:kind :select-wrong} -> :wait-options]
                            [:wait-options {}
-                            (e-t :option-pressed) -> :wait-options
-                            (e-t :option-timeout) -> :show-results
-                            (e-t :all-pressed) -> :show-results]
+                            {:kind :option-pressed} -> :wait-options
+                            {:kind :option-timeout} -> :show-results
+                            {:kind :all-pressed} -> :show-results]
                            [:show-results {:is-terminal true}
                             _ -> :show-results]
                            ])]
     (loop [f (question-fsm
                :start ; the initial state
-               {:question question
-                :answer (Answer. [false [nil nil nil nil] [0 0 0 0]])} ; the state of the accumulator
+               {
+                :question question
+                :answer (Answer. question false [nil nil nil nil] [0 0 0 0])
+                :stage stage
+                } ; the state of the accumulator
               )
-           e (async/merge events timeout-chan)]
+           e (async/merge [events timeout-chan])]
       (case (:is-terminated? f)
         true (:value f)
         (recur (fsm/fsm-event f (<!! e)) e))
@@ -78,7 +75,7 @@
 
 (defn run-question 
   [world event from-state to-state]
-  (let [events (async/merge (:buttons world) (:quizmaster world))
+  (let [events (async/merge [(:buttons world) (:quizmaster world)])
         question-chan (:question-chan world)
         question-index (+ 1 (:question-index world))
         current-round (:current-round world)
@@ -102,42 +99,58 @@
   [stage rounds questions game-state]
   (let [question-chan (chan)
         game (fsm/fsm-inc [
-                           [:start
-                            (e-t :start-round) -> {:action to-round-setup} :round-setup]
-                           [:round-setup
-                            (e-t :start-question) -> {:action (partial run-question :on-question]
-                           [:on-question
-                            (e-t :question-ended) -> :wait-continue
-                            (e-t :out-of-questions) -> :end-of-round]
-                           [:wait-continue
-                            (e-t :start-question) -> :on-question]
-                           [:end-of-round
-                            (e-t :start-round) -> :round-setp]
+                           [:start {}
+                            {:kind :start-round} -> {:action to-round-setup} :round-setup]
+                           [:round-setup {}
+                            {:kind :start-question} -> {:action run-question} :on-question]
+                           [:on-question {}
+                            {:kind :question-ended} -> :wait-continue
+                            {:kind :out-of-questions} -> :end-of-round]
+                           [:wait-continue {}
+                            {:kind :start-question} -> :on-question]
+                           [:end-of-round {}
+                            {:kind :start-round} -> :round-setup]
                            ])
-          events (async/merge (:buttons stage) (:quizmaster stage) question-chan) ; XXX there's a bunch of knowledge buried here
+          events (async/merge [(:buttons stage) (:quizmaster stage) question-chan]) ; XXX there's a bunch of knowledge buried here
           
         ]
     (loop [f (game :start (assoc @game-state 
                                  :stage stage
                                  :rounds rounds
                                  :questions questions
-                                 :question-chan question-chan)
-                                 ev (<!! e)]
+                                 :question-chan question-chan))]
       (println f)
       (reset! game-state (:value f))
-      (recur (fsm/fsm-event f) e))
-    )
-  )
+      (recur (fsm/fsm-event f (<!! events))))
+  ))
 
 (defn buttons-actor
   []
-  (chan))
+  (let [c (chan)]
+    c
+    ))
+
 (defn main-display-actor
   []
-  (chan))
+  (let [main-display-channel (chan)]
+    (go-loop [ev {:kind :starting}]
+            (println "main-display:" ev)                 
+            (recur (<! main-display-channel)))
+    main-display-channel))
+
+
+(defn player-lights-actor
+  []
+  (let [player-lights-channel (chan)]
+    (go-loop [ev {:kind :starting}]
+            (println "main-display:" ev)                 
+            (recur (<! player-lights-channel)))
+    player-lights-channel))
+
 (defn quizmaster-actor
   []
-  (chan))
+  (let [quizmaster-channel (chan)]
+      quizmaster-channel))
 
 (defn read-from-file
   [what]
@@ -161,7 +174,7 @@
     ))
 
 
-(defn -main
+(defn main
   [& args]
   (let [
         game-items (read-from-file :items)
