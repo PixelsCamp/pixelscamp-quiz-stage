@@ -1,6 +1,10 @@
 (ns pixelsquiz.core
   (:gen-class))
 
+(require '[pixelsquiz.stage :refer :all])
+(require '[pixelsquiz.types])
+(import '(pixelsquiz.types Event Answer Question Round Team GameState))
+
 (require '[clojure.spec :as s])
 (require '[reduce-fsm :as fsm])
 (require '[clojure.core.async :as async
@@ -8,12 +12,6 @@
                     alts! alts!! timeout]])
 (require '[clojure.edn :as edn])
 
-(defrecord Event [kind bag-of-props])
-(defrecord Team [playerA playerB])
-(defrecord Question [id kind score text options])
-(defrecord Answer [question buzzed answers scores])
-(defrecord Round [number teams questions])
-(defrecord GameState [round-index current-round question-index current-question])
 
 (defn buzz-timer 
   [c & _]
@@ -124,33 +122,6 @@
       (recur (fsm/fsm-event f (<!! events))))
   ))
 
-(defn buttons-actor
-  []
-  (let [c (chan)]
-    c
-    ))
-
-(defn main-display-actor
-  []
-  (let [main-display-channel (chan)]
-    (go-loop [ev {:kind :starting}]
-            (println "main-display:" ev)                 
-            (recur (<! main-display-channel)))
-    main-display-channel))
-
-
-(defn player-lights-actor
-  []
-  (let [player-lights-channel (chan)]
-    (go-loop [ev {:kind :starting}]
-            (println "main-display:" ev)                 
-            (recur (<! player-lights-channel)))
-    player-lights-channel))
-
-(defn quizmaster-actor
-  []
-  (let [quizmaster-channel (chan)]
-      quizmaster-channel))
 
 (defn read-from-file
   [what]
@@ -174,16 +145,11 @@
     ))
 
 
-(defn main
+(defn -main
   [& args]
   (let [
         game-items (read-from-file :items)
-        stage {
-               :buttons (buttons-actor)
-               :main-display (main-display-actor)
-               :player-lights (player-lights-actor)
-               :quizmaster (quizmaster-actor)
-               }
+        stage (setup-stage) 
         game-state (atom (read-from-file :initial-state))
         ]
     (game-loop stage (:rounds game-items) (:questions game-items) game-state) 
