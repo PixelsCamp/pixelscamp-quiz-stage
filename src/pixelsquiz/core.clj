@@ -12,6 +12,7 @@
                     alts! alts!! timeout]])
 (require '[clojure.edn :as edn])
 
+(require 'spyscope.core)
 
 (defn buzz-timer 
   [c & _]
@@ -30,7 +31,7 @@
 
 (defn show-question
   [world event from-state to-state]
-  (<! (-> world :stage :main-display) (:question world))
+  (<!! (-> world :stage :main-display) (:question world))
   )
 
 
@@ -81,17 +82,19 @@
         question (get (:questions world) question-number)]
       (case question
         nil (>!! question-chan (Event. :out-of-questions {:question-index question-index}))
-        (>!! question-chan (Event. :question-ended {:result (question-fsm question events) }))
+        (>!! question-chan (Event. :question-ended {:result (question-fsm question events (:stage world)) }))
         )))
 
 
 (defn to-round-setup 
   [acc event from-state to-state]
-  (let [new-round-number (+ 1 (:round acc))
-        current-round (nth (:rounds acc) new-round-number)]
+  (let [new-round-number (+ 1 (:round-index acc))
+        current-round (get (:rounds acc) new-round-number)]
+    (println (str "to-round-setup " new-round-number " " current-round))
     (assoc acc 
            :round-index new-round-number
-           :current-round (get (:rounds acc) new-round-number))))
+           :current-round current-round
+           :question-index -1)))
 
 (defn game-loop
   [stage rounds questions game-state]
@@ -117,7 +120,6 @@
                                  :rounds rounds
                                  :questions questions
                                  :question-chan question-chan))]
-      (println f)
       (reset! game-state (:value f))
       (recur (fsm/fsm-event f (<!! events))))
   ))
@@ -141,7 +143,7 @@
                                   ])
                         ]
             }
-    :initial-state {:round 1}
+    :initial-state {:round-index -1}
     ))
 
 
