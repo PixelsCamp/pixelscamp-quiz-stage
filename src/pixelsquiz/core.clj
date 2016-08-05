@@ -1,6 +1,7 @@
 (ns pixelsquiz.core
   (:gen-class))
 
+
 (require '[pixelsquiz.stage :refer :all])
 (require '[pixelsquiz.types])
 (import '(pixelsquiz.types Event Answer Question Round Team GameState))
@@ -13,6 +14,7 @@
 (require '[clojure.edn :as edn])
 
 (require 'spyscope.core)
+(require '[alex-and-georges.debug-repl :refer :all])
 
 (defn buzz-timer 
   [c & _]
@@ -31,7 +33,7 @@
 
 (defn show-question
   [world event from-state to-state]
-  (<!! (-> world :stage :main-display) (:question world))
+  (>!! (-> world :stage :main-display) (:question world))
   )
 
 
@@ -57,6 +59,7 @@
                            [:show-results {:is-terminal true}
                             _ -> :show-results]
                            ])]
+(println "starting question")
     (loop [f (question-fsm
                :start ; the initial state
                {
@@ -74,16 +77,17 @@
 
 (defn run-question 
   [world event from-state to-state]
-  (let [events (async/merge [(:buttons world) (:quizmaster world)])
-        question-chan (:question-chan world)
+  (let [events (async/merge [(-> world :stage :buttons) (-> world :stage :quizmaster)])
+        answer-chan (:answer-chan world)
         question-index (+ 1 (:question-index world))
         current-round (:current-round world)
         question-number (get (:questions current-round) question-index)
         question (get (:questions world) question-number)]
       (case question
-        nil (>!! question-chan (Event. :out-of-questions {:question-index question-index}))
-        (>!! question-chan (Event. :question-ended {:result (question-fsm question events (:stage world)) }))
-        )))
+        nil (>!! answer-chan (Event. :out-of-questions {:question-index question-index}))
+        (>!! answer-chan (Event. :question-ended {:result (question-fsm question events (:stage world)) })))
+      (debug-repl)
+    (assoc world :question-index question-index)))
 
 
 (defn to-round-setup 
@@ -98,7 +102,9 @@
 
 (defn game-loop
   [stage rounds questions game-state]
-  (let [question-chan (chan)
+  (let [answer-chan (chan 1)
+        round-events (chan 1)
+        question-events (chan 1)
         game (fsm/fsm-inc [
                            [:start {}
                             {:kind :start-round} -> {:action to-round-setup} :round-setup]
@@ -112,16 +118,17 @@
                            [:end-of-round {}
                             {:kind :start-round} -> :round-setup]
                            ])
-          events (async/merge [(:buttons stage) (:quizmaster stage) question-chan]) ; XXX there's a bunch of knowledge buried here
-          
+          events (async/mult (async/merge [(:buttons stage) (:quizmaster stage)])) ; XXX there's a bunch of knowledge buried here 
         ]
+    (async/tap events round-events)
+    (async/tap events question-events)
     (loop [f (game :start (assoc @game-state 
-                                 :stage stage
+                                 :stage (assoc stage :question-events question-events)
                                  :rounds rounds
                                  :questions questions
-                                 :question-chan question-chan))]
+                                 :answer-chan answer-chan))]
       (reset! game-state (:value f))
-      (recur (fsm/fsm-event f (<!! events))))
+      (recur (fsm/fsm-event f (<!! round-events))))
   ))
 
 
@@ -133,7 +140,7 @@
                      (Round. 1 ['a 'b 'c 'd] [1 2 3 4 5 6 7])
                      (Round. 2 ['e 'f 'g 'h] [1 10 11 12 13 14 15])
                      ]
-            :questions [
+            :questions [ nil
                         (Question. 1 :multi 1 "The first question" 
                                    [
                                     "First answer"
@@ -154,6 +161,7 @@
         stage (setup-stage) 
         game-state (atom (read-from-file :initial-state))
         ]
+    (add-watch game-state nil (fn [k r os s] (println (str "main loop " s))))
     (game-loop stage (:rounds game-items) (:questions game-items) game-state) 
    )
   )

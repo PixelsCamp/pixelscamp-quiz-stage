@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0-alpha10"]
                  [spyscope "0.1.5"]
+[org.clojars.gjahad/debug-repl "0.3.3"]
                  [reduce-fsm "0.1.4"]
                  [org.clojure/core.async "0.2.385"]
                  [ring/ring-core "1.5.0"]
