@@ -33,7 +33,7 @@
   []
   (let [player-lights-channel (chan 16)]
     (go-loop [ev {:kind :starting}]
-            (println (str "        player-lights: " ev))                 
+            (println "        player-lights: " ev)                 
             (recur (<! player-lights-channel)))
     {:actor :player-lights
      :chan player-lights-channel
@@ -46,7 +46,7 @@
        :chan quizmaster-channel
        :routes (POST "/actions/:action" [action] 
                      (>!! quizmaster-channel (Event. (keyword action) {}))
-                      (ok (str "ok " (keyword action)))
+                      (ok (str "ok " (keyword action) "\n"))
                      )}
       ))
 
