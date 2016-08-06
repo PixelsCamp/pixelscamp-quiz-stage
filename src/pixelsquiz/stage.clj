@@ -1,16 +1,25 @@
 (ns pixelsquiz.stage
-    (:gen-class))
+  (:gen-class)
 
-(require '[pixelsquiz.types])
+  (:require
+    [pixelsquiz.types]
+    [ring.middleware.defaults]
+    [compojure.core     :as comp :refer (defroutes GET POST)]
+    [compojure.route    :as route]
+    [taoensso.encore    :as encore :refer (have have?)]
+    [taoensso.timbre    :as timbre :refer (tracef debugf infof warnf errorf)]
+    [taoensso.sente     :as sente]
+    [org.httpkit.server :as http-kit]
+    [taoensso.sente.server-adapters.http-kit :refer (get-sch-adapter)]
+    [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
+             alts! alts!! timeout]])
+     )
+
 (import pixelsquiz.types.Event)
 
-(require '[compojure.api.sweet :refer :all])
-(require '[ring.util.http-response :refer :all])
-(require '[ring.adapter.jetty :refer [run-jetty]])
 
-(require '[clojure.core.async :as async
-           :refer [>! <! >!! <!! go go-loop chan buffer close! thread
-                    alts! alts!! timeout]])
+
+
 
 (defn buttons-actor
   []
@@ -46,8 +55,8 @@
        :chan quizmaster-channel
        :routes (POST "/actions/:action" [action] 
                      (>!! quizmaster-channel (Event. (keyword action) {}))
-                      (ok (str "ok " (keyword action) "\n"))
-                     )}
+                      (str "ok " (keyword action) "\n"))
+                     }
       ))
 
 (defn setup-stage
@@ -55,6 +64,6 @@
   (let [actors [(buttons-actor) (main-display-actor) (player-lights-actor) (quizmaster-actor)]
 ;        ui-routes (map #(:routes %) actors)]
       ui-routes (:routes (nth actors 3))]
-    (go (run-jetty (routes ui-routes) {:port 3000}))
+    (http-kit/run-server (comp/routes ui-routes) {:port 3000})
       (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))
