@@ -16,6 +16,7 @@
 								 [compojure                 "1.5.1"] ; Or routing lib of your choice 
                  [org.clojars.torbjornvatn/hidapi "1.1"]
                  [clj-time "0.12.0"]
+                 [cheshire "5.6.3"]
 								 ]
   :main ^:skip-aot pixelsquiz.core
   :target-path "target/%s"

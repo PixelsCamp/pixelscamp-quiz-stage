@@ -17,6 +17,8 @@
 (require 'spyscope.core)
 (require '[alex-and-georges.debug-repl :refer :all])
 
+(def buzz-score-modifier 2)
+
 
 (defn buzz-timer 
   [c world & _]
@@ -53,7 +55,7 @@
 
 (defn show-question-results
   [world & _]
-  (w-m-d (:current-answer world))
+  (w-m-d #spy/d (:current-answer world))
   false)
 
 (defmacro with-answer 
@@ -71,7 +73,8 @@
                                                                        (-> event :bag-of-props :button-index)) 
                                       scores)
              :buzz-pressed (Answer. question (-> event :bag-of-props :team) good-buzz answers scores)
-             :select-right (Answer. question team-buzzed true answers scores)
+             :select-right (Answer. question team-buzzed true answers (assoc [0 0 0 0] (-> event :bag-of-props :team) 
+                                                                             (* buzz-score-modifier ((:score question)))))
              :select-wrong (Answer. question team-buzzed false answers scores)))))
 
 
@@ -82,18 +85,22 @@
 
 (defn acc-option
   [timeout-chan world event & _]
-  (let [new-world (acc-answer world event)]
+  (let [new-world (acc-answer world event)
+        answers (-> new-world :current-answer :answers)
+        scores (map #(:score %) (-> new-world :current-answer :question :shuffled-options))
+        ]
     (if (= 4 (count (filter #(not (nil? %)) (-> new-world :answer :answers))))
       (>!! timeout-chan (Event. :all-pressed {}))
       )
-    new-world))
+    (assoc (-> new-world :current-answer :scores) (map #(if (get answers %) (get scores (get answers %)) 0) (range 4)))
+    ))
 
 
 
 
 (defn options-show-and-timeout
   [c world & _]
-  (w-m-d (-> world :question :options))
+  (w-m-d (map #(:text %) (-> world :current-answer :question :shuffled-options)))
   (options-timeout c world)
   world)
 
@@ -102,25 +109,39 @@
   
   world)
 
+(defn prepare-for-next-question
+  [world event & _]
+  (assoc world :answers (conj (:answers world) (:current-answer world)))
+  )
 
-(defn prepare-question 
+(defn start-question 
   [answer-chan world event from-state to-state]
   (let [events (chan)
         question-index (+ 1 (:question-index world))
         current-round (:current-round world)
         question-number (get (:questions current-round) question-index)
-        question (get (:questions world) question-number)]
+        question (get (:questions world) question-number)
+        shuffled-options (shuffle (map (fn [text original score]
+                                         {:text text
+                                          :original-pos original
+                                          :score score})
+                                        (:options question) (range 4) [(:score question) 0 0 0] ; XXX option scores 
+                                       ))
+        ]
       (case question
         nil (>!! answer-chan (Event. :out-of-questions {:question-index question-index}))
         :nothing)
     (assoc world 
             :question-index question-index
             :question question
-            :current-answer (Answer. question nil false [nil nil nil nil] [0 0 0 0])
+            :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil false [nil nil nil nil] [0 0 0 0])
            )))
 
+(defn end-of-round
+  [world]
+  false)
 
-(defn to-round-setup 
+(defn round-setup 
   [acc event from-state to-state]
   (let [new-round-number (+ 1 (:round-index acc))
         current-round (get (:rounds acc) new-round-number)]
@@ -136,11 +157,11 @@
         round-events (async/merge [(:buttons stage) (:quizmaster stage) timeout-chan])
         game (fsm/fsm-inc [
                            [:start {}
-                            {:kind :start-round} -> {:action to-round-setup} :round-setup]
-                           [:round-setup {}
-                            {:kind :start-question} -> {:action (partial prepare-question timeout-chan)} :start-question]
+                            {:kind :start-round} -> {:action round-setup} :wait-for-question]
+                           [:wait-for-question {}
+                            {:kind :start-question} -> {:action (partial start-question timeout-chan)} :start-question]
                            [:start-question {}
-                            {:kind :out-of-questions} -> :end-of-round
+                            {:kind :out-of-questions} -> end-of-round
                             {:kind :show-question} -> {:action (partial buzz-timer timeout-chan)} :wait-buzz]
                            [:wait-buzz {}
                             {:kind :show-question} -> {:action show-question} :wait-buzz
@@ -156,8 +177,8 @@
                             {:kind :options-timeout} -> show-question-results
                             {:kind :all-pressed} -> show-question-results]
                            [show-question-results {}
-                            {:kind :next-question} -> :round-setup]
-                           [:end-of-round {}
+                            {:kind :next-question} -> {:action prepare-for-next-question} :wait-for-question]
+                           [end-of-round {}
                             {:kind :next-round} -> :start]
                            ])
         ]
@@ -165,7 +186,8 @@
                    (assoc (:value @game-state) 
                                  :stage stage
                                  :rounds rounds
-                                 :questions questions))]
+                                 :questions questions
+                                 :answers []))]
       (reset! game-state f)
       (recur (fsm/fsm-event f #spy/d (<!! round-events))))
   ))

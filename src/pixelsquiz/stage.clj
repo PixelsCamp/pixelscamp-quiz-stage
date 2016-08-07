@@ -12,6 +12,7 @@
                                           alts! alts!! timeout]]
     [clj-time.core :as t]
     [clj-time.coerce :as tc]
+    [cheshire.core :as json]
     )
 
   (:import [com.codeminders.hidapi HIDDeviceInfo HIDManager]
@@ -120,7 +121,7 @@
              (println (str "      main-display: " ev))
              (doseq [client (keys @ws-connections)]
                ;; send all, client will filter them
-               (send! client ev))            
+               (send! client (json/generate-string ev)))
              (recur (<! main-display-channel)))
     {:actor :main-display
      :chan main-display-channel
