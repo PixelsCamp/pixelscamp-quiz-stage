@@ -17,6 +17,7 @@
                  [org.clojars.torbjornvatn/hidapi "1.1"]
                  [clj-time "0.12.0"]
                  [cheshire "5.6.3"]
+                 [org.craigandera/dynne "0.4.1"]
 								 ]
   :main ^:skip-aot pixelsquiz.core
   :target-path "target/%s"

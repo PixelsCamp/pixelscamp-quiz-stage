@@ -1,10 +1,10 @@
 (ns pixelsquiz.stage
-  (:gen-class)
 
   (:use org.httpkit.server)
 
   (:require
     [pixelsquiz.types]
+    [pixelsquiz.sounds :as sounds]
     [ring.middleware.defaults]
     [compojure.core     :as comp :refer (defroutes GET POST)]
     [compojure.route    :as route]
