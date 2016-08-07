@@ -10,20 +10,77 @@
     [compojure.route    :as route]
     [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
                                           alts! alts!! timeout]])
+  
+    (:import [com.codeminders.hidapi HIDDeviceInfo HIDManager]
+                        [java.io IOException])
   )
 
 (import pixelsquiz.types.Event)
 
+(defn load-hid-natives []
+  (let [bits (System/getProperty "sun.arch.data.model")]
+    (clojure.lang.RT/loadLibrary (str "hidapi-jni-" bits))))
 
 
+(defn open-buzz []
+  (try
+    (let [_ (load-hid-natives)
+          manager (HIDManager/getInstance)]
+      (.openById manager 1356 2 ""))
+    (catch Exception e nil))
+  )
 
+;; A b1 0-4
+;; B b1 5-7 b2 0-1
+;; C b2 2-6
+;; D b2 7 b3 0-3
+
+(defn read-buzz [dev]
+  (try
+  (let [buf (byte-array 5)]
+    (loop [br 0] 
+      (if (= br 5) 
+        (let [b1 (aget buf 2)
+              b2 (aget buf 3)
+              b3 (aget buf 4)
+              states [
+                      (bit-and 0x1f b1)
+                      (bit-and 0x1f (bit-or (bit-shift-left b2 3) (unsigned-bit-shift-right b1 5)))
+                      (bit-and 0x1f (unsigned-bit-shift-right b2 2))
+                      (bit-and 0x1f (bit-or (bit-shift-left b3 1) (bit-and 0x1 (unsigned-bit-shift-right b2 7))))
+                      ]
+              ]
+            (println states)
+          )    
+        ) 
+      (recur (.readTimeout dev buf 50)))
+    )
+  (catch Exception e nil))
+  )
+
+(defn open-and-read-buzz
+  []
+  (loop [dev (open-buzz)]
+    (if (nil? dev)
+      (do 
+        (<!! (timeout 1000))
+        (recur (open-buzz)))
+      (do
+        (read-buzz dev)
+        (recur (open-buzz)))
+    )))
 
 (defn buttons-actor
   []
   (let [c (chan 16)]
     {:actor :buttons
      :chan c
-     :routes nil}))
+     :routes nil})
+    (let [manager (HIDManager/getInstance)
+                    devs (.listDevices manager)]
+      (for [d devs] (println (:vendor_id )))
+    )
+  )
 
 (defn main-display-actor
   []
@@ -57,7 +114,8 @@
 
 (defn player-lights-actor
   []
-  (let [player-lights-channel (chan 16)]
+  (let [ws-connections (atom {}) 
+        player-lights-channel (chan 16)]
     (go-loop [ev {:kind :starting}]
              (println "        player-lights: " ev)                 
              (recur (<! player-lights-channel)))
