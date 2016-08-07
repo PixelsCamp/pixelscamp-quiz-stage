@@ -9,13 +9,18 @@
     [compojure.core     :as comp :refer (defroutes GET POST)]
     [compojure.route    :as route]
     [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
-                                          alts! alts!! timeout]])
-  
-    (:import [com.codeminders.hidapi HIDDeviceInfo HIDManager]
-                        [java.io IOException])
+                                          alts! alts!! timeout]]
+    [clj-time.core :as t]
+    [clj-time.coerce :as tc]
+    )
+
+  (:import [com.codeminders.hidapi HIDDeviceInfo HIDManager]
+           [java.io IOException])
   )
 
 (import pixelsquiz.types.Event)
+
+(def controller-buttons [:red :yellow :green :orange :blue])
 
 (defn load-hid-natives []
   (let [bits (System/getProperty "sun.arch.data.model")]
@@ -30,57 +35,73 @@
     (catch Exception e nil))
   )
 
-;; A b1 0-4
-;; B b1 5-7 b2 0-1
-;; C b2 2-6
-;; D b2 7 b3 0-3
-
-(defn read-buzz [dev]
-  (try
-  (let [buf (byte-array 5)]
-    (loop [br 0] 
-      (if (= br 5) 
-        (let [b1 (aget buf 2)
-              b2 (aget buf 3)
-              b3 (aget buf 4)
-              states [
-                      (bit-and 0x1f b1)
-                      (bit-and 0x1f (bit-or (bit-shift-left b2 3) (unsigned-bit-shift-right b1 5)))
-                      (bit-and 0x1f (unsigned-bit-shift-right b2 2))
-                      (bit-and 0x1f (bit-or (bit-shift-left b3 1) (bit-and 0x1 (unsigned-bit-shift-right b2 7))))
-                      ]
-              ]
-            (println states)
-          )    
-        ) 
-      (recur (.readTimeout dev buf 50)))
-    )
-  (catch Exception e nil))
+(defn- debounce-buttons
+  [current previous]
+  (bit-and current (bit-xor current previous))
   )
 
-(defn open-and-read-buzz
-  []
+
+(defn- buzz-to-properties
+  [buttons team]
+  (map #({:button (get controller-buttons %) 
+          :pressed (> 0 (bit-and buttons (bit-shift-right 0x1 %)))
+          :team team
+          }) (range (count controller-buttons))))
+
+(defn read-buzz [dev channel]
+  (try
+    (let [buf (byte-array 5)
+          ]
+      (loop [br 0
+             previous [0 0 0 0]] 
+        (let [states (if (= br 5) 
+                       (let [ts (tc/to-long (t/now))
+                             b1 (aget buf 2)
+                             b2 (aget buf 3)
+                             b3 (aget buf 4)
+                             states [
+                                     ;; A b1 0-4
+                                     ;; B b1 5-7 b2 0-1
+                                     ;; C b2 2-6
+                                     ;; D b2 7 b3 0-3
+                                     (bit-and 0x1f b1)
+                                     (bit-and 0x1f (bit-or (bit-shift-left b2 3) (unsigned-bit-shift-right b1 5)))
+                                     (bit-and 0x1f (unsigned-bit-shift-right b2 2))
+                                     (bit-and 0x1f (bit-or (bit-shift-left b3 1) (bit-and 0x1 (unsigned-bit-shift-right b2 7))))
+                                     ]
+                             ]
+                         (for [props (map buzz-to-properties (map debounce-buttons states previous) (range 4))
+                               :when (:pressed props)]
+                           (>!! channel (Event. :button-pressed props)))
+
+                         (println states)
+                         )
+                       previous    
+                       )] 
+          (recur (.readTimeout dev buf -1) states)))
+      )
+    (catch Exception e nil))
+  )
+
+(defn open-and-read-buzz-into [channel]
   (loop [dev (open-buzz)]
     (if (nil? dev)
       (do 
-        (<!! (timeout 1000))
+        (Thread/sleep 1000)
         (recur (open-buzz)))
       (do
-        (read-buzz dev)
+        (read-buzz dev channel)
         (recur (open-buzz)))
-    )))
+      )))
 
 (defn buttons-actor
   []
   (let [c (chan 16)]
+    (go (open-and-read-buzz-into c))
     {:actor :buttons
      :chan c
-     :routes nil})
-    (let [manager (HIDManager/getInstance)
-                    devs (.listDevices manager)]
-      (for [d devs] (println (:vendor_id )))
-    )
-  )
+     :routes nil}
+  ))
 
 (defn main-display-actor
   []
