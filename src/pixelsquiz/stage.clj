@@ -82,7 +82,7 @@
                                  ]
                             (>!! channel (Event. (case (:button props)
                                                   :red :buzz-pressed
-                                                  :option-presses) props))
+                                                  :option-pressed) props))
                            )
                          states)
                        previous)

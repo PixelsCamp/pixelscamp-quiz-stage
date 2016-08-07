@@ -50,10 +50,6 @@
   (w-m-d "timeout!!" )
   world)
 
-(defn wake-up-quizmaster
-  [world event from-state to-state]
-  (w-m-d "waiting for quizmaster right wrong")
-  world)
 
 (defn show-question-results
   [world & _]
@@ -62,13 +58,36 @@
 
 (defmacro with-answer 
   [& forms]
-  `(let [{question :question buzzed :buzzed answers :answers scores :scores} (:current-answer ~'world)]
+  `(let [{question :question team-buzzed :team-buzzed good-buzz :good-buzz answers :answers scores :scores} (:current-answer ~'world)]
      ~@forms))
+
 
 (defn acc-answer
   [world event & _]
   (with-answer
-   (assoc world :current-answer (Answer. question buzzed (assoc answers (-> event :bag-of-props :remote) (-> event :bag-of-props :button)) scores))))
+    (assoc world :current-answer 
+           (case (:kind event) ; XXX this is kinda ugly ...
+             :option-pressed (Answer. question team-buzzed good-buzz (assoc answers (-> event :bag-of-props :team) 
+                                                                       (-> event :bag-of-props :button-index)) 
+                                      scores)
+             :buzz-pressed (Answer. question (-> event :bag-of-props :team) good-buzz answers scores)
+             :select-right (Answer. question team-buzzed true answers scores)
+             :select-wrong (Answer. question team-buzzed false answers scores)))))
+
+
+(defn wake-up-quizmaster
+  [world event from-state to-state]
+  (w-m-d "waiting for quizmaster right wrong")
+  (acc-answer world event))
+
+(defn acc-option
+  [timeout-chan world event & _]
+  (let [new-world (acc-answer world event)]
+    (if (= 4 (count (filter #(not (nil? %)) (-> new-world :answer :answers))))
+      (>!! timeout-chan (Event. :all-pressed {}))
+      )
+    new-world))
+
 
 
 
@@ -97,7 +116,7 @@
     (assoc world 
             :question-index question-index
             :question question
-            :current-answer (Answer. question false [nil nil nil nil] [0 0 0 0])
+            :current-answer (Answer. question nil false [nil nil nil nil] [0 0 0 0])
            )))
 
 
@@ -133,7 +152,7 @@
                            [:wait-before-options {}
                             {:kind :start-mult} -> {:action (partial options-show-and-timeout timeout-chan)} :wait-answers]
                            [:wait-answers {}
-                            {:kind :option-pressed} -> {:action acc-answer} :wait-answers
+                            {:kind :option-pressed} -> {:action (partial acc-option timeout-chan)} :wait-answers
                             {:kind :options-timeout} -> show-question-results
                             {:kind :all-pressed} -> show-question-results]
                            [show-question-results {}
