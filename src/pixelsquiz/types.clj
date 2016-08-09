@@ -9,3 +9,4 @@
 (defrecord Round [number teams questions])
 (defrecord GameState [round-index current-round question-index current-question])
 
+(def controller-buttons [:red :yellow :green :orange :blue])
