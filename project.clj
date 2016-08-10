@@ -21,7 +21,10 @@
 								 ]
   :main ^:skip-aot pixelsquiz.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}}
+  :profiles {:uberjar {:aot :all}
+             :dev {
+                   :source-paths ["dev"]
+                   :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
   :plugins [[lein-figwheel "0.5.0-1"]]
   :cljsbuild {
               :builds [{

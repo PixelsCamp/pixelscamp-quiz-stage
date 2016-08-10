@@ -1,9 +1,6 @@
 
 
 # TODO
- - lights push
- - show after question
- - show after round
  - quiz console
  - question tie breakers
  - stage html
@@ -22,3 +19,6 @@
  - basic quizmaster webservice
  - stage push
  - buzzes interface
+ - lights push
+ - show after question
+ - show after round

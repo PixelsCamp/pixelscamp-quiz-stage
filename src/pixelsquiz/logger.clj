@@ -17,7 +17,8 @@
 
 (defn error
   [& args]
-  (print-with-serverity "ERROR" args))
+  (print-with-serverity "ERROR" args)
+  nil)
 
 (defn warn
   [& args]

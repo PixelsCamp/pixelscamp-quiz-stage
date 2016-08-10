@@ -38,29 +38,29 @@
 
 
 (defmacro w-m-d
-  [m]
-  `(>!! (-> ~'world  :stage :main-display) ~m))
-
-(defn show-question
-  [world & _]
-  (w-m-d (-> world :question :text))
-  world)
+  [form]
+  `(>!! (-> ~'world  :stage :displays) ~form))
 
 
 (defn buzz-timedout
   [world & _]
-  (w-m-d "timeout!!" )
+  (w-m-d (Event. :timeout {}))
   world)
 
 
+(defn show-question
+  [world & _]
+  (w-m-d (Event. :show-question (-> world :current-question)))
+  world)
+
 (defn show-question-results
   [world & _]
-  (w-m-d #spy/d (:current-answer world))
+  (w-m-d #spy/d (Event. :show-question-results (:current-answer world)))
   false)
 
 (defmacro with-answer 
   [& forms]
-  `(let [{question :question team-buzzed :team-buzzed good-buzz :good-buzz answers :answers scores :scores} (:current-answer ~'world)]
+  `(let [{question :current-question team-buzzed :team-buzzed good-buzz :good-buzz answers :answers scores :scores} (:current-answer ~'world)]
      ~@forms))
 
 
@@ -80,14 +80,13 @@
 
 (defn wake-up-quizmaster
   [world event from-state to-state]
-  (w-m-d "waiting for quizmaster right wrong")
   (acc-answer world event))
 
 (defn acc-option
   [timeout-chan world event & _]
   (let [new-world (acc-answer world event)
         answers (-> new-world :current-answer :answers)
-        scores (map #(:score %) (-> new-world :current-answer :question :shuffled-options))
+        scores (map #(:score %) (-> new-world :current-answer :current-question :shuffled-options))
         ]
     (if (= 4 (count (filter #(not (nil? %)) (-> new-world :answer :answers))))
       (>!! timeout-chan (Event. :all-pressed {}))
@@ -100,7 +99,7 @@
 
 (defn options-show-and-timeout
   [c world & _]
-  (w-m-d (map #(:text %) (-> world :current-answer :question :shuffled-options)))
+  (w-m-d (Event. :show-options (:current-answer world)))
   (options-timeout c world)
   world)
 
@@ -108,6 +107,27 @@
   [world event from-state to-state]
   
   world)
+
+(defn question-on-quizmaster
+  [world]
+  (w-m-d (Event. :for-quizmaster {:text (str "Q:" (-> world :current-question :text) " A: " (get (-> world :current-question :options) 0))} ))
+  false)
+
+(defn right-or-wrong
+  [world]
+  (w-m-d (Event. :for-quizmaster {:text "waiting for quizmaster right wrong"}))
+  (w-m-d (Event. :buzzed (:current-answer world)))
+  false)
+
+(defn wait-answers
+  [world]
+  false)
+
+(defn end-of-round
+  [world]
+  (w-m-d (Event. :end-of-round (:current-round world)))
+  false)
+
 
 (defn prepare-for-next-question
   [world event & _]
@@ -133,13 +153,10 @@
         :nothing)
     (assoc world 
             :question-index question-index
-            :question question
+            :current-question question
             :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil false [nil nil nil nil] [0 0 0 0])
            )))
 
-(defn end-of-round
-  [world]
-  false)
 
 (defn round-setup 
   [acc event from-state to-state]
@@ -159,21 +176,21 @@
                            [:start {}
                             {:kind :start-round} -> {:action round-setup} :wait-for-question]
                            [:wait-for-question {}
-                            {:kind :start-question} -> {:action (partial start-question timeout-chan)} :start-question]
-                           [:start-question {}
+                            {:kind :start-question} -> {:action (partial start-question timeout-chan)} question-on-quizmaster]
+                           [question-on-quizmaster {}
                             {:kind :out-of-questions} -> end-of-round
                             {:kind :show-question} -> {:action (partial buzz-timer timeout-chan)} :wait-buzz]
                            [:wait-buzz {}
                             {:kind :show-question} -> {:action show-question} :wait-buzz
                             {:kind :buzz-timeout} -> {:action buzz-timedout} :wait-before-options
-                            {:kind :buzz-pressed} -> {:action wake-up-quizmaster} :right-or-wrong]
-                           [:right-or-wrong {}
+                            {:kind :buzz-pressed} -> {:action acc-answer} right-or-wrong]
+                           [right-or-wrong {}
                             {:kind :select-right} -> {:action acc-answer} show-question-results
                             {:kind :select-wrong} -> {:action acc-answer} :wait-before-options]
                            [:wait-before-options {}
-                            {:kind :start-mult} -> {:action (partial options-show-and-timeout timeout-chan)} :wait-answers]
-                           [:wait-answers {}
-                            {:kind :option-pressed} -> {:action (partial acc-option timeout-chan)} :wait-answers
+                            {:kind :start-mult} -> {:action (partial options-show-and-timeout timeout-chan)} wait-answers]
+                           [wait-answers {}
+                            {:kind :option-pressed} -> {:action (partial acc-option timeout-chan)} wait-answers
                             {:kind :options-timeout} -> show-question-results
                             {:kind :all-pressed} -> show-question-results]
                            [show-question-results {}
@@ -182,6 +199,7 @@
                             {:kind :next-round} -> :start]
                            ])
         ]
+    (greetings! {:stage stage})
     (loop [f (game (:state @game-state) 
                    (assoc (:value @game-state) 
                                  :stage stage
@@ -198,8 +216,8 @@
   (case what
     :items {
             :rounds [
-                     (Round. 1 ['a 'b 'c 'd] [1 2 3 4 5 6 7])
-                     (Round. 2 ['e 'f 'g 'h] [1 10 11 12 13 14 15])
+                     (Round. 1 ['a 'b 'c 'd] [1 2 3 4 5 6 7] [0 0 0 0])
+                     (Round. 2 ['e 'f 'g 'h] [1 10 11 12 13 14 15] [0 0 0 0])
                      ]
             :questions [ nil
                         (Question. 1 :multi 1 "The first question" 
@@ -224,7 +242,7 @@
         game-items (read-from-file :items)
         stage (setup-stage) 
         ]
-    (add-watch game-state nil (fn [k r os s] (println (str "main loop " s))))
+    (add-watch game-state nil (fn [k r os s] (clojure.pprint/pprint  s)))
     (game-loop stage (:rounds game-items) (:questions game-items) game-state) 
    )
   )

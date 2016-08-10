@@ -6,6 +6,7 @@
     [pixelsquiz.types :refer :all]
     [pixelsquiz.sounds :as sounds]
     [pixelsquiz.buzz :as buzz :refer [open-and-read-buzz-into]]
+    [pixelsquiz.logger :as logger]
     [ring.middleware.defaults]
     [compojure.core     :as comp :refer (defroutes GET POST)]
     [compojure.route    :as route]
@@ -34,23 +35,75 @@
      :routes nil}
   ))
 
-(defn main-display-actor
+(defn format-for-displays
+  [ev]
+  (try 
+    (case (:kind ev)
+      :buzzed {:do :highlight :team (-> ev :bag-of-props :current-answer :team-buzzed)}
+      :update-lights {:do :update-lights :colours (-> ev :bag-of-props :current-answer :answers) }
+      :show-question {:do :show-question 
+                      :text (-> ev :bag-of-props :text) 
+                      :options ["" "" "" ""]
+                      }
+      :show-options {:do :show-question ; ev bag-of-props Answer
+                     :text (-> ev :bag-of-props :question :text)
+                     :options (map #(:text %) (-> ev :bag-of-props :question :shuffled-options))
+                     }
+      :show-question-results {:do :update-lights  ; ev bag-of-props Answer
+                              :scores (-> ev :bag-of-props :scores)
+                              :options (:s (reduce (fn 
+                                                     [acc o] 
+                                                     {:t (inc (:t acc)) 
+                                                      :s (if (nil? o)
+                                                           (:s acc)
+                                                           (assoc (:s acc) o (str (get (:s acc) o) " " (inc (:t acc)))))
+                                                      })
+                                                   { :t 0 :s ["" "" "" ""]}
+                                                   ()
+                                                   ))
+                              }
+      :end-of-round {:do :update-all ; ev bag-of-props Round
+                     :text "Round ended!"
+                     :options (map #(str "Team " (:team %) " - " (:score %) " points") 
+                                   (sort-by :score > (mapv (fn [s t] {:score s :team t}) (-> ev :bag-of-props :scores) [1 2 3 4])))
+                     :scores (-> ev :bag-of-props :scores)
+                     }
+      (logger/error "format-for-displays " ev))
+    (catch Exception e (logger/error "exception in format-for-displays" ev e))))
+
+(defn format-for-quizmaster
+  [ev]
+  (try
+    (case (:kind ev)
+      :for-quizmaster (:bag-of-props ev)
+      nil)
+    (catch Exception e (logger/error "exception in format-for-quizmaster" ev e))
+    ))
+
+(defn displays-actor
   []
   (let [ws-connections (atom {})
-        main-display-channel (chan 16)]
+        qm-connections (atom {})
+        displays-channel (chan 16)]
     (go-loop [ev {:kind :starting}]
-             (println (str "      main-display: " ev))
-             (doseq [client (keys @ws-connections)]
-               ;; send all, client will filter them
-               (send! client (json/generate-string ev)))
-             (recur (<! main-display-channel)))
-    {:actor :main-display
-     :chan main-display-channel
-     :routes (GET "/maindisplay" req 
+             (let [message (format-for-displays ev)
+                   qm-mesg (format-for-quizmaster ev)]
+               (if (not (nil? message))
+                 (doseq [client (keys @ws-connections)]
+                   ;; send all, client will filter them
+                   (send! client (json/generate-string message))))
+               (if (not (nil? qm-mesg))
+                 (doseq [client (keys @qm-connections)]
+                   (send! client (json/generate-string qm-mesg)))))
+             (recur (<! displays-channel)))
+    {:actor :displays
+     :chan displays-channel
+     :routes (GET "/displays" req 
                   (with-channel req channel              ; get the channel
                     ;; communicate with client using method defined above
                     (on-close channel (fn [status]
                                         (swap! ws-connections dissoc channel)
+                                        (swap! qm-connections dissoc channel)
                                         (println "channel closed")))
                     (if (websocket? channel)
                       (do (println "channel conn") (swap! ws-connections assoc channel true))
@@ -60,20 +113,14 @@
                                           ;; An optional param can pass to send!: close-after-send?
                                           ;; When unspecified, `close-after-send?` defaults to true for HTTP channels
                                           ;; and false for WebSocket.  (send! channel data close-after-send?)
-                                          (send! channel data)))) ; data is sent directly to the client 
-                  )
+                                          (let [message (json/parse-string data true)]
+                                            (case (:kind message)
+                                                  "quizmaster-auth" (do (swap! qm-connections assoc channel true)
+                                                                       (send! channel (json/generate-string {:kind :info
+                                                                                                             :text "OK!"})))
+                                                  (logger/warn "received data from displays:" data)))))))
      }))
 
-(defn player-lights-actor
-  []
-  (let [ws-connections (atom {}) 
-        player-lights-channel (chan 16)]
-    (go-loop [ev {:kind :starting}]
-             (println "        player-lights: " ev)                 
-             (recur (<! player-lights-channel)))
-    {:actor :player-lights
-     :chan player-lights-channel
-     :routes nil}))
 
 (defn quizmaster-actor
   []
@@ -89,8 +136,8 @@
 (defn setup-stage
   []
   (let [
-        actors [(buttons-actor) (main-display-actor) (player-lights-actor) (quizmaster-actor)]
-        ui-routes [(:routes (nth actors 3))
+        actors [(displays-actor) (quizmaster-actor) (buttons-actor)]
+        ui-routes [(:routes (nth actors 0))
                    (:routes (nth actors 1))]
         ]
     (run-server (apply comp/routes ui-routes) {:port 3000})
