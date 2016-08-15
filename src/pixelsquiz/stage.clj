@@ -4,6 +4,7 @@
 
   (:require
     [pixelsquiz.types :refer :all]
+    [pixelsquiz.util :refer :all]
     [pixelsquiz.sounds :as sounds]
     [pixelsquiz.buzz :as buzz :refer [open-and-read-buzz-into]]
     [pixelsquiz.logger :as logger]
@@ -65,7 +66,7 @@
       :end-of-round {:do :update-all ; ev bag-of-props Round
                      :text "Round ended!"
                      :options (map #(str "Team " (:team %) " - " (:score %) " points") 
-                                   (sort-by :score > (mapv (fn [s t] {:score s :team t}) (-> ev :bag-of-props :scores) [1 2 3 4])))
+                                   (sort-teams-by-scores (-> ev :bag-of-props :scores)))
                      :scores (-> ev :bag-of-props :scores)
                      }
       (logger/error "format-for-displays " ev))

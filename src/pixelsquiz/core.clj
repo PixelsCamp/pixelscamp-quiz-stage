@@ -1,7 +1,7 @@
 (ns pixelsquiz.core
   (:gen-class))
 
-
+(require '[pixelsquiz.util :refer :all])
 (require '[pixelsquiz.stage :refer :all])
 (require '[pixelsquiz.types])
 (import '(pixelsquiz.types Event Answer Question Round Team GameState))
@@ -129,48 +129,73 @@
   false)
 
 
+(defn round-tied?
+  [round]
+  (let [teamscores (sort-teams-by-scores (:scores round))]
+   (= (:score (first teamscores)) (:score (second teamscores)))
+  ))
+
+(defn add-tiebreaker-question-if-necessary
+  [world]
+  (let [current-round (:current-round world)
+        question-number (get (:questions current-round) (:question-index current-round))
+        ]
+    (if (and (nil? question-number) (round-tied? current-round))
+      (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) (first (:tiebreaker-pool world))))
+             :tiebreaker-pool (rest (:tiebreaker-pool world)))
+      world
+      )
+    ))
+
+
 (defn prepare-for-next-question
   [world event & _]
-  (assoc world :answers (conj (:answers world) (:current-answer world)))
-  )
+  (let [question-index (+ 1 (:question-index world))
+        new-world (assoc world 
+                         :answers (conj (:answers world) (:current-answer world))
+                         :question-index question-index
+                         )
+        ]
+    (add-tiebreaker-question-if-necessary new-world)))
 
 (defn start-question 
   [answer-chan world event from-state to-state]
-  (let [events (chan)
-        question-index (+ 1 (:question-index world))
-        current-round (:current-round world)
+  (let [current-round (:current-round world)
+        question-index (:question-index world)
         question-number (get (:questions current-round) question-index)
-        question (get (:questions world) question-number)
+        question (get (:questions-repo world) question-number)
         shuffled-options (shuffle (map (fn [text original score]
                                          {:text text
                                           :original-pos original
                                           :score score})
-                                        (:options question) (range 4) [(:score question) 0 0 0] ; XXX option scores 
+                                       (:options question) (range 4) [(:score question) 0 0 0] ; XXX option scores 
                                        ))
         ]
-      (case question
-        nil (>!! answer-chan (Event. :out-of-questions {:question-index question-index}))
-        :nothing)
+    (if (nil? question)
+      (>!! answer-chan (Event. :out-of-questions {:question-index question-index})))
     (assoc world 
-            :question-index question-index
-            :current-question question
-            :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil false [nil nil nil nil] [0 0 0 0])
+           :current-question question
+           :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil false [nil nil nil nil] [0 0 0 0])
            )))
 
-
+(defn prepare-for-next-round
+  [world event & _] 
+    (assoc world
+           :past-rounds (conj (:rounds world) (:current-round world)))
+  )
 (defn round-setup 
-  [acc event from-state to-state]
-  (let [new-round-number (+ 1 (:round-index acc))
-        current-round (get (:rounds acc) new-round-number)]
-    (println (str "to-round-setup " new-round-number " " current-round))
-    (assoc acc 
+  [world event from-state to-state]
+  (let [new-round-number (+ 1 (:round-index world))
+        new-round (get (:rounds world) new-round-number)]
+    (assoc world
            :round-index new-round-number
-           :current-round current-round
-           :question-index -1)))
+           :current-round new-round
+           :question-index 0)))
 
 (defn game-loop
-  [stage rounds questions game-state]
+  [game-state world]
   (let [timeout-chan (chan 16)
+        stage (:stage world)
         round-events (async/merge [(:buttons stage) (:quizmaster stage) timeout-chan])
         game (fsm/fsm-inc [
                            [:start {}
@@ -196,15 +221,15 @@
                            [show-question-results {}
                             {:kind :start-question} -> {:action prepare-for-next-question} :wait-for-question]
                            [end-of-round {}
-                            {:kind :start-round} -> :start]
+                            {:kind :start-round} -> {:action prepare-for-next-round} :start]
                            ])
         ]
     (loop [f (game (:state @game-state) 
-                   (assoc (:value @game-state) 
-                                 :stage stage
-                                 :rounds rounds
-                                 :questions questions
-                                 :answers []))]
+                   (merge (:value @game-state) 
+                          world
+                          {:past-rounds []
+                           :answers []}
+                          ))]
       (reset! game-state f)
       (recur (fsm/fsm-event f #spy/d (<!! round-events))))
   ))
@@ -215,10 +240,10 @@
   (case what
     :items {
             :rounds [
-                     (Round. 1 ['a 'b 'c 'd] [1 2 3 4 5 6 7] [0 0 0 0])
+                     (Round. 1 ['a 'b 'c 'd] [1] [0 0 0 0])
                      (Round. 2 ['e 'f 'g 'h] [1 10 11 12 13 14 15] [0 0 0 0])
                      ]
-            :questions [ nil
+            :questions-repo [ nil
                         (Question. 1 :multi 1 "The first question" 
                                    [
                                     "First answer"
@@ -227,13 +252,14 @@
                                     "Last answer"
                                   ])
                         ]
+            :tiebreaker-pool [1 1 1 1 1]
             }
     :initial-state {:state :start :value {:round-index -1}}
     ))
 
 
 (def game-state (atom (read-from-file :initial-state) ))
-(defonce server (repl/start-server :port 7888))
+;(defonce server (repl/start-server :port 7888))
 
 (defn -main
   [& args]
@@ -242,6 +268,6 @@
         stage (setup-stage) 
         ]
     (add-watch game-state nil (fn [k r os s] (clojure.pprint/pprint  s)))
-    (game-loop stage (:rounds game-items) (:questions game-items) game-state) 
+    (game-loop game-state (assoc game-items :stage stage))
    )
   )

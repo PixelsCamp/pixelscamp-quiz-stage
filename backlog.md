@@ -1,8 +1,6 @@
 
 
 # TODO
- - quiz console
- - question tie breakers
  - stage html
   - basic html
 	- beautify
@@ -22,3 +20,5 @@
  - lights push
  - show after question
  - show after round
+ - quiz console
+ - question tie breakers
