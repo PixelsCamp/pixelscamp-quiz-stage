@@ -1,0 +1,127 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<title>Quizconsole</title>
+
+	<style type="text/css" media="screen">
+		iframe#mainscreen {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			border: solid thin black;
+			}
+			
+			XPTO {
+		zoom: 0.75;
+    -moz-transform: scale(0.75);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.75);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.75);
+		-webkit-transform-origin: 0 0;
+	}
+	div#framewrap {
+		position: absolute;
+		top:0; left: 0;
+		width: 80%;
+		height: 100%;
+	}
+
+	div#commands {
+		width: 100px;
+		height: 100%;
+		top: 0;
+		right: 0;
+		position: absolute;
+	}
+
+	button {
+		width: 100%;
+		height: 100px;
+		margin-bottom: 20px;
+	}
+	button#sendcmd {
+		height: 1em;
+		margin-bottom: 0px;
+	}
+
+	div#statuswrap {
+		width: 80%;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 70%;
+		overflow: scroll;
+		border: solid thin black;
+	}
+
+
+	div#pergunta {
+		width: 80%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 30%;
+		border: solid thin black;
+		font-size: 150%;
+	}
+
+	input.confirm {
+		width: 100px;
+	height: 100px;
+		margin: 50px;
+	}
+	input.cancel {
+		width: 100px;
+		height: 100px;
+		margin: 50px;
+	}
+	</style>
+</head>
+<body>
+	<div id="framewrap">
+	</div>
+
+	<div id="commands">
+		<button id="start-question" >PROXIMA</button>
+		<button id="show-question" >START</button>
+		<button id="start-mult" >MULTI</button>
+		<button id="start-round"> SPECIALS</button>
+		<textarea name="servercmd" id="servercmd" rows="8" cols="20"></textarea>
+		<button id="sendcmd" onclick="send()">send!</button>
+	</div>
+	<div id="pergunta"> 
+	</div>
+	<div id="statuswrap">
+	<pre id="status">
+		
+	</pre>
+</div>
+<script src="/static/jquery-3.1.0.js"></script>
+<script>
+
+function send_command(ev) {
+	$.post('/actions/'+ $(ev.target).attr('id'))
+}
+
+$("#commands button").each(function (idx) {
+ $(this).click(send_command) 
+})
+
+var ws = new WebSocket("ws://localhost:3000/displays");
+ws.onopen = function (event) {
+	ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
+}
+ws.onmessage = function (event) {
+	var msg = JSON.parse(event.data);
+	console.log(event.data);
+	if(msg.do === 'quizmaster-only') {
+		$('#pergunta').text(msg.text);
+	} else {
+		$('#status').text( $('#status').text() + '\n' + msg.text);
+	}
+}
+</script>
+</body>
+</html>

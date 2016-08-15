@@ -75,7 +75,7 @@
   [ev]
   (try
     (case (:kind ev)
-      :for-quizmaster (:bag-of-props ev)
+      :for-quizmaster (merge {:do :quizmaster-only} (:bag-of-props ev))
       nil)
     (catch Exception e (logger/error "exception in format-for-quizmaster" ev e))
     ))
@@ -138,7 +138,8 @@
   (let [
         actors [(displays-actor) (quizmaster-actor) (buttons-actor)]
         ui-routes [(:routes (nth actors 0))
-                   (:routes (nth actors 1))]
+                   (:routes (nth actors 1))
+                   (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
     (run-server (apply comp/routes ui-routes) {:port 3000})
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))

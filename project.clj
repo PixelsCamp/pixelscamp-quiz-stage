@@ -8,8 +8,6 @@
                   [org.clojars.gjahad/debug-repl "0.3.3"]
                  [reduce-fsm "0.1.4"]
                  [org.clojure/core.async "0.2.385"]
-								 [com.taoensso/sente        "1.11.0-SNAPSHOT"] ; <--- Sente
-								 [com.taoensso/timbre       "4.7.2"]
 								 [http-kit                             "2.2.0"] ; Default
 								 [ring                      "1.5.0"]
 								 [ring/ring-defaults        "0.2.1"] ; Includes `ring-anti-forgery`, etc.
@@ -18,6 +16,8 @@
                  [clj-time "0.12.0"]
                  [cheshire "5.6.3"]
                  [org.craigandera/dynne "0.4.1"]
+                 [prismatic/dommy "1.1.0"]
+                 [cljs-ajax "0.5.8"]
 								 ]
   :main ^:skip-aot pixelsquiz.core
   :target-path "target/%s"
@@ -25,14 +25,16 @@
              :dev {
                    :source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
-  :plugins [[lein-figwheel "0.5.0-1"]]
+  :plugins [[lein-figwheel "0.5.0-1"]
+            [lein-cljsbuild "0.3.0"]]
   :cljsbuild {
               :builds [{
-                        :id "dev"
-                        :source-paths ["html"]
+                        :id "quizconsole"
+                        :source-paths ["src-cljs/quizconsole"]
                         :figwheel true
-                        :compiler {
-                                   :main "pixelsquiz.lights"
+                        :compiler {:output-to "html/pixelsquiz/autogen/quizconsole.js"
+                                   :optimizations :whitespace
+                                   :pretty-print true
                                    }
                         }]
               }

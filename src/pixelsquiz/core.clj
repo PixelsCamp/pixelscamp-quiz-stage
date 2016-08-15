@@ -194,12 +194,11 @@
                             {:kind :options-timeout} -> show-question-results
                             {:kind :all-pressed} -> show-question-results]
                            [show-question-results {}
-                            {:kind :next-question} -> {:action prepare-for-next-question} :wait-for-question]
+                            {:kind :start-question} -> {:action prepare-for-next-question} :wait-for-question]
                            [end-of-round {}
-                            {:kind :next-round} -> :start]
+                            {:kind :start-round} -> :start]
                            ])
         ]
-    (greetings! {:stage stage})
     (loop [f (game (:state @game-state) 
                    (assoc (:value @game-state) 
                                  :stage stage
