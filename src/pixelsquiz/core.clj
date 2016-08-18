@@ -243,15 +243,7 @@
                      (Round. 1 ['a 'b 'c 'd] [1] [0 0 0 0])
                      (Round. 2 ['e 'f 'g 'h] [1 10 11 12 13 14 15] [0 0 0 0])
                      ]
-            :questions-repo [ nil
-                        (Question. 1 :multi 1 "The first question" 
-                                   [
-                                    "First answer"
-                                    "Second answer"
-                                    "Third answer"
-                                    "Last answer"
-                                  ])
-                        ]
+            :questions-repo (read-string (slurp "questions.edn"))
             :tiebreaker-pool [1 1 1 1 1]
             }
     :initial-state {:state :start :value {:round-index -1}}

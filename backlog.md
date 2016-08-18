@@ -5,7 +5,6 @@
   - basic html
 	- beautify
  - sounds
- - test questions
  - save state
  - recover from crash
  - question backoffice
@@ -22,3 +21,4 @@
  - show after round
  - quiz console
  - question tie breakers
+ - test questions
