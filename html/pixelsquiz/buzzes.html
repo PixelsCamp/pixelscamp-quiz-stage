@@ -1,0 +1,78 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<title>Buzzes</title>
+
+	<style type="text/css" media="screen">
+		div.buzz {
+			border: solid black;
+			display: float;
+			float: left;
+			padding: 10px;
+		}
+
+		a.but {
+			border: solid thin black;
+			display: block;
+			width: 50px;
+			height: 50px;
+			padding: 10px;
+		}
+	</style>
+	
+</head>
+<body onload=''>
+	<div id="buzzes">
+
+</div>
+
+
+	<script src="/static/jquery-3.1.0.js"></script>
+<script>
+
+function send_command(ev) {
+	console.log(ev);
+	e = $(ev.target);
+	button = e.data('button')
+	action = button === 'red' ? 'buzz-pressed' : 'option-pressed';
+	$.post('/actions/'+action, {
+		'button': button,
+		'button-index': buttons.indexOf(button),
+		'pressed': true,
+		'team': e.data('team')
+	});
+}
+
+var buttons = ['red', 'blue', 'orange', 'green', 'yellow'];
+teams = [0,1,2,3];
+
+var topdiv = $('#buzzes');
+teams.map(function(t) {
+	var contdiv = document.createElement('div');
+	contdiv.id = 'buzz'+t;
+	contdiv.className = 'buzz';
+	contdiv.innerHTML = 'TEAM '+t;
+	buttons.map(function(b) {
+		var but = document.createElement('a');
+		var signal = b === 'red' ? 'playerbuzzed' : 'playermulti';
+		but.href="#";
+		but.className = 'but';
+		but.innerHTML = b;
+		but.style.cssText = 'background: '+b;
+		$(but).data('team', t);
+		$(but).data('button', b)
+		but.onclick = send_command
+		return but;
+	}).forEach(function(x) {
+		contdiv.appendChild(x);	
+	});
+	return contdiv;
+}).forEach(function(x) {
+	topdiv.append(x);	
+});
+
+
+</script>
+</body>
+</html>

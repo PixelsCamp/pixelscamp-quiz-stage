@@ -8,7 +8,7 @@
     [pixelsquiz.sounds :as sounds]
     [pixelsquiz.buzz :as buzz :refer [open-and-read-buzz-into]]
     [pixelsquiz.logger :as logger]
-    [ring.middleware.defaults]
+    [ring.middleware.defaults :refer :all]
     [compojure.core     :as comp :refer (defroutes GET POST)]
     [compojure.route    :as route]
     [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
@@ -41,7 +41,6 @@
   (case (:kind ev)
     :timer-start (sounds/play-thinking-music)
     :buzzed (sounds/play (get [:p1 :p2 :p3 :p4] (-> ev :bag-of-props :team-buzzed)))
-    :update-lights ()
     :default
     )
   )
@@ -141,8 +140,8 @@
   (let [quizmaster-channel (chan 16)]
     {:actor :quizmaster
      :chan quizmaster-channel
-     :routes (POST "/actions/:action" [action] 
-                   (>!! quizmaster-channel (Event. (keyword action) {}))
+     :routes (POST "/actions/:action" [action :as request]
+                   (>!! quizmaster-channel (Event. (keyword action) (:params request)))
                    (str "ok " (keyword action) "\n"))
      }
     ))
@@ -155,6 +154,6 @@
                    (:routes (nth actors 1))
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
-    (run-server (apply comp/routes ui-routes) {:port 3000})
+    (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))
