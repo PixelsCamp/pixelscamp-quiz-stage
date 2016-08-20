@@ -5,8 +5,6 @@
   - basic html
 	- beautify
  - sounds
- - save state
- - recover from crash
  - question backoffice
 
  # DONE
@@ -22,3 +20,5 @@
  - quiz console
  - question tie breakers
  - test questions
+ - save state
+ - recover from crash

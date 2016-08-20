@@ -19,6 +19,8 @@
 
 (def buzz-score-modifier 2)
 
+(def game-state-file "game-state.edn")
+(def questions-db "questions.edn")
 
 (defn buzz-timer 
   [c world & _]
@@ -192,6 +194,8 @@
            :current-round new-round
            :question-index 0)))
 
+
+
 (defn game-loop
   [game-state world]
   (let [timeout-chan (chan 16)
@@ -240,18 +244,35 @@
   (case what
     :items {
             :rounds [
-                     (Round. 1 ['a 'b 'c 'd] [1] [0 0 0 0])
-                     (Round. 2 ['e 'f 'g 'h] [1 10 11 12 13 14 15] [0 0 0 0])
+                     (Round. 1 ['a 'b 'c 'd] [1 2 3] [0 0 0 0])
+                     (Round. 2 ['e 'f 'g 'h] [1 4] [0 0 0 0])
                      ]
-            :questions-repo (read-string (slurp "questions.edn"))
+            :questions-repo (read-string (slurp questions-db))
             :tiebreaker-pool [1 1 1 1 1]
             }
-    :initial-state {:state :start :value {:round-index -1}}
+    :initial-state (let [saved (try 
+                          (read-string (slurp game-state-file))
+                          (catch Exception e {:state :start :value {:round-index -1}}))
+                         state-fn (ns-resolve *ns* (symbol (name (:state saved))))]
+                         (if (ifn? state-fn)
+                           (assoc saved :state (deref state-fn))
+                           saved))
     ))
 
 
 (def game-state (atom (read-from-file :initial-state) ))
 ;(defonce server (repl/start-server :port 7888))
+
+(defn save-game-state-to-file!
+  [key ref old-state state]
+  (let [value (:value state)]
+    (spit game-state-file (pr-str {:state (:state state)
+                                   :value (select-keys value [:current-question :current-answer :current-round :question-index]) 
+                                   }) :append false)
+    (spit (str game-state-file "-log") (pr-str state) :append true)
+    (clojure.pprint/pprint state)
+    ;;  (clojure.pprint/pprint (select-keys value [:current-round :current-answer :question-index]))
+    ))
 
 (defn -main
   [& args]
@@ -259,7 +280,7 @@
         game-items (read-from-file :items)
         stage (setup-stage) 
         ]
-    (add-watch game-state nil (fn [k r os s] (clojure.pprint/pprint  s)))
+    (add-watch game-state nil save-game-state-to-file!)
     (game-loop game-state (assoc game-items :stage stage))
    )
   )
