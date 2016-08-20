@@ -11,10 +11,10 @@
   :buzz (s/read-sound "sounds/buzz.mp3")
   :correct (s/read-sound "sounds/correct.mp3")
   :error (s/read-sound "sounds/error.wav")
-  :player1 (s/read-sound "sounds/p1.mp3")
-  :player2 (s/read-sound "sounds/p2.mp3")
-  :player3 (s/read-sound "sounds/p3.mp3")
-  :player4 (s/read-sound "sounds/p4.mp3")
+  :t1 (s/read-sound "sounds/p1.mp3")
+  :t2 (s/read-sound "sounds/p2.mp3")
+  :t3 (s/read-sound "sounds/p3.mp3")
+  :t4 (s/read-sound "sounds/p4.mp3")
 })
 
 (defn play-thinking-music
@@ -28,5 +28,6 @@
 
 (defn play 
   [sound]
-  (s/play (sound sounds)))
+  (if-let [s (sound sounds)]
+    (s/play s)))
 

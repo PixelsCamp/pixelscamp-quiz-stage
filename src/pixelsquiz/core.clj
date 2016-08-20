@@ -66,7 +66,7 @@
 
 (defmacro with-answer 
   [& forms]
-  `(let [{question :current-question team-buzzed :team-buzzed good-buzz :good-buzz answers :answers scores :scores} (:current-answer ~'world)]
+  `(let [{question :question team-buzzed :team-buzzed good-buzz :good-buzz answers :answers scores :scores} (:current-answer ~'world)]
      ~@forms))
 
 
@@ -79,8 +79,8 @@
                                                                        (-> event :bag-of-props :button-index)) 
                                       scores)
              :buzz-pressed (Answer. question (-> event :bag-of-props :team) good-buzz answers scores)
-             :select-right (Answer. question team-buzzed true answers (assoc [0 0 0 0] (-> event :bag-of-props :team) 
-                                                                             (* buzz-score-modifier ((:score question)))))
+             :select-right (Answer. question team-buzzed true answers (assoc [0 0 0 0] team-buzzed 
+                                                                             (* buzz-score-modifier (:score question))))
              :select-wrong (Answer. question team-buzzed false answers scores)))))
 
 
@@ -121,7 +121,6 @@
 
 (defn right-or-wrong
   [world]
-  (w-m-d (Event. :for-quizmaster {:text "waiting for quizmaster right wrong"}))
   (w-m-d (Event. :buzzed (:current-answer world)))
   false)
 
@@ -157,11 +156,15 @@
 (defn prepare-for-next-question
   [world event & _]
   (let [question-index (+ 1 (:question-index world))
+        current-round (:current-round world)
         new-world (assoc world 
                          :answers (conj (:answers world) (:current-answer world))
                          :question-index question-index
+                         :current-round (assoc current-round :scores (mapv + (:scores current-round) 
+                                                                          (-> world :current-answer :scores)))
                          )
         ]
+    (w-m-d (Event. :update-scores (:current-round new-world)))
     (add-tiebreaker-question-if-necessary new-world)))
 
 (defn start-question 

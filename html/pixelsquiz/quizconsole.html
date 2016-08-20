@@ -87,9 +87,9 @@
 		<button id="start-question" >PROXIMA</button>
 		<button id="show-question" >START</button>
 		<button id="start-mult" >MULTI</button>
-		<button id="start-round"> SPECIALS</button>
+		<button id="start-round">ROUND</button>
 		<textarea name="servercmd" id="servercmd" rows="8" cols="20"></textarea>
-		<button id="sendcmd" onclick="send()">send!</button>
+		<button id="sendcmd" onclick="sendmanual()">send!</button>
 	</div>
 	<div id="pergunta"> 
 	</div>
@@ -100,14 +100,31 @@
 </div>
 <script src="/static/jquery-3.1.0.js"></script>
 <script>
+function _send_command(cmd) {
+	$.post('/actions/'+ cmd)
+
+}
 
 function send_command(ev) {
-	$.post('/actions/'+ $(ev.target).attr('id'))
+	_send_command($(ev.target).attr('id'));
+}
+
+function sendmanual() {
+	_send_command($('#servercmd').val());
 }
 
 $("#commands button").each(function (idx) {
  $(this).click(send_command) 
 })
+
+function get_right_wrong(team) {
+	var r = window.confirm('Team '+ team +' got it right ?');
+	if (r) {
+		_send_command('select-right');
+	} else {
+		_send_command('select-wrong');
+	}
+}
 
 var ws = new WebSocket("ws://localhost:3000/displays");
 ws.onopen = function (event) {
@@ -117,7 +134,11 @@ ws.onmessage = function (event) {
 	var msg = JSON.parse(event.data);
 	console.log(event.data);
 	if(msg.do === 'quizmaster-only') {
-		$('#pergunta').text(msg.text);
+		if (msg.getrightwrong) {
+			get_right_wrong(msg.getrightwrong);
+		} else {
+			$('#pergunta').text(msg.text);
+		}
 	} else {
 		$('#status').text( $('#status').text() + '\n' + msg.text);
 	}

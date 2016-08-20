@@ -36,7 +36,7 @@ function send_command(ev) {
 	e = $(ev.target);
 	button = e.data('button')
 	action = button === 'red' ? 'buzz-pressed' : 'option-pressed';
-	$.post('/actions/'+action, {
+	$.post('/buttons/' + action, {
 		'button': button,
 		'button-index': buttons.indexOf(button),
 		'pressed': true,

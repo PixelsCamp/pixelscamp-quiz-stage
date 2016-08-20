@@ -33,14 +33,19 @@
     (go (open-and-read-buzz-into c))
     {:actor :buttons
      :chan c
-     :routes nil}
+     :routes (POST "/buttons/:action" [action :as request]
+                   (>!! c (Event. (keyword action) (assoc (:params request)
+                                                          :team (read-string (-> request :params :team))
+                                                          :button-index (read-string (-> request :params :button-index)))))
+                   (str "ok " (keyword action) "\n"))
+     }
   ))
 
 (defn play-sounds-for!
   [ev]
   (case (:kind ev)
     :timer-start (sounds/play-thinking-music)
-    :buzzed (sounds/play (get [:p1 :p2 :p3 :p4] (-> ev :bag-of-props :team-buzzed)))
+    :buzzed (sounds/play (get [:t1 :t2 :t3 :t4] (-> ev :bag-of-props :team-buzzed)))
     :default
     )
   )
@@ -51,7 +56,7 @@
   (try 
     (case (:kind ev)
       :timer-update {:do :timer-update :value (-> ev :bag-of-props :value)}
-      :buzzed {:do :highlight :team (-> ev :bag-of-props :current-answer :team-buzzed)}
+      :buzzed {:do :highlight :team (-> ev :bag-of-props :team-buzzed)}
       :update-lights {:do :update-lights :colours (-> ev :bag-of-props :current-answer :answers) }
       :show-question {:do :show-question 
                       :text (-> ev :bag-of-props :text) 
@@ -74,6 +79,7 @@
                                                    ()
                                                    ))
                               }
+      :update-scores {:do :update-scores :scores (-> ev :bag-of-props :scores) }
       :end-of-round {:do :update-all ; ev bag-of-props Round
                      :text "Round ended!"
                      :options (map #(str "Team " (:team %) " - " (:score %) " points") 
@@ -88,6 +94,7 @@
   (try
     (case (:kind ev)
       :for-quizmaster (merge {:do :quizmaster-only} (:bag-of-props ev))
+      :buzzed (assoc {:do :quizmaster-only} :getrightwrong (-> ev :bag-of-props :team-buzzed))
       nil)
     (catch Exception e (logger/error "exception in format-for-quizmaster" ev e))
     ))
@@ -152,6 +159,7 @@
         actors [(displays-actor) (quizmaster-actor) (buttons-actor)]
         ui-routes [(:routes (nth actors 0))
                    (:routes (nth actors 1))
+                   (:routes (nth actors 2)) ; XXX humm ...
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
     (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
