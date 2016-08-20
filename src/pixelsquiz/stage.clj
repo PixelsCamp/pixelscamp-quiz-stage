@@ -36,10 +36,22 @@
      :routes nil}
   ))
 
+(defn play-sounds-for!
+  [ev]
+  (case (:kind ev)
+    :timer-start (sounds/play-thinking-music)
+    :buzzed (sounds/play (get [:p1 :p2 :p3 :p4] (-> ev :bag-of-props :team-buzzed)))
+    :update-lights ()
+    :default
+    )
+  )
+
+
 (defn format-for-displays
   [ev]
   (try 
     (case (:kind ev)
+      :timer-update {:do :timer-update :value (-> ev :bag-of-props :value)}
       :buzzed {:do :highlight :team (-> ev :bag-of-props :current-answer :team-buzzed)}
       :update-lights {:do :update-lights :colours (-> ev :bag-of-props :current-answer :answers) }
       :show-question {:do :show-question 
@@ -89,6 +101,7 @@
     (go-loop [ev {:kind :starting}]
              (let [message (format-for-displays ev)
                    qm-mesg (format-for-quizmaster ev)]
+               (play-sounds-for! ev)
                (if (not (nil? message))
                  (doseq [client (keys @ws-connections)]
                    ;; send all, client will filter them

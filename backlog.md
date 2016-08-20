@@ -4,7 +4,7 @@
  - stage html
   - basic html
 	- beautify
- - sounds
+ - timers
  - question backoffice
 
  # DONE
@@ -22,3 +22,4 @@
  - test questions
  - save state
  - recover from crash
+ - sounds

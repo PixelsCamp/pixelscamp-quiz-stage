@@ -22,21 +22,20 @@
 (def game-state-file "game-state.edn")
 (def questions-db "questions.edn")
 
-(defn buzz-timer 
-  [c world & _]
-  (go
-    (<! (timeout 20000))
-    (>! c (Event. :buzz-timeout {})))
-  world
-  )
-
-
-(defn options-timeout 
-  [c world & _]
-  (go
-    (<! (timeout 20000))
-    (>! c (Event. :options-timeout {})))
-  world)
+(defn run-timer
+  [duration evkind disp c]
+  (>!! disp (Event. :timer-start {}))
+  (go-loop
+    [seconds duration]
+    (if (> seconds -1)
+      (do
+        (<! (timeout 1000))
+        (>! disp (Event. :timer-update {:value seconds}))
+        (recur (dec seconds))
+        )
+      (>! c (Event. evkind {}))
+      )
+    ))
 
 
 (defmacro w-m-d
@@ -44,9 +43,14 @@
   `(>!! (-> ~'world  :stage :displays) ~form))
 
 
-(defn buzz-timedout
-  [world & _]
-  (w-m-d (Event. :timeout {}))
+(defn buzz-timer
+  [c world & _]
+  (run-timer 20 :buzz-timeout (-> world :stage :displays) c)
+  world)
+
+(defn options-timer
+  [c world & _]
+  (run-timer 20 :options-timeout (-> world :stage :displays) c)
   world)
 
 
@@ -102,7 +106,7 @@
 (defn options-show-and-timeout
   [c world & _]
   (w-m-d (Event. :show-options (:current-answer world)))
-  (options-timeout c world)
+  (options-timer c world)
   world)
 
 (defn fsm-fn
@@ -211,7 +215,7 @@
                             {:kind :show-question} -> {:action (partial buzz-timer timeout-chan)} :wait-buzz]
                            [:wait-buzz {}
                             {:kind :show-question} -> {:action show-question} :wait-buzz
-                            {:kind :buzz-timeout} -> {:action buzz-timedout} :wait-before-options
+                            {:kind :buzz-timeout} ->  :wait-before-options
                             {:kind :buzz-pressed} -> {:action acc-answer} right-or-wrong]
                            [right-or-wrong {}
                             {:kind :select-right} -> {:action acc-answer} show-question-results
