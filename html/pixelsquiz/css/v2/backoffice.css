@@ -1,0 +1,18 @@
+/* css stuff for backoffice */
+
+.bouseritem {
+  padding-bottom: 10px;
+  }
+
+.bouseritem .actions {
+  margin-top: 10px;
+  margin-left: 15px;
+  }
+
+button.SmallBtn {
+        font-size: 0.6em;
+        padding-left:3px;
+        padding-right:3px;
+        padding-bottom:3px;
+        padding-top:3px;
+}

@@ -1,0 +1,116 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	
+		<title>Mainscreen</title>
+
+
+		<link rel="stylesheet" type="text/css" href="/static/css/v2/museo.css">
+		<link rel="stylesheet" href="/static/css/v2/addictive.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+		<link rel="stylesheet" href="/static/css/v2/demo.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        
+        <link rel="stylesheet" type="text/css" href="/css/sons-of-obsidian.css" />
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/static/css/mainscreen.css" />
+			
+	</head>
+	<body>
+		<div id="main">
+			<div id="perg" class="main">
+				WELCOME TO THE AMAZING
+			</div>
+			<div id="rAcont" class="flipable">
+			<div id="r0" class="resp blue">
+				PIXELSCAMP IV
+			</div>
+		</div>
+			<div id="rBcont" class="flipable">
+			<div id="r1" class="resp orange">
+				QUIZ
+			</div>
+		</div>
+			<div id="rCcont" class="flipable">
+			<div id="r2" class="resp green">
+				SHOW			
+			</div>
+		</div>
+			<div id="rDcont" class="flipable">
+			<div id="r3" class="resp yellow">
+				2016
+			</div>
+		</div>
+		</div>
+		<div id="side">
+			<div id="timer">
+				<span id="timernumber">20</span> 
+			</div>
+			<div id="scoreboard">
+				<p>Question  <span id="nperg">0/10</span></p>
+				<table id="scoreboardtab">
+					<tr><td>Team 1: </td> <td>0 points</td></tr>	
+					<tr><td>Team 2: </td> <td>0 points</td></tr>	
+					<tr><td>Team 3: </td> <td>0 points</td></tr>	
+					<tr><td>Team 4: </td> <td>0 points</td></tr>	
+				</table>
+			</div>
+		</div>
+
+		<script src="/static/jquery-3.1.0.js"></script>
+		<script>
+
+function update_scores(qi, scores) {
+	var scoreb = $('#scoreboardtab');
+
+	$('#nperg').text(qi);
+	var t = [];
+	for(var i = 1 ; i < 5 ; i++) {
+		t.push('<tr><td>Team ')
+			t.push(i);
+		t.push(': </td> <td>');
+		t.push(scores[i-1]);
+		t.push(' points</td></tr>');
+	}
+	scoreb.html(t.join(''));
+}
+
+function throb (secs) {
+	var td = $('#timer');
+	var timer = $('#timernumber');
+
+	timer.fadeOut(50, function () {
+		timer.text(secs);
+		timer.fadeIn(50);
+	});
+}
+
+function show_question(q,o) {
+	$('#perg').text(q);
+	for (i=0;i<4;i++) {
+		$('#r'+i).text(o[i]);
+	}
+}
+
+var ws = new WebSocket("ws://localhost:3000/displays");
+ws.onmessage = function (event) {
+	var msg = JSON.parse(event.data);
+
+		console.log(msg);
+	if (msg.do === 'timer-update') {
+		throb(msg.value)	
+	} else if (msg.do === 'show-question') {
+		show_question(msg.text, msg.options);
+	} else if (msg.do === 'update-lights') {
+		show_question('', msg.options);
+	} else if (msg.do === 'update-all') {
+		show_question(msg.text, msg.options);
+		update_scores(msg.questionnum, msg.scores);
+	} else if (msg.do === 'update-scores') {
+		update_scores(msg.questionnum, msg.scores);
+	}
+}
+
+		</script>
+
+	</body>
+</html>
