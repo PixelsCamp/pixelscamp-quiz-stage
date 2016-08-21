@@ -10,8 +10,9 @@
   (:import [com.codeminders.hidapi HIDDeviceInfo HIDManager]
            [java.io IOException])
   )
-
 (import pixelsquiz.types.Event)
+
+(def controller-buttons [:red :yellow :green :orange :blue])
 
 (defn load-hid-natives []
   (let [bits (System/getProperty "sun.arch.data.model")]
@@ -32,11 +33,13 @@
   )
 
 
+(def button-mapping [nil 3 2 1 0])
+
 (defn buzz-to-properties
   [buttons team]
   (map #(assoc {}
           :button (get controller-buttons %) 
-          :button-index %
+          :button-index (get button-mapping %)
           :pressed (> (bit-and buttons (bit-shift-left 0x1 %)) 0)
           :team team
           ) (range (count controller-buttons))))

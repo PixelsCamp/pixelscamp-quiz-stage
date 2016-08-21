@@ -38,7 +38,7 @@ function send_command(ev) {
 	action = button === 'red' ? 'buzz-pressed' : 'option-pressed';
 	$.post('/buttons/' + action, {
 		'button': button,
-		'button-index': buttons.indexOf(button),
+		'button-index': buttons.indexOf(button)-1,
 		'pressed': true,
 		'team': e.data('team')
 	});
