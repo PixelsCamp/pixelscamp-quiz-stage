@@ -46,6 +46,7 @@
   (case (:kind ev)
     :timer-start (sounds/play :ping)
     :buzzed (sounds/play (get [:t1 :t2 :t3 :t4] (-> ev :bag-of-props :team-buzzed)))
+    :timer-update (if (> 4 (-> ev :bag-of-props :value)) (sounds/play :ping) )
     :default
     )
   )
