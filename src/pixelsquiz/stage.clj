@@ -44,7 +44,7 @@
 (defn play-sounds-for!
   [ev]
   (case (:kind ev)
-    :timer-start (sounds/play-thinking-music)
+    :timer-start (sounds/play :ping)
     :buzzed (sounds/play (get [:t1 :t2 :t3 :t4] (-> ev :bag-of-props :team-buzzed)))
     :default
     )
