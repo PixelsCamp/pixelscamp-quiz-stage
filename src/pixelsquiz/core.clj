@@ -22,20 +22,26 @@
 (def game-state-file "game-state.edn")
 (def questions-db "questions.edn")
 
+(def timer-active (atom false))
+
 (defn run-timer
   [duration evkind disp c]
+  (reset! timer-active true)
   (>!! disp (Event. :timer-start {}))
   (go-loop
-    [seconds duration]
+    [seconds (dec duration)]
     (if (> seconds -1)
       (do
         (<! (timeout 1000))
         (>! disp (Event. :timer-update {:value seconds}))
-        (recur (dec seconds))
+        (recur (if @timer-active 
+                 (dec seconds)
+                 -1))
         )
-      (>! c (Event. evkind {}))
-      )
-    ))
+      (do
+        (reset! timer-active false)
+        (>! c (Event. evkind {})))
+      )))
 
 
 (defmacro w-m-d
@@ -61,6 +67,7 @@
 
 (defn show-question-results
   [world & _]
+  (reset! timer-active false)
   (w-m-d #spy/d (Event. :show-question-results (:current-answer world)))
   false)
 
@@ -100,14 +107,19 @@
     (when (all-teams-answered? answering-team (:current-answer world))
       (>!! timeout-chan (Event. :all-pressed {}))
       )
-    (if (= answering-team (-> world :current-answer :team-buzzed))
+    (if (or (= answering-team (-> world :current-answer :team-buzzed))
+            (not (nil? (get (-> world :current-answer :answers) answering-team))))
       world ; if the team buzzed ignore them
       (with-answer (assoc world :current-answer (Answer. question team-buzzed good-buzz 
                                                                (assoc answers answering-team selected-option)
                                                                (assoc scores answering-team (get question-scores selected-option)))))
     )))
 
-
+(defn qm-choice
+  [world event & _]
+  (reset! timer-active false)
+  (acc-answer world event)
+  )
 
 
 (defn options-show-and-timeout
@@ -172,6 +184,7 @@
                          )
         ]
     (w-m-d (Event. :update-scores (:current-round new-world)))
+    (w-m-d (Event. :show-question {:text ""}))
     (add-tiebreaker-question-if-necessary new-world)))
 
 (defn start-question 
@@ -203,6 +216,8 @@
   [world event from-state to-state]
   (let [new-round-number (+ 1 (:round-index world))
         new-round (get (:rounds world) new-round-number)]
+    (w-m-d (Event. :show-question {:text "New round"}))
+    (w-m-d (Event. :update-scores {:scores [0 0 0 0] :questionnum 0}))
     (assoc world
            :round-index new-round-number
            :current-round (assoc new-round :question-index 0))
@@ -228,8 +243,8 @@
                             {:kind :buzz-timeout} ->  :wait-before-options
                             {:kind :buzz-pressed} -> {:action acc-answer} right-or-wrong]
                            [right-or-wrong {}
-                            {:kind :select-right} -> {:action acc-answer} show-question-results
-                            {:kind :select-wrong} -> {:action acc-answer} :wait-before-options]
+                            {:kind :select-right} -> {:action qm-choice} show-question-results
+                            {:kind :select-wrong} -> {:action qm-choice} :wait-before-options]
                            [:wait-before-options {}
                             {:kind :start-mult} -> {:action (partial options-show-and-timeout timeout-chan)} wait-answers]
                            [wait-answers {}
@@ -258,8 +273,9 @@
   (case what
     :items {
             :rounds [
-                     (Round. 1 ['a 'b 'c 'd] [1 2 3] [0 0 0 0])
-                     (Round. 2 ['e 'f 'g 'h] [1 4] [0 0 0 0])
+                     (Round. 1 ['a 'b 'c 'd] [1 2 3 4] [0 0 0 0])
+                     (Round. 2 ['e 'f 'g 'h] [1 2 4 5] [0 0 0 0])
+                     (Round. 3 ['i 'j 'k 'l] [2 2 2 2] [0 0 0 0])
                      ]
             :questions-repo (read-string (slurp questions-db))
             :tiebreaker-pool [1 1 1 1 1]

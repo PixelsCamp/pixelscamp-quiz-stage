@@ -74,7 +74,7 @@
                                                       :s (if (nil? o)
                                                            (:s acc)
                                                            (assoc (:s acc) o (str (get (:s acc) o) " " (inc (:t acc)))))
-                                                      }) {:t 0 :s ["" "" "" ""]} (-> ev :bag-of-props :answers)
+                                                      }) {:t 0 :s (mapv #(str (:text %) " - ") (-> ev :bag-of-props :question :shuffled-options))} (-> ev :bag-of-props :answers)
                                                    ))
                               }
       :update-scores {:do :update-scores :scores (-> ev :bag-of-props :scores) :questionnum (-> ev :bag-of-props :question-index) } ; Round

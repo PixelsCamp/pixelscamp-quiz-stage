@@ -1,9 +1,10 @@
 
 
 # TODO
- - stage html
-  - basic html
-	- beautify
+ - end of timer sound effects
+ - player lights 
+ - displays should reconnect
+ - stage html	- beautify
  - question backoffice
 
  # DONE
@@ -23,3 +24,11 @@
  - recover from crash
  - sounds
  - timers
+ - stage html - basic html
+ - status on the quizconsole
+ - sometimes quizconsole doesn't show select right/wrong
+ - timer doesn't cancel
+ - after mult should keep answers
+ - prepare question should clear the board
+ - round start should clear board
+ - option answers can be replaced
