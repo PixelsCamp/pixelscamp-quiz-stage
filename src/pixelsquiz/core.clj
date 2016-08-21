@@ -72,13 +72,10 @@
 
 (defn acc-answer
   [world event & _]
-  (with-answer
+  (with-answer world
     (assoc world :current-answer 
            (case (:kind event) ; XXX this is kinda ugly ...
-             :option-pressed (Answer. question team-buzzed good-buzz (assoc answers (-> event :bag-of-props :team) 
-                                                                       (-> event :bag-of-props :button-index)) 
-                                      scores)
-             :buzz-pressed (Answer. question (-> event :bag-of-props :team) good-buzz answers scores)
+             :buzz-pressed (Answer. question (-> event :bag-of-props :team) nil answers scores)
              :select-right (Answer. question team-buzzed true answers (assoc [0 0 0 0] team-buzzed 
                                                                              (* buzz-score-modifier (:score question))))
              :select-wrong (Answer. question team-buzzed false answers scores)))))
@@ -88,17 +85,27 @@
   [world event from-state to-state]
   (acc-answer world event))
 
+(defn all-teams-answered?
+  [answering-team current-answer]
+  (= 4 (count (set (filter #(not (nil? %)) (conj (filter #(not (nil? (get (:answers current-answer) %))) (range 4))
+                                             answering-team (:team-buzzed current-answer))))))
+  )
+
 (defn acc-option
   [timeout-chan world event & _]
-  (let [new-world (acc-answer world event)
-        answers (-> new-world :current-answer :answers)
-        scores (map #(:score %) (-> new-world :current-answer :current-question :shuffled-options))
+  (let [question-scores (mapv #(:score %) (-> world :current-answer :question :shuffled-options))
+        answering-team  (-> event :bag-of-props :team)
+        selected-option  (-> event :bag-of-props :button-index)
         ]
-    (if (= 4 (count (filter #(not (nil? %)) (-> new-world :answer :answers))))
+    (when (all-teams-answered? answering-team (:current-answer world))
       (>!! timeout-chan (Event. :all-pressed {}))
       )
-    (assoc (-> new-world :current-answer :scores) (map #(if (get answers %) (get scores (get answers %)) 0) (range 4)))
-    ))
+    (if (= answering-team (-> world :current-answer :team-buzzed))
+      world ; if the team buzzed ignore them
+      (with-answer (assoc world :current-answer (Answer. question team-buzzed good-buzz 
+                                                               (assoc answers answering-team selected-option)
+                                                               (assoc scores answering-team (get question-scores selected-option)))))
+    )))
 
 
 
@@ -173,7 +180,7 @@
         question-index (:question-index world)
         question-number (get (:questions current-round) question-index)
         question (get (:questions-repo world) question-number)
-        shuffled-options (shuffle (map (fn [text original score]
+        shuffled-options (shuffle (mapv (fn [text original score]
                                          {:text text
                                           :original-pos original
                                           :score score})
@@ -184,7 +191,7 @@
       (>!! answer-chan (Event. :out-of-questions {:question-index question-index})))
     (assoc world 
            :current-question question
-           :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil false [nil nil nil nil] [0 0 0 0])
+           :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil nil [nil nil nil nil] [0 0 0 0])
            )))
 
 (defn prepare-for-next-round
@@ -277,8 +284,8 @@
                                    :value (select-keys value [:current-question :current-answer :current-round :question-index]) 
                                    }) :append false)
     (spit (str game-state-file "-log") (pr-str state) :append true)
-    (clojure.pprint/pprint state)
-    ;;  (clojure.pprint/pprint (select-keys value [:current-round :current-answer :question-index]))
+    (clojure.pprint/pprint (:state state))
+    (clojure.pprint/pprint (select-keys value [:current-round :current-answer :question-index]))
     ))
 
 (defn -main
