@@ -15,6 +15,7 @@
   :t2 (s/read-sound "sounds/p2.mp3")
   :t3 (s/read-sound "sounds/p3.mp3")
   :t4 (s/read-sound "sounds/p4.mp3")
+  :ping (s/read-sound "sounds/ping.mp3")
 })
 
 (defn play-thinking-music
