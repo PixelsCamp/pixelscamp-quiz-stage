@@ -162,13 +162,13 @@
 
 (defn prepare-for-next-question
   [world event & _]
-  (let [question-index (+ 1 (:question-index world))
+  (let [question-index (+ 1 (-> world :current-round :question-index))
         current-round (:current-round world)
         new-world (assoc world 
                          :answers (conj (:answers world) (:current-answer world))
-                         :question-index question-index
                          :current-round (assoc current-round :scores (mapv + (:scores current-round) 
-                                                                          (-> world :current-answer :scores)))
+                                                                          (-> world :current-answer :scores))
+                                                              :question-index question-index)
                          )
         ]
     (w-m-d (Event. :update-scores (:current-round new-world)))
@@ -177,7 +177,7 @@
 (defn start-question 
   [answer-chan world event from-state to-state]
   (let [current-round (:current-round world)
-        question-index (:question-index world)
+        question-index (:question-index current-round)
         question-number (get (:questions current-round) question-index)
         question (get (:questions-repo world) question-number)
         shuffled-options (shuffle (mapv (fn [text original score]
@@ -205,8 +205,8 @@
         new-round (get (:rounds world) new-round-number)]
     (assoc world
            :round-index new-round-number
-           :current-round new-round
-           :question-index 0)))
+           :current-round (assoc new-round :question-index 0))
+    ))
 
 
 
@@ -281,11 +281,11 @@
   [key ref old-state state]
   (let [value (:value state)]
     (spit game-state-file (pr-str {:state (:state state)
-                                   :value (select-keys value [:current-question :current-answer :current-round :question-index]) 
+                                   :value (select-keys value [:current-question :current-answer :current-round]) 
                                    }) :append false)
     (spit (str game-state-file "-log") (pr-str state) :append true)
     (clojure.pprint/pprint (:state state))
-    (clojure.pprint/pprint (select-keys value [:current-round :current-answer :question-index]))
+    (clojure.pprint/pprint (select-keys value [:current-round :current-answer]))
     ))
 
 (defn -main
