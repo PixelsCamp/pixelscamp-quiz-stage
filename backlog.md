@@ -2,7 +2,6 @@
 
 # TODO
  - player lights 
- - displays should reconnect
  - stage html	- beautify
  - question backoffice
 
@@ -32,3 +31,4 @@
  - round start should clear board
  - option answers can be replaced
  - end of timer sound effects
+ - displays should reconnect
