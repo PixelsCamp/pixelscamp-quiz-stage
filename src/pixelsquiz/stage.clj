@@ -6,7 +6,7 @@
     [pixelsquiz.types :refer :all]
     [pixelsquiz.util :refer :all]
     [pixelsquiz.sounds :as sounds]
-    [pixelsquiz.buzz :as buzz :refer [open-and-read-buzz-into]]
+    [pixelsquiz.buzz :as buzz :refer [open-and-read-buzz-into button-colours]]
     [pixelsquiz.logger :as logger]
     [ring.middleware.defaults :refer :all]
     [compojure.core     :as comp :refer (defroutes GET POST)]
@@ -56,9 +56,21 @@
   [ev]
   (try 
     (case (:kind ev)
+      :question-starting {:do :lights-off}
       :timer-update {:do :timer-update :value (-> ev :bag-of-props :value)}
       :buzzed {:do :highlight :team (-> ev :bag-of-props :team-buzzed)}
-      :update-lights {:do :update-lights :colours (-> ev :bag-of-props :current-answer :answers) }
+      :qm-choice {:do :update-lights
+                    :colours (assoc ["off" "off" "off" "off"] 
+                                    (-> ev :bag-of-props :team)
+                                    (case (-> ev :bag-of-props :right-wrong)
+                                      :select-right "right"
+                                      :select-wrong "wrong"))
+                    }
+      :update-lights {:do :update-lights 
+                      :colours (mapv #(if (nil? %) 
+                                       "off" 
+                                       (get button-colours %))
+                      (-> ev :bag-of-props :answers)) }
       :show-question {:do :show-question 
                       :text (-> ev :bag-of-props :text) 
                       :options ["" "" "" ""]
@@ -67,7 +79,7 @@
                      :text (-> ev :bag-of-props :question :text)
                      :options (map #(:text %) (-> ev :bag-of-props :question :shuffled-options))
                      }
-      :show-question-results {:do :update-lights  ; ev bag-of-props Answer
+      :show-question-results {:do :update-scores  ; ev bag-of-props Answer
                               :scores (-> ev :bag-of-props :scores)
                               :options 
                               (:s (reduce (fn [acc o] 

@@ -34,6 +34,8 @@
 
 
 (def button-mapping [nil 3 2 1 0])
+(def button-colours ["blue" "orange" "green" "yellow"])
+;; this is overly complicated, buzz buttons are numbered yellow to blue but the controller ordering is blue to yellow so we use that.
 
 (defn buzz-to-properties
   [buttons team]

@@ -118,6 +118,11 @@
 (defn qm-choice
   [world event & _]
   (reset! timer-active false)
+  (with-answer world 
+    (w-m-d (Event. :qm-choice 
+                   {:team team-buzzed
+                    :right-wrong (:kind event)
+                    })))
   (acc-answer world event)
   )
 
@@ -136,6 +141,7 @@
 (defn question-on-quizmaster
   [world]
   (w-m-d (Event. :for-quizmaster {:text (str "Q:" (-> world :current-question :text) " A: " (get (-> world :current-question :options) 0))} ))
+  (w-m-d (Event. :question-starting {}))
   false)
 
 (defn right-or-wrong
@@ -145,6 +151,7 @@
 
 (defn wait-answers
   [world]
+  (w-m-d (Event. :update-lights (:current-answer world) ))
   false)
 
 (defn end-of-round
@@ -297,7 +304,7 @@
   [key ref old-state state]
   (let [value (:value state)]
     (spit game-state-file (pr-str {:state (:state state)
-                                   :value (select-keys value [:current-question :current-answer :current-round]) 
+                                   :value (select-keys value [:current-question :current-answer :current-round :round-index]) 
                                    }) :append false)
     (spit (str game-state-file "-log") (pr-str state) :append true)
     (clojure.pprint/pprint (:state state))

@@ -1,0 +1,170 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Player</title>
+	
+	<style type="text/css" media="screen">
+		div#main-sd {
+			min-height: 480px;
+			max-height: 480px;
+			height: 480px;
+			min-width: 640px;
+			max-width: 640px;
+			width: 640px;
+		}
+
+		div#main-hd {
+			text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;
+			border: thin solid black;
+			position: absolute;
+			top: 0; left: 0;
+			min-height: 1080px;
+			max-height: 1080px;
+			height: 1080px;
+			min-width: 1920px;
+			max-width: 1920px;
+			width: 1920px;
+			font-size: 1000px;
+			text-align: center;
+		}
+
+
+		div#main {
+			text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;
+			border: thin solid black;
+			position: absolute;
+			top: 0; left: 0;
+			min-height: 720px;
+			max-height: 720px;
+			height: 720px;
+			min-width: 1280px;
+			max-width: 1280px;
+			width: 1280px;
+			font-size: 720px;
+			text-align: center;
+			overflow: hidden;
+		}
+
+		.off {
+			background: #404040;
+		}
+
+		.highlight {
+			background: white;
+		}
+
+		.blue {
+			background: blue;
+		}
+		.orange {
+			background: darkorange;
+		}
+		.green {
+			background: green;
+		}
+		.yellow {
+			background: yellow;
+		}
+
+		.right {
+			background: green;
+		}
+		.wrong {
+			background: red;
+		}
+
+		.bomb {
+			background: url('imgs/bomb.jpg');
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		.star {
+			background: url('imgs/starman.png');
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+	</style>
+
+		<script src="/static/jquery-3.1.0.js"></script>
+</head>
+<body >
+	<div id="main">
+	</div>
+	<script>
+var team = document.location.hash[1] - 1;
+var d = $('#main');
+
+
+function clear () {
+	d.removeClass();
+}
+
+var ops = {
+	'highlight': function() {
+		clear();
+		d.addClass('highlight');
+	},
+	'right': function() {
+		d.addClass('right');
+	},
+	'wrong': function() {
+		d.addClass('wrong');
+	},
+	'off': function() {
+		clear();
+		d.text('');
+		d.addClass('off');
+	},
+
+	'blue': function () {
+		clear();
+		d.addClass('blue');
+	},
+	'orange': function () {
+		clear();
+		d.addClass('orange');
+	},
+	'green': function () {
+		clear();
+		d.addClass('green');
+	},
+	'yellow': function() {
+		clear();
+		d.addClass('yellow');	
+	}
+}
+
+function update_scores(scores) {
+	d.text(scores[team]);
+}
+
+var ws = new WebSocket("ws://" + document.location.host + "/displays");
+ws.onmessage = function (event) {
+	var msg = JSON.parse(event.data);
+
+	console.log(msg);
+	if (msg.do === 'highlight') {
+		if (msg.team == team) {
+			ops.highlight();
+		}
+	} else if (msg.do === 'show-question') {
+		clear();
+	} else if (msg.do === 'update-lights') {
+		var c = msg.colours[team];
+		ops[c]();
+	} else if (msg.do === 'update-all') {
+		update_scores( msg.scores);
+	} else if (msg.do === 'update-scores') {
+		update_scores(msg.scores);
+	} else if (msg.do === 'lights-off') {
+		ops['off']();
+	}
+}
+
+
+
+	</script>
+</body>
+</html>
