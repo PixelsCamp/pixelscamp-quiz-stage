@@ -7,7 +7,7 @@
 (def audio-player (atom nil))
 
 (def sounds {
-  :thinking-music (s/read-sound "sounds/blues-prog2.mp3")
+  :thinking-music (s/read-sound "sounds/thinking.mp3")
   :buzz (s/read-sound "sounds/buzz.mp3")
   :correct (s/read-sound "sounds/correct.mp3")
   :error (s/read-sound "sounds/error.wav")
