@@ -1,11 +1,11 @@
 
 
 # TODO
- - player lights 
  - stage html	- beautify
+ - player lights - icons
  - question backoffice
 
- # DONE
+# DONE
  - calculate score
  - basic fsm setup
  - game flow
@@ -32,3 +32,4 @@
  - option answers can be replaced
  - end of timer sound effects
  - displays should reconnect
+ - player lights 
