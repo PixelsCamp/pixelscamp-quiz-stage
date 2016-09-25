@@ -1,7 +1,6 @@
 
 
 # TODO
- - round number on new round
  - stage html	- beautify
  - player lights - icons
  - detect end of game
@@ -39,3 +38,4 @@
  - don't send mult choices after red button
  - stop thinking music after red button
  - remove team sounds
+ - round number on new round
