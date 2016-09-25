@@ -145,7 +145,7 @@ function start() {
 			}
 		} else {
 			if(msg.do === 'update-all' || msg.do === 'update-scores' || msg.do === 'update-lights')
-				$('#status').text( $('#status').text() + '\n' + JSON.stringify(msg));
+				$('#status').text(JSON.stringify(msg) + '\n' + $('#status').text());
 		}
 	}
 }
