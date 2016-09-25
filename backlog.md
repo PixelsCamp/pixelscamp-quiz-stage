@@ -1,9 +1,13 @@
 
 
 # TODO
+ - stop thinking music after red button
+ - remove team sounds
+ - round number on new round
  - stage html	- beautify
  - player lights - icons
  - detect end of game
+ - add state to qm console
  - question backoffice
 
 # DONE
@@ -34,3 +38,4 @@
  - end of timer sound effects
  - displays should reconnect
  - player lights 
+ - don't send mult choices after red button
