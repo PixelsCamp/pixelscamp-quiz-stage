@@ -280,12 +280,14 @@
   (case what
     :items {
             :rounds [
-                     (Round. 1 ['a 'b 'c 'd] [1 2 3 4] [0 0 0 0])
-                     (Round. 2 ['e 'f 'g 'h] [1 2 4 5] [0 0 0 0])
-                     (Round. 3 ['i 'j 'k 'l] [2 2 2 2] [0 0 0 0])
+                     (Round. 1 ['a 'b 'c 'd] (vec (range 0 11)) [0 0 0 0])
+                     (Round. 2 ['e 'f 'g 'h] (vec (cons 0 (range 11 21))) [0 0 0 0])
+                     (Round. 3 ['i 'j 'k 'l] (vec (cons 0 (range 21 31))) [0 0 0 0])
+                     (Round. 4 ['m 'n 'o 'p] (vec (cons 0 (range 31 41))) [0 0 0 0])
+                     (Round. 5 ['1 '2 '3 '4] (vec (range 41 56)) [0 0 0 0])
                      ]
             :questions-repo (read-string (slurp questions-db))
-            :tiebreaker-pool [1 1 1 1 1]
+            :tiebreaker-pool (vec (range 56 71))
             }
     :initial-state (let [saved (try 
                           (read-string (slurp game-state-file))

@@ -18,5 +18,7 @@
 
 (defn write-test-questions!
   [n]
-  (spit "questions.edn" (pr-str (apply vector (cons nil ; humans start at 1
-                                      (take n (test-questions)))))))
+  (spit "questions.edn" (pr-str (apply vector (cons 
+                                                (Question. 0 :multi 0 "The test question"
+                                                           ["a1" "a2" "a3" "a4"])
+                                                (take n (test-questions)))))))

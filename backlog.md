@@ -3,6 +3,7 @@
 # TODO
  - stage html	- beautify
  - player lights - icons
+ - detect end of game
  - question backoffice
 
 # DONE
