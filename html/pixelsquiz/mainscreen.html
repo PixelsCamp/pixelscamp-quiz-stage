@@ -22,7 +22,7 @@
 			</div>
 			<div id="rAcont" class="flipable">
 			<div id="r0" class="resp blue">
-				PIXELSCAMP IV
+				PIXELSCAMP VIII
 			</div>
 		</div>
 			<div id="rBcont" class="flipable">
@@ -103,13 +103,14 @@ function start() {
 			throb(msg.value)	
 		} else if (msg.do === 'show-question') {
 			show_question(msg.text, msg.options);
-		} else if (msg.do === 'update-lights') {
-			show_question('', msg.options);
 		} else if (msg.do === 'update-all') {
 			show_question(msg.text, msg.options);
 			update_scores(msg.questionnum, msg.scores);
 		} else if (msg.do === 'update-scores') {
 			update_scores(msg.questionnum, msg.scores);
+			if (msg.options) {
+				show_question('', msg.options);
+			}
 		}
 	}
 }
