@@ -45,7 +45,7 @@
   [ev]
   (case (:kind ev)
     :timer-start (sounds/play-thinking-music)
-    :buzzed (sounds/play (get [:t1 :t2 :t3 :t4] (-> ev :bag-of-props :team-buzzed)))
+    :buzzed (sounds/stop-thinking-music) 
     :timer-update (if (= 0 (-> ev :bag-of-props :value)) (sounds/play :ping) )
     :show-question-results (sounds/stop-thinking-music)
     :default
@@ -83,9 +83,9 @@
       :show-question-results {:do :update-scores  ; ev bag-of-props Answer
                               :scores (-> ev :bag-of-props :scores)
                               :options 
-                              (case (-> ev :bag-of-props :good-buz)
-                                true ["" "" "" ""]
-                                false (:s (reduce (fn [acc o] 
+                              (if (-> ev :bag-of-props :good-buz)
+                                ["" "" "" ""]
+                                (:s (reduce (fn [acc o] 
                                                      {:t (inc (:t acc)) 
                                                       :s (if (nil? o)
                                                            (:s acc)

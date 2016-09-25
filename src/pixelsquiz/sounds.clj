@@ -24,7 +24,7 @@
 
 (defn stop-thinking-music
   []
-  (s/stop @audio-player)
+  (when @audio-player (s/stop @audio-player))
   (reset! audio-player nil))
 
 (defn play 
