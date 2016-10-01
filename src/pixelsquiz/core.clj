@@ -300,7 +300,7 @@
 
 
 (def game-state (atom (read-from-file :initial-state) ))
-;(defonce server (repl/start-server :port 7888))
+(defonce server (repl/start-server :port 7888))
 
 (defn save-game-state-to-file!
   [key ref old-state state]
@@ -323,3 +323,25 @@
     (game-loop game-state (assoc game-items :stage stage))
    )
   )
+
+
+;; evil stuff here -> helpers for OMFG on the repl
+(defn stage-ch 
+  []
+  (-> @game-state :value :stage :displays))
+
+(defn push-to-stage 
+  [title options] 
+  (let [world (:value @game-state)] 
+    (w-m-d {:kind :show-options 
+            :bag-of-props {:question {:text title 
+                                      :shuffled-options (mapv #(assoc {} :text %) options)}}})
+    ))
+
+(defn team-numbers
+  []
+  (let [world (:value @game-state)]
+    (w-m-d {:kind :update-scores 
+            :bag-of-props {:scores [1 2 3 4]
+                           :question-index 0}})
+    ))
