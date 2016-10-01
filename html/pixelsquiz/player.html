@@ -144,13 +144,13 @@ var ws = new WebSocket("ws://" + document.location.host + "/displays");
 ws.onmessage = function (event) {
 	var msg = JSON.parse(event.data);
 
-	console.log(msg);
+	console.log(event.data);
 	if (msg.do === 'highlight') {
 		if (msg.team == team) {
 			ops.highlight();
 		}
 	} else if (msg.do === 'show-question') {
-		clear();
+		ops.off();
 	} else if (msg.do === 'update-lights') {
 		var c = msg.colours[team];
 		ops[c]();
@@ -163,6 +163,7 @@ ws.onmessage = function (event) {
 	}
 }
 
+ops.off();
 
 
 	</script>
