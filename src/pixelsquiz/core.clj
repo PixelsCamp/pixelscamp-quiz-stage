@@ -278,17 +278,8 @@
 (defn read-from-file
   [what]
   (case what
-    :items {
-            :rounds [
-                     (Round. 1 ['a 'b 'c 'd] (vec (range 0 11)) [0 0 0 0])
-                     (Round. 2 ['e 'f 'g 'h] (vec (cons 0 (range 11 21))) [0 0 0 0])
-                     (Round. 3 ['i 'j 'k 'l] (vec (cons 0 (range 21 31))) [0 0 0 0])
-                     (Round. 4 ['m 'n 'o 'p] (vec (cons 0 (range 31 41))) [0 0 0 0])
-                     (Round. 5 ['1 '2 '3 '4] (vec (range 41 56)) [0 0 0 0])
-                     ]
-            :questions-repo (read-string (slurp questions-db))
-            :tiebreaker-pool (vec (range 56 71))
-            }
+    :items (merge (read-string (slurp "round-config.edn"))
+                  {:questions-repo (read-string (slurp questions-db))})
     :initial-state (let [saved (try 
                           (read-string (slurp game-state-file))
                           (catch Exception e {:state :start :value {:round-index -1}}))
