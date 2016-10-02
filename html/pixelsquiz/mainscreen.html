@@ -86,6 +86,9 @@ function throb (secs) {
 
 function show_question(q,o) {
 	$('#perg').text(q);
+	show_options(o);
+}
+function show_options(o) {
 	for (i=0;i<4;i++) {
 		$('#r'+i).text(o[i]);
 	}
@@ -109,7 +112,7 @@ function start() {
 		} else if (msg.do === 'update-scores') {
 			update_scores(msg.questionnum, msg.scores);
 			if (msg.options) {
-				show_question('', msg.options);
+				show_options(msg.options);
 			}
 		}
 	}
