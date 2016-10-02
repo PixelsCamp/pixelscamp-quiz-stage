@@ -1,0 +1,11 @@
+{:rounds [#pixelsquiz.types.Round{:number 1, :teams [a b c d], 
+:questions [0 63 3 10 18 28 53 31 40 52 56 ], :scores [0 0 0 0]} 
+#pixelsquiz.types.Round{:number 2, :teams [e f g h], 
+:questions [0 4 12 13 29 57 42 37 48 58 65 ], :scores [0 0 0 0]} 
+#pixelsquiz.types.Round{:number 3, :teams [i j k l], 
+:questions [0 6 33 27 20 55 30 44 51 59 66 ], :scores [0 0 0 0]} 
+#pixelsquiz.types.Round{:number 4, :teams [m n o p], 
+:questions [0 8 17 23 32 62 39 45 50 60 38 ], :scores [0 0 0 0]} 
+#pixelsquiz.types.Round{:number 5, :teams [1 2 3 4], 
+:questions [ 1 2 5 7 9 11 16 24 21 22 41 46 49 67 61 ], :scores [0 0 0 0]}]
+:tiebreaker-pool [69 14 15 19 71 25 34 35 36 70 74 43 47 64 73 54 68 72]} 
