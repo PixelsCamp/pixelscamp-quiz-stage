@@ -34,12 +34,12 @@
 			border: thin solid black;
 			position: absolute;
 			top: 0; left: 0;
-			min-height: 720px;
-			max-height: 720px;
-			height: 720px;
-			min-width: 1280px;
-			max-width: 1280px;
-			width: 1280px;
+			min-height: 900px;
+			max-height: 900px;
+			height: 900px;
+			min-width: 1440px;
+			max-width: 1440px;
+			width: 1440px;
 			font-size: 720px;
 			text-align: center;
 			overflow: hidden;
@@ -66,6 +66,28 @@
 			background: yellow;
 		}
 
+// css oveeerrriiiiides
+
+		.red {
+			background: #EA282E;
+		}
+
+		.orange {
+			background: #EF6946;
+		}
+
+		.yellow {
+			background: #FDCF1A;
+		}
+
+		.green {
+			background: #4FBA49;
+		}
+
+		.blue {
+			background: #01A7EE;
+		}
+
 		.right {
 			background: green;
 		}
@@ -73,15 +95,18 @@
 			background: red;
 		}
 
-		.bomb {
-			background: url('imgs/bomb.jpg');
-			background-size: contain;
+		.fail {
+			background: #ea282e url('x-icon.png');
 			background-position: center;
 			background-repeat: no-repeat;
 		}
-		.star {
-			background: url('imgs/starman.png');
-			background-size: contain;
+		.love {
+			background: #01A7EE url('heart-icon.png');
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		.win {
+			background: #4FBA49 url('cup-icon.png');
 			background-position: center;
 			background-repeat: no-repeat;
 		}
@@ -110,7 +135,7 @@ var ops = {
 		d.addClass('right');
 	},
 	'wrong': function() {
-		d.addClass('wrong');
+		d.addClass('bomb');
 	},
 	'off': function() {
 		clear();
