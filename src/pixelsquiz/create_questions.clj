@@ -27,7 +27,7 @@
 
 (defn map-questions-txt
   [input]
-  (mapv #(Question. %2 :multi 1 (first %1) (rest %1))
+  (mapv #(Question. %2 :multi 1 (first %1) (vec (rest %1)))
         (map #(str/split % #"\n")
              (str/split (slurp input) #"\n\s*\n"))
         (range 100)
