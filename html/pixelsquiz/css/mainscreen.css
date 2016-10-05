@@ -1,8 +1,8 @@
 
 body {
   color: #b0b0b0;
-	width: 1280;
-	height: 768;
+	width: 1920;
+	height: 1080;
 	border: solid black;
   padding:0em;
 	font-size: 18px;
@@ -35,8 +35,7 @@ div#perg {
 }
 
 div .resp {
-	font-size: 200%;
-	min-height: 2em;
+	font-size: 400%;
 	padding: 10px;
 	margin: 10px;
 }
@@ -55,15 +54,16 @@ div#timer {
 	padding: 10px;
 	margin: 20px;
 	text-align: center;
-	min-width: 230px;
-	height: 230px;
+	vertical-align: center;
+	min-width: 300px;
+	height: 300px;
 	line-height: 230px;
 	color: white;
 	font-family: Avant Pixel
 }
 
 #timernumber {
-	font-size: 800%;
+	font-size: 1000%;
 }
 
 div#scoreboard {
@@ -72,7 +72,7 @@ div#scoreboard {
 	padding: 10px;
 	margin: 20px;
 	text-align: center;
-	font-size: 200%;
+	font-size: 300%;
 }
 
 div#scoreboard p {
