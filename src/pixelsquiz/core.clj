@@ -336,3 +336,7 @@
             :bag-of-props {:scores [1 2 3 4]
                            :question-index 0}})
     ))
+
+(defn thank-sponsors
+  []
+  (push-to-stage "THANKS TO" ["GitHub", "Whitesmith", "Talkdesk", "and all the participants"]))
