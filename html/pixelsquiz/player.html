@@ -110,6 +110,11 @@
 			background-position: center;
 			background-repeat: no-repeat;
 		}
+		.invader {
+			background: #01A7EE url('invader-icon.png');
+			background-position: center;
+			background-repeat: no-repeat;
+		}
 	</style>
 
 		<script src="/static/jquery-3.1.0.js"></script>
@@ -129,13 +134,15 @@ function clear () {
 var ops = {
 	'highlight': function() {
 		clear();
-		d.addClass('highlight');
+		d.addClass('invader');
 	},
 	'right': function() {
+		clear()
 		d.addClass('right');
 	},
 	'wrong': function() {
-		d.addClass('bomb');
+		clear();
+		d.addClass('fail');
 	},
 	'off': function() {
 		clear();
@@ -175,7 +182,7 @@ ws.onmessage = function (event) {
 			ops.highlight();
 		}
 	} else if (msg.do === 'show-question') {
-		ops.off();
+		if(msg.text != '') ops.off();
 	} else if (msg.do === 'update-lights') {
 		var c = msg.colours[team];
 		ops[c]();

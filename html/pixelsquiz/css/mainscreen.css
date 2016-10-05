@@ -32,7 +32,6 @@ div#perg {
 	min-height: 4em;
 	margin: 10px;
 	padding: 10px;
-	box-shadow: -5px 5px rgba(200,200,200,0.8), 5px -5px rgba(200,200,200, 0.8);
 }
 
 div .resp {
@@ -40,7 +39,6 @@ div .resp {
 	min-height: 2em;
 	padding: 10px;
 	margin: 10px;
-	box-shadow: -5px 5px rgba(200,200,200,100);
 }
 
 div#statusline {
@@ -53,18 +51,19 @@ div#timer {
 	position: absolute;
 	top: 10px;
 	right: 0px;
-	font-size: 250%;
-	font-family: consolas;
-	background: rgba(255,0,0,0.5);
+	background: rgba(255,0,0,1);
 	padding: 10px;
 	margin: 20px;
 	text-align: center;
-	min-width: 200px;
-	box-shadow: -5px 5px #f0f0f0;
+	min-width: 230px;
+	height: 230px;
+	line-height: 230px;
+	color: white;
+	font-family: Avant Pixel
 }
 
 #timernumber {
-	font-size: 500%;
+	font-size: 800%;
 }
 
 div#scoreboard {
