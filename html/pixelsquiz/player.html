@@ -192,6 +192,10 @@ ws.onmessage = function (event) {
 		update_scores(msg.scores);
 	} else if (msg.do === 'lights-off') {
 		ops['off']();
+	} else if (msg.do === 'team-number') {
+		var bg = ["blue", "orange", "green", "yellow"];
+		ops[bg[team]]();
+		d.text(team+1);
 	}
 }
 

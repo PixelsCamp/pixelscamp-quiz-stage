@@ -38,6 +38,7 @@ div .resp {
 	font-size: 400%;
 	padding: 10px;
 	margin: 10px;
+	min-height: 1.2em;
 }
 
 div#statusline {

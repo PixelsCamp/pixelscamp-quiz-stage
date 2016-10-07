@@ -130,7 +130,7 @@ var ws = null;
 
 function start() {
 	console.log('starting ws');
-	ws = new WebSocket("ws://localhost:3000/displays");
+	ws = new WebSocket("ws://" + document.location.host +"/displays");
 	ws.onopen = function (event) {
 		ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
 	}
