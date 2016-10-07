@@ -291,7 +291,6 @@
 
 
 (def game-state (atom (read-from-file :initial-state) ))
-(defonce server (repl/start-server :port 7888))
 
 (defn save-game-state-to-file!
   [key ref old-state state]
@@ -317,6 +316,8 @@
 
 
 ;; evil stuff here -> helpers for OMFG on the repl
+(defonce server (repl/start-server :port 7888))
+
 (defn stage-ch 
   []
   (-> @game-state :value :stage :displays))
@@ -332,11 +333,14 @@
 (defn team-numbers
   []
   (let [world (:value @game-state)]
-    (w-m-d {:kind :update-scores 
-            :bag-of-props {:scores [1 2 3 4]
-                           :question-index 0}})
-    ))
+    (w-m-d {:kind :team-number} 
+    )))
 
 (defn thank-sponsors
   []
   (push-to-stage "THANKS TO" ["GitHub", "Whitesmith", "Talkdesk", "and all the participants"]))
+
+(defn list-teams
+  []
+  (push-to-stage "" (-> @game-state :value :current-round :teams)))
+

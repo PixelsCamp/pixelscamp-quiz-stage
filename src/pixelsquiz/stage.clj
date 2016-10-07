@@ -101,6 +101,7 @@
                      :scores (-> ev :bag-of-props :scores)
                      :questionnum (-> ev :bag-of-props :question-index)
                      }
+      :team-number {:do :team-number}
       (logger/error "format-for-displays " ev))
     (catch Exception e (logger/error "exception in format-for-displays" ev e))))
 
@@ -177,6 +178,6 @@
                    (:routes (nth actors 2)) ; XXX humm ...
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
-    (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
+    (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:ip "10.0.0.6":port 3000})
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))
