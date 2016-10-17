@@ -1,8 +1,7 @@
 
 
 # TODO
- - stage html	- beautify
- - player lights - icons
+ - better qm console
  - detect end of game
  - add state to qm console
  - question backoffice
@@ -39,3 +38,5 @@
  - stop thinking music after red button
  - remove team sounds
  - round number on new round
+ - stage html	- beautify
+ - player lights - icons
