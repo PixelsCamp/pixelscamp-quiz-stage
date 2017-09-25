@@ -1,0 +1,85 @@
+Question,Correct Answer,Wrong Option,Wrong Option,Wrong Option
+Test question: How do you exit Vi(m)?,ESC :q,Control-C,C-x C-c,Alt-F4
+Breaking the Enigma machine (WW2) is commonly attributed to which place?,Bletchley Park,Bell Labs,Menlo Park,Torchwood
+Elixir (the language) is based on which runtime platform?,Erlang VM,JVM,CLR,V8
+"The Doctor's ship, the TARDIS, is a... what?",Police Call Box,Gourd-shaped Cigar,Phone Booth,Flying Saucer
+The engines commonly used in larger commercial aircraft are... of what type?,TurboFans,TurboJets,TurboProps,RamJets
+What's a Paamayim Nekudotayim?,A double-colon,The apocalypse,A type of bread,A made up word
+Where do long period comets (supposedly) come from?,Oort Cloud,Kuiper Belt,Asteroid Belt,China
+"Besides Monkey Island itself, where does ""The Secret of Monkey Island"" take place?",Mêlée Island,Plunder Island,Scabb Island,Dinky Island
+Who wrote The Martian?,Andy Weir,Ridley Scott,Phillip K. Dick,H.G. Wells
+"Besides C. Ronaldo, which other portuguese figure appeared in The Simpsons?",Carlos Lopes,Salazar,Emplastro,Mário Soares
+"Place the following in ascending order: π, √3, e, √2","√2, √3, e, π","π, e, √3, √2","π, √3, √2, e","√2, π, e, √3"
+Test question: Who is the original creator of Linux's systemd?,Lennart Poettering,Cthulhu,Sauron,Zalgo
+Who wrote the Three Laws of Robotics?,Isaac Asimov,Dean Kamen,Karel Čapek,Norbert Wiener
+How many different DNA base pairs are there?,2,4,3,6
+"In the name H. R. Giger, what does the H. R. stand for?",Hans Rudolf,Harold Ramis,Honecker Richthofen,Herbert Richers
+IBM recently open-sourced their JVM. What's its name?,OpenJ9,HotSpot,IcedTea,Jazelle
+"From Rick and Morty, what does Rick’s catchphase “Wubba Lubba Dub Dub” mean?","I am in great pain, please help me.",Nothing,Peace among worlds,I don't give a ${F_BOMB}!!!
+"Besides Gorilla Glass, Corning is best known for... what?",Fiber Optics,Artificial Diamonds,Wood Furniture,Car Tires
+Who's the author of the Blowfish cipher?,Bruce Schneier,Vincent Rijmen,D.J. Bernstein,Ralph Merkle
+"Besides ""Plan 9 from Bell Labs,"" what is Rob Pike best known for?",Go,Emacs,C,Rust
+ARM (the architecture) debuted in which brand of computers?,Acorn,Amiga,Apple I,ZX Spectrum
+What's the Baader-Meinhof phenomenon?,Frequency Illusion,Gambler's Fallacy,Confirmation Bias,Not Invented Here Syndrome
+Test question: TDD is a...,Methodology,Myth,Sexually Transmitted Disease,Trap
+Who is the creator of Bitcoin?,Satoshi Nakamoto,Yukihiro Matsumoto,Vitalik Buterin,Richard Stallman
+What's the Enterprise's registry number (license plate) in Star Trek TOS?,NCC-1701,OV-101,NX-01,NCC-1764
+"When Steve Jobs left Apple in 1985, he then founded which company?",NeXT,Be Inc.,Copland,Atari
+"SCUMM, the game engine, was first used by which game?",Manic Mansion,The Secret of Monkey Island,Full Throttle,Manic Miner
+What is Google's OS that's speculated to be an Android replacement?,Fuchsia,Plan 9,Singularity,Illumos
+What was the name of Luke Skywalkers' aunt?,Beru,Shmi,Jar Jar Binks,Mon Mothma
+Who plays Moss in The IT Crowd?,Richard Ayoade,Chris O'Dowd,Matt Berry,Noel Fielding
+"In the ZX Spectrum game ""Jet Set Willy"", what is Willy's profession?",Miner,Soldier,Pilot,Policeman
+"The cellular automata ""Game of Life"" was created by whom?",John Conway,Brian Silverman,Edward Moore,Stephen Wolfram
+What is originally described by RFC 1149?,IP over Pigeons,Electricity over IP,DNS,ARP
+Test question: Which one of these is NOT a Jason Bourne movie?,The Bourne Shell,The Bourne Supremacy,The Bourne Ultimatum,The Bourne Identity
+What is the name of Google Chrome's web/layout engine?,Blink,Gecko,Trident,WebKit
+What did Edsger Dijkstra consider harmful?,GOTO,C++,COBOL,Feldgrau
+"Who's the well-known Linux kernel contributor that, in 2008, was convicted for murder?",Hans Reiser,Linus Torvalds,Alan Cox,Greg Kroah-Hartman
+"In which company did OpenGL originate, in the early 90's?",Silicon Graphics,3dfx,Nvidia,Microsoft
+How do neighbors find each other in an IPv6 network?,NDP,SLAAC,ARPv6,MLD
+"Who's the author of the Kryptos sculpture, at the CIA HQ in Langley, Virginia?",Jim Sanborn,Jacques Lipchitz,Andy Warhol,Adriaen de Vries
+"Microsoft used to have a UNIX, what was its name?",Xenix,A/UX,MINIX,VMS
+"Where did (Benôit) Mandelbrot work, when he first visualized the fractal with his name?",IBM,Bell Labs,Xerox PARC,HP
+"In Linux, what's the number for SIGTERM?",15,9,11,1
+What's the best known example of a Lepton?,Electron,Photon,Neutron,Proton
+Which D.J. Bernstein cipher is currently gaining popularity in HTTPS?,ChaCha20,AES256,MacGuffin,Twofish
+"What does ""Sun"" in ""Sun Microsystems"" (of Java fame) mean?",Stanford University Network,Standard Unix Node,Simple Unified Networking,Still UnNamed
+"In the first Rambo movie (""First Blood""), what's Rambo's body count?",1,10,75,120
+What's the name of the AGC (Apollo Guidance Computer) Lunar module component?,Luminary099,Comanche055,Apache032,Ludicrous003
+What's the Monster's nickname in Stranger Things?,Demogorgon,Gormogon,Langolier,Chupacabra
+"Ethernet was originally developed at Xerox PARC, when?",1973/1974,1985/1986,1967/1968,1991/1992
+What's the name of SpaceX's rockets?,Falcon,Vega,Antares,Titan
+The style guide for Python code is defined in which PEP?,PEP8,PEP7,PEP20,PEP5
+Name the author of Thus Spoke Zarathustra (2001's opening score)...,Strauss,Bach,Wagner,Tchaikovsky
+What's the name of macOS X's kernel?,XNU,Hurd,Inferno,L4
+Albert Einstein got the Nobel Prize in Physics for which theory?,Law of the Photoelectric Effect,Special Relativity,General Relativity,Quantum Mechanics
+"Initially, at Bill Gates' suggestion, what was to be the IBM PC's operating system?",CP/M,PC-DOS,VMS,OS/2
+"In Arthur C. Clarke's ""Rendezvous with Rama"", what is Rama?",A ship,An alien,A god,A pyramid
+"What's the 12th number in the Fibonacci sequence? (0, 1, 1, 2, ...)",89,21,233,987
+"What's the hexadecimal code for capital ""A"" in EBCDIC?",0xC1,0xD6,0xE9,0xF8
+"The ""F"" in MOSFET means what?",Field,Fine,Force,Ferrous
+Where's the European Space Agency's main spaceport? (Town),Kourou,Baikonur,Cayenne,Sohae
+What was the original meaning of VAX (as in the historical computers)?,Virtual Address eXtension,Valve Array eXecutor,Very Advanced eXtensions,Valve Assisted eXecution
+A Monad... in biology... is an historical term for what?,Unicellular Organism,Enzyme,Gland,Algae
+"In 2005, The Doctor (Who) regenerated into his 10th incarnation. Which actor played it?",David Tennant,Christopher Eccleston,Tom Baker,William Hartnell
+Who's the creator of FORTRAN?,John Backus,Bjarne Stroustrup,Niklaus Wirth,Peter Naur
+"In cryptography, what is a ""crib""?",A piece of plaintext,A key,A cipher,A piece of unknown ciphertext
+"In 2122, a towing spaceship is on its way to Earth. What's the name of this movie?",Alien,Pandorum,Galaxy Quest,Europa Report
+"That we know of, how many Bothans died in Star Wars: Rogue One?",None,Many,Some,Lots
+"What's the Unicode code-point for the ""pile of poo"" emoji?",U+1F4A9,U+0058,U+0215,U+1EFDJ
+Who's the creator of Mr. Robot?,Sam Esmail,Justin Roiland,Dan Harmon,Glen A. Larson
+"Who's the author of the ""xkcd"" webcomic?",Randall Munroe,Doug Savage,Jorge Cham,Scott Kurtz
+Who invented the Quicksort algorithm?,C.A.R. Hoare,Edsger Dijkstra,Niklaus Wirth,Donald Knuth
+FAST is now the largest radiotelescope in the world. Where is it located?,China,Argentina,Canary Islands,Chile
+Which fundamental force prevents you from crossing walls?,Electromagnetism,Gravity,Strong Nuclear Force,Weak Nuclear Force
+Name the original creator of NodeJS...,Ryan Dahl,Guido van Rossum,Rasmus Lerdorf,Larry Wall
+Which company has its HQ where Silicon Graphics used to be?,Google,Facebook,Microsoft,Apple
+What's the name of the leading character in the cult TV show Firefly?,Malcom Reynolds,William Adama,John Crichton,Jack O'Neill
+What's the name of the player-controlled character in Grim Fandango?,Manny Calavera,Juan Rico,Carlos Estévez,Inigo Montoya
+"If you need to adjust the separation between all characters in a text, what do you adjust?",Tracking,Kerning,Baseline,Weight
+"In electronics, what's a BJT?",Bipolar Junction Transistor,Binary Junction Transformer,Bacon Jam Tomato,Binary Jump Target
+What was the original name for JavaScript?,LiveScript,ECMAScript,Gibberish,ActionScript
+What's the first movie featuring a completely computer animated sequence?,Star Trek II,2001: A Space Odyssey,Tron,The Lawnmower Man
+How many nF (nanofarad) are in one uF (microfarad)?,1000,10,100,10000
+The creator of The Secret of Monkey Island is... who?,Ron Gilbert,Largo LaGrande,Guybrush Threepwood,Michael Land
