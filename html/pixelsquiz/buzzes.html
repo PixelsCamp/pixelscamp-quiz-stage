@@ -20,7 +20,7 @@
 			padding: 10px;
 		}
 	</style>
-	
+
 </head>
 <body onload=''>
 	<div id="buzzes">
@@ -52,7 +52,7 @@ teams.map(function(t) {
 	var contdiv = document.createElement('div');
 	contdiv.id = 'buzz'+t;
 	contdiv.className = 'buzz';
-	contdiv.innerHTML = 'TEAM '+t;
+	contdiv.innerHTML = 'TEAM '+(t+1);
 	buttons.map(function(b) {
 		var but = document.createElement('a');
 		var signal = b === 'red' ? 'playerbuzzed' : 'playermulti';
@@ -65,11 +65,11 @@ teams.map(function(t) {
 		but.onclick = send_command
 		return but;
 	}).forEach(function(x) {
-		contdiv.appendChild(x);	
+		contdiv.appendChild(x);
 	});
 	return contdiv;
 }).forEach(function(x) {
-	topdiv.append(x);	
+	topdiv.append(x);
 });
 
 

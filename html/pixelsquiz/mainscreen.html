@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	
+
 		<title>Mainscreen</title>
 
 
@@ -9,49 +9,42 @@
 		<link rel="stylesheet" href="/static/css/v2/addictive.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
 		<link rel="stylesheet" href="/static/css/v2/demo.css" type="text/css" media="screen" title="no title" charset="utf-8">
-        
-        <link rel="stylesheet" type="text/css" href="/css/sons-of-obsidian.css" />
+
+        <!--link rel="stylesheet" type="text/css" href="/css/sons-of-obsidian.css" /-->
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/static/css/mainscreen.css" />
-			
+
 	</head>
 	<body>
 		<div id="main">
-			<div id="perg" class="main">
-				WELCOME TO THE AMAZING
+			<div id="perg" class="main">The Amazing Quizshow!</div>
+
+			<div id="options">
+				<div id="rAcont" class="flipable">
+					<div id="r0" class="resp blue"></div>
+				</div>
+				<div id="rBcont" class="flipable">
+					<div id="r1" class="resp orange"></div>
+				</div>
+				<div id="rCcont" class="flipable">
+					<div id="r2" class="resp green"></div>
+				</div>
+				<div id="rDcont" class="flipable">
+					<div id="r3" class="resp yellow"></div>
+				</div>
 			</div>
-			<div id="rAcont" class="flipable">
-			<div id="r0" class="resp blue">
-				PIXELSCAMP VIII
-			</div>
-		</div>
-			<div id="rBcont" class="flipable">
-			<div id="r1" class="resp orange">
-				QUIZ
-			</div>
-		</div>
-			<div id="rCcont" class="flipable">
-			<div id="r2" class="resp green">
-				SHOW			
-			</div>
-		</div>
-			<div id="rDcont" class="flipable">
-			<div id="r3" class="resp yellow">
-				2016
-			</div>
-		</div>
 		</div>
 		<div id="side">
 			<div id="timer">
-				<span id="timernumber">20</span> 
+				<span id="timernumber">20</span>
 			</div>
 			<div id="scoreboard">
-				<p>Question  <span id="nperg">0/10</span></p>
+				<p>Question <span id="nperg">0</span></p>
 				<table id="scoreboardtab">
-					<tr><td>Team 1: </td> <td>0 points</td></tr>	
-					<tr><td>Team 2: </td> <td>0 points</td></tr>	
-					<tr><td>Team 3: </td> <td>0 points</td></tr>	
-					<tr><td>Team 4: </td> <td>0 points</td></tr>	
+					<tr><td>Team #1:</td> <td>0</td> <td>points</td></tr>
+					<tr><td>Team #2:</td> <td>0</td> <td>points</td></tr>
+					<tr><td>Team #3:</td> <td>0</td> <td>points</td></tr>
+					<tr><td>Team #4:</td> <td>0</td> <td>points</td></tr>
 				</table>
 			</div>
 		</div>
@@ -65,11 +58,11 @@ function update_scores(qi, scores) {
 	$('#nperg').text(qi);
 	var t = [];
 	for(var i = 1 ; i < 5 ; i++) {
-		t.push('<tr><td>Team ')
+		t.push('<tr><td>Team #')
 			t.push(i);
 		t.push(': </td> <td>');
 		t.push(scores[i-1]);
-		t.push(' points</td></tr>');
+		t.push('</td> <td>points</td></tr>');
 	}
 	scoreb.html(t.join(''));
 }
@@ -94,7 +87,7 @@ function show_options(o) {
 	}
 }
 
-var ws = null; 
+var ws = null;
 
 function start() {
 	ws = new WebSocket("ws://" + document.location.host + "/displays");
@@ -103,9 +96,14 @@ function start() {
 
 		console.log(msg);
 		if (msg.do === 'timer-update') {
-			throb(msg.value)	
+			throb(msg.value)
 		} else if (msg.do === 'show-question') {
-			show_question(msg.text, msg.options);
+			if (msg.text) {
+				show_question(msg.text, msg.options);
+			} else {
+				show_question("These are the current scores...", ["", "", "",""])
+				throb(20);
+			}
 		} else if (msg.do === 'update-all') {
 			show_question(msg.text, msg.options);
 			update_scores(msg.questionnum, msg.scores);
@@ -114,6 +112,8 @@ function start() {
 			if (msg.options) {
 				show_options(msg.options);
 			}
+		} else if (msg.do == 'lights-off') {
+			show_question("", ["", "", "", ""])
 		}
 	}
 }

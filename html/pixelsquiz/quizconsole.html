@@ -5,13 +5,18 @@
 	<title>Quizconsole</title>
 
 	<style type="text/css" media="screen">
+		body {
+			background: #222;
+			color: #eee;
+		}
+
 		iframe#mainscreen {
 			width: 100%;
 			height: 100%;
 			overflow: hidden;
 			border: solid thin black;
 			}
-			
+
 			XPTO {
 		zoom: 0.75;
     -moz-transform: scale(0.75);
@@ -29,42 +34,56 @@
 	}
 
 	div#commands {
-		width: 100px;
+		width: 200px;
 		height: 100%;
 		top: 0;
 		right: 0;
 		position: absolute;
+		margin: 40px;
 	}
 
 	button {
 		width: 100%;
 		height: 100px;
 		margin-bottom: 20px;
+		font-size: 20px;
+		font-weight: bold;
 	}
+
+	#command-box {
+		visibility: hidden;
+	}
+
 	button#sendcmd {
-		height: 1em;
+		height: 50px;
 		margin-bottom: 0px;
 	}
 
 	div#statuswrap {
-		width: 80%;
+		width: 1000px;
 		position: absolute;
 		bottom: 0;
 		left: 0;
-		height: 70%;
+		height: 55%;
 		overflow: scroll;
-		border: solid thin black;
+		background: #555;
+		margin: 20px;
+		padding: 20px;
 	}
 
 
 	div#pergunta {
-		width: 80%;
+		width: 1000px;
 		position: absolute;
+		padding: 20px;
 		top: 0;
 		left: 0;
-		height: 30%;
-		border: solid thin black;
-		font-size: 150%;
+		height: 25%;
+		font-size: 40px;
+		background: #fdcf1a;
+		color: #111;
+		font-weight: bold;
+		margin: 20px;
 	}
 
 	input.confirm {
@@ -84,18 +103,20 @@
 	</div>
 
 	<div id="commands">
-		<button id="start-question" >PROXIMA</button>
-		<button id="show-question" >START</button>
-		<button id="start-mult" >MULTI</button>
-		<button id="start-round">ROUND</button>
-		<textarea name="servercmd" id="servercmd" rows="8" cols="20"></textarea>
-		<button id="sendcmd" onclick="sendmanual()">send!</button>
+		<button id="start-round">Start Round</button>
+		<button id="start-question" >Next Question / Show Scores</button>
+		<button id="show-question" >Start Question / Show Text</button>
+		<button id="start-mult" >Multiple Choice</button>
+		<div id="command-box">
+			<textarea name="servercmd" id="servercmd" rows="8" cols="20"></textarea>
+			<button id="sendcmd" onclick="sendmanual()">send!</button>
+		</div>
 	</div>
-	<div id="pergunta"> 
+	<div id="pergunta">
 	</div>
 	<div id="statuswrap">
 	<pre id="status">
-		
+
 	</pre>
 </div>
 <script src="/static/jquery-3.1.0.js"></script>
@@ -114,11 +135,11 @@ function sendmanual() {
 }
 
 $("#commands button").each(function (idx) {
- $(this).click(send_command) 
+ $(this).click(send_command)
 })
 
 function get_right_wrong(team) {
-	var r = window.confirm('Team '+ team +' got it right ?');
+	var r = window.confirm('Team #'+ (team+1) +' got it right?');
 	if (r) {
 		_send_command('select-right');
 	} else {
@@ -126,7 +147,7 @@ function get_right_wrong(team) {
 	}
 }
 
-var ws = null; 
+var ws = null;
 
 function start() {
 	console.log('starting ws');
@@ -144,8 +165,9 @@ function start() {
 				$('#pergunta').text(msg.text);
 			}
 		} else {
-			if(msg.do === 'update-all' || msg.do === 'update-scores' || msg.do === 'update-lights')
+			if (msg.do === 'update-all' || msg.do === 'update-scores' || msg.do === 'update-lights') {
 				$('#status').text(JSON.stringify(msg) + '\n' + $('#status').text());
+			}
 		}
 	}
 }
