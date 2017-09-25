@@ -140,7 +140,7 @@
 
 (defn question-on-quizmaster
   [world]
-  (w-m-d (Event. :for-quizmaster {:text (str "Q:" (-> world :current-question :text) " A: " (get (-> world :current-question :options) 0))} ))
+  (w-m-d (Event. :for-quizmaster {:text (str "" (-> world :current-question :text) " -----> A: " (get (-> world :current-question :options) 0))} ))
   (w-m-d (Event. :question-starting {}))
   false)
 
