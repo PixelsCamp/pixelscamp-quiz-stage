@@ -178,6 +178,6 @@
                    (:routes (nth actors 2)) ; XXX humm ...
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
-    (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:ip "10.0.0.6":port 3000})
+    (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))
