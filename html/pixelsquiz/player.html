@@ -2,8 +2,13 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title>Player</title>
-	
+
 	<style type="text/css" media="screen">
+		body {
+			color: #fff;
+			background: #000;
+		}
+
 		div#main-sd {
 			min-height: 480px;
 			max-height: 480px;
@@ -14,8 +19,8 @@
 		}
 
 		div#main-hd {
-			text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;
-			border: thin solid black;
+			/*text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;*/
+			border: 2px solid green;
 			position: absolute;
 			top: 0; left: 0;
 			min-height: 1080px;
@@ -24,14 +29,14 @@
 			min-width: 1920px;
 			max-width: 1920px;
 			width: 1920px;
-			font-size: 1000px;
+			font-size: 900px;
 			text-align: center;
 		}
 
 
 		div#main {
-			text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;
-			border: thin solid black;
+			/*text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;*/
+			/*border: 2px solid green;*/
 			position: absolute;
 			top: 0; left: 0;
 			min-height: 900px;
@@ -40,59 +45,51 @@
 			min-width: 1440px;
 			max-width: 1440px;
 			width: 1440px;
-			font-size: 720px;
+			font-size: 800px;
 			text-align: center;
 			overflow: hidden;
 		}
 
 		.off {
-			background: #404040;
+			background: #000;
 		}
 
 		.highlight {
-			background: white;
+			background: #fff;
 		}
-
-		.blue {
-			background: blue;
-		}
-		.orange {
-			background: darkorange;
-		}
-		.green {
-			background: green;
-		}
-		.yellow {
-			background: yellow;
-		}
-
-// css oveeerrriiiiides
 
 		.red {
 			background: #EA282E;
+			color: #222;
 		}
 
 		.orange {
 			background: #EF6946;
+			color: #222;
 		}
 
 		.yellow {
 			background: #FDCF1A;
+			color: #222;
 		}
 
 		.green {
 			background: #4FBA49;
+			color: #222;
 		}
 
 		.blue {
 			background: #01A7EE;
+			color: #222;
 		}
 
 		.right {
-			background: green;
+			background: #0f0;
+			color: #000;
 		}
 		.wrong {
-			background: red;
+			background: #f00;
+			color: #000;
 		}
 
 		.fail {
@@ -164,7 +161,7 @@ var ops = {
 	},
 	'yellow': function() {
 		clear();
-		d.addClass('yellow');	
+		d.addClass('yellow');
 	}
 }
 
@@ -187,7 +184,7 @@ ws.onmessage = function (event) {
 		var c = msg.colours[team];
 		ops[c]();
 	} else if (msg.do === 'update-all') {
-		update_scores( msg.scores);
+		update_scores(msg.scores);
 	} else if (msg.do === 'update-scores') {
 		update_scores(msg.scores);
 	} else if (msg.do === 'lights-off') {
