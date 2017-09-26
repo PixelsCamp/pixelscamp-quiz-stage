@@ -10,7 +10,7 @@
 
 		<link rel="stylesheet" href="/static/css/v2/demo.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
-        <!--link rel="stylesheet" type="text/css" href="/css/sons-of-obsidian.css" /-->
+		<!--link rel="stylesheet" type="text/css" href="/css/sons-of-obsidian.css" /-->
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/static/css/mainscreen.css" />
 
@@ -55,7 +55,10 @@
 function update_scores(qi, scores) {
 	var scoreb = $('#scoreboardtab');
 
-	$('#nperg').text(qi);
+	if (qi) {
+		$('#nperg').text(qi);
+	}
+
 	var t = [];
 	for(var i = 1 ; i < 5 ; i++) {
 		t.push('<tr><td>Team #')
@@ -101,7 +104,7 @@ function start() {
 			if (msg.text) {
 				show_question(msg.text, msg.options);
 			} else {
-				show_question("These are the current scores...", ["", "", "",""])
+				show_question("Lets add the scores...", ["", "", "",""])
 				throb(20);
 			}
 		} else if (msg.do === 'update-all') {
