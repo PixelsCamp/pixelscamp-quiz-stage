@@ -8,6 +8,13 @@
 		body {
 			background: #222;
 			color: #eee;
+			font-family: 'Gill Sans';
+		}
+
+		h1 {
+			font-family: 'Avant Pixel';
+			margin: 15px 20px;
+			color: #fdcf1a;
 		}
 
 		iframe#mainscreen {
@@ -28,13 +35,13 @@
 	}
 	div#framewrap {
 		position: absolute;
-		top:0; left: 0;
+		top: 0; left: 0;
 		width: 80%;
 		height: 100%;
 	}
 
 	div#commands {
-		width: 200px;
+		width: 250px;
 		height: 100%;
 		top: 0;
 		right: 0;
@@ -44,10 +51,51 @@
 
 	button {
 		width: 100%;
-		height: 100px;
+		height: 120px;
 		margin-bottom: 20px;
 		font-size: 20px;
 		font-weight: bold;
+
+		display: inline-block;
+		padding: 15px 25px;
+		font-size: 24px;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		outline: none;
+		border: none;
+		border-radius: 15px;
+		box-shadow: 0 9px #777;
+	}
+
+	button#start-round {
+		background: #01a7ee;
+		color: #222;
+	}
+
+	button#start-question {
+		background: #f80;
+		color: #222;
+	}
+
+	button#show-question {
+		background: #0c0;
+		color: #222;
+	}
+
+	button#start-mult {
+		background: #ff0;
+		color: #222;
+	}
+
+	button:hover {
+	    background: #eee !important;
+	}
+
+	button:active {
+		background: #eee !important;
+		box-shadow: 0 5px #666;
+		transform: translateY(4px);
 	}
 
 	#command-box {
@@ -60,30 +108,28 @@
 	}
 
 	div#statuswrap {
-		width: 1000px;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		height: 55%;
-		overflow: scroll;
-		background: #555;
+		width: 850px;
 		margin: 20px;
 		padding: 20px;
+		position: absolute;
+		bottom: 0; left: 0;
+		height: 45%;
+		overflow: scroll;
+		background: none;
+		font-family: monospace;
 	}
 
 
 	div#pergunta {
-		width: 1000px;
-		position: absolute;
-		padding: 20px;
-		top: 0;
-		left: 0;
-		height: 25%;
-		font-size: 40px;
-		background: #fdcf1a;
-		color: #111;
-		font-weight: bold;
+		width: 850px;
 		margin: 20px;
+		padding: 20px;
+		position: absolute;
+		top: 40px; left: 0;
+		height: 25%;
+		font-size: 36px;
+		background: none;
+		border-bottom: 2px solid #fdcf1a;
 	}
 
 	input.confirm {
@@ -99,6 +145,7 @@
 	</style>
 </head>
 <body>
+	<h1>Quizmaster Console</h1>
 	<div id="framewrap">
 	</div>
 
