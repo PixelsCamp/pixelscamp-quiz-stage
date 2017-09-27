@@ -14,6 +14,51 @@
             <li><a href="player.html#4">Team #4</a></li>
         </ul>
     </ul>
-    <p><b>Note:</b> Teams are numbered from 1-4 for display purposes, but are 0-3 internally.
+
+    <p><b>Note:</b> Teams are numbered from 1-4 for display purposes, but are 0-3 internally.</p>
+
+    <h2>Bill of Materials</h2>
+    <ul>
+        <li>Your laptop and its power adapter;</li>
+        <li>VGA adapter for your laptop</li>
+        <li>Ethernet adapter for your laptop</li>
+        <li>A-B USB cable (short);</li>
+        <li>A-type USB extension cable (long);</li>
+        <li>Powered USB hub and its power supply;</li>
+        <li>Buzzers with their controller;</li>
+        <li>Ethernet switch and its power supply;</li>
+        <li>5 ethernet cables;</li>
+        <li>4 Raspberry Pis and their SD cards;</li>
+        <li>4 USB power supplies (for the Raspberry Pi);</li>
+        <li>4 HDMI cables;</li>
+        <li>4 monitors (provided by Hipnose);</li>
+    </ul>
+
+    <h2>Assembly Checklist</h2>
+    <ol>
+        <li>Disable your <b>firewall</b>;</li>
+        <li>Disable standby/blank screen on your laptop;</li>
+        <li>Turn the <b>ethernet switch</b> on;</li>
+        <li>Connect your laptop to the <b>network</b> (and optionally disable your wireless connection);</li>
+        <li>Connect the buzzers to the powered <b>USB hub</b>;</li>
+        <li>Connect the powered USB hub to your laptop (using the <b>long cable</b>);</li>
+        <li>Connect the Raspberry Pis to the <b>pulpit monitors</b>;</li>
+        <li>Connect the Raspberry Pis to the <b>network</b> (ethernet switch);</li>
+        <li>Connect to the Raspberry Pis via SSH (<tt>pi@192.168.114.101</tt> to <tt>104</tt>)</li>
+    </ol>
+
+    <h2>Pre-flight Checklist</h2>
+    <ol>
+        <li>Remove the previous <b>game state</b>;</li>
+        <li>Start the <b>game engine</b>: <tt>lein run</tt>;</li>
+        <li>Check all four <b>buzzers</b>;</li>
+        <li>Start the <b>player screens</b> on the four Raspberry Pis (<tt>./start_screen.sh</tt> over SSH);</li>
+        <li>Open the <a href="quizconsole.html">quiz console</a> on <b>Safari</b> (other browsers may reject answers when switching tabs)</li>
+        <li>Open the <a href="mainscreen.html">main screen</a>;</li>
+        <li>Open your <b>team roster</b> spreadsheet (where winners will be recorded);</li>
+        <li>...</li>
+        <li>Profit!</li>
+    </ol>
+
 </body>
 </html>
