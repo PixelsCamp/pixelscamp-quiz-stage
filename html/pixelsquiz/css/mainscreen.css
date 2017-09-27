@@ -104,8 +104,9 @@ div#scoreboard {
 div#scoreboard p {
 	margin: 10;
 	font-family: Avant Pixel;
-	font-size: 52px;
+	font-size: 46px;
 	color: white;
+	text-align: center;
 }
 
 div#scoreboard table {

@@ -39,7 +39,7 @@
 				<span id="timernumber">20</span>
 			</div>
 			<div id="scoreboard">
-				<p>Question <span id="nperg">0</span></p>
+				<p><span id="nperg">Lets Start!</span></p>
 				<table id="scoreboardtab">
 					<tr><td>Team #1:</td> <td>0</td> <td>points</td></tr>
 					<tr><td>Team #2:</td> <td>0</td> <td>points</td></tr>
@@ -52,12 +52,8 @@
 		<script src="/static/jquery-3.1.0.js"></script>
 		<script>
 
-function update_scores(qi, scores) {
+function update_scores(scores) {
 	var scoreb = $('#scoreboardtab');
-
-	if (qi) {
-		$('#nperg').text(qi);
-	}
 
 	var t = [];
 	for(var i = 1 ; i < 5 ; i++) {
@@ -91,33 +87,64 @@ function show_options(o) {
 }
 
 var ws = null;
+var curr_question = 1;
 
 function start() {
 	ws = new WebSocket("ws://" + document.location.host + "/displays");
 	ws.onmessage = function (event) {
 		var msg = JSON.parse(event.data);
+        var curr_question_text = '';
 
 		console.log(msg);
+
+        // Pixels Camp starts tomorrow, lets bring out the big hammer...
+        if ('questionnum' in msg && typeof(msg['questionnum']) in {'number':1, 'string':1}) {
+            curr_question = msg['questionnum'] + 1;
+            console.log('Updating question number: ' + curr_question);
+        }
+
 		if (msg.do === 'timer-update') {
 			throb(msg.value)
 		} else if (msg.do === 'show-question') {
 			if (msg.text) {
 				show_question(msg.text, msg.options);
+
+                if ((/^\s*starting\s+round\s+[0-9]+/i).test(msg.text)) {
+                    console.log("The round is starting.");
+                    curr_question = 1;
+                }
+
+                curr_question_text = 'Question ' + curr_question;
 			} else {
 				show_question("Lets add the scores...", ["", "", "",""])
+                curr_question_text = 'Total Scores';
 				throb(20);
 			}
 		} else if (msg.do === 'update-all') {
 			show_question(msg.text, msg.options);
-			update_scores(msg.questionnum, msg.scores);
+			update_scores(msg.scores);
+            if ('text' in msg && (/^\s*round\s+ended/i).test(msg.text)) {
+                console.log("The round has ended.");
+                curr_question_text = 'Final Scores';
+            } else {
+                curr_question_text = 'Question ' + curr_question;
+            }
 		} else if (msg.do === 'update-scores') {
-			update_scores(msg.questionnum, msg.scores);
+			update_scores(msg.scores);
+            curr_question_text = 'Question ' + curr_question;
+
 			if (msg.options) {
 				show_options(msg.options);
 			}
 		} else if (msg.do == 'lights-off') {
 			show_question("", ["", "", "", ""])
+            curr_question_text = 'Question ' + curr_question;
 		}
+
+        if (curr_question_text) {  // ...assumes we never blank this item.
+            console.log('Setting scores title: ' + curr_question_text);
+            $('#nperg').text(curr_question_text);
+        }
 	}
 }
 
