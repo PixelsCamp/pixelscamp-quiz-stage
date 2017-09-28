@@ -2,7 +2,7 @@ Question,Correct Answer,Wrong Option,Wrong Option,Wrong Option
 Test question: How do you exit Vi(m)?,ESC :q,Control-C,C-x C-c,Alt-F4
 Breaking the Enigma machine (WW2) is commonly attributed to which place?,Bletchley Park,Bell Labs,Menlo Park,Torchwood
 Elixir (the language) is based on which runtime platform?,Erlang VM,JVM,CLR,V8
-"The Doctor's ship, the TARDIS, is a... what?",Police Call Box,Gourd-shaped Cigar,Phone Booth,Flying Saucer
+"The Doctor's ship, the TARDIS, is a... what?",Police Box,Gourd-shaped Cigar,Phone Booth,Flying Saucer
 The engines commonly used in larger commercial aircraft are... of what type?,TurboFans,TurboJets,TurboProps,RamJets
 What's a Paamayim Nekudotayim?,A double-colon,The apocalypse,A type of bread,A made up word
 Where do long period comets (supposedly) come from?,Oort Cloud,Kuiper Belt,Asteroid Belt,China
@@ -34,7 +34,7 @@ Who plays Moss in The IT Crowd?,Richard Ayoade,Chris O'Dowd,Matt Berry,Noel Fiel
 What is originally described by RFC 1149?,IP over Pigeons,Electricity over IP,DNS,ARP
 Test question: Which one of these is NOT a Jason Bourne movie?,The Bourne Shell,The Bourne Supremacy,The Bourne Ultimatum,The Bourne Identity
 What is the name of Google Chrome's web/layout engine?,Blink,Gecko,Trident,WebKit
-What did Edsger Dijkstra consider harmful?,GOTO,C++,COBOL,Feldgrau
+What did Edsger Dijkstra consider harmful?,GOTO,C++,Promises,Prolog
 "Who's the well-known Linux kernel contributor that, in 2008, was convicted for murder?",Hans Reiser,Linus Torvalds,Alan Cox,Greg Kroah-Hartman
 "In which company did OpenGL originate, in the early 90's?",Silicon Graphics,3dfx,Nvidia,Microsoft
 How do neighbors find each other in an IPv6 network?,NDP,SLAAC,ARPv6,MLD

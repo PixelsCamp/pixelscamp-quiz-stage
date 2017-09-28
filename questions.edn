@@ -2,7 +2,7 @@
   #pixelsquiz.types.Question{:id 0, :kind :multi, :score 0, :text "Test question: How do you exit Vi(m)?", :options ["ESC :q" "Control-C" "C-x C-c" "Alt-F4"]}
   #pixelsquiz.types.Question{:id 1, :kind :multi, :score 1, :text "Breaking the Enigma machine (WW2) is commonly attributed to which place?", :options ["Bletchley Park" "Bell Labs" "Menlo Park" "Torchwood"]}
   #pixelsquiz.types.Question{:id 2, :kind :multi, :score 1, :text "Elixir (the language) is based on which runtime platform?", :options ["Erlang VM" "JVM" "CLR" "V8"]}
-  #pixelsquiz.types.Question{:id 3, :kind :multi, :score 1, :text "The Doctor's ship, the TARDIS, is a... what?", :options ["Police Call Box" "Gourd-shaped Cigar" "Phone Booth" "Flying Saucer"]}
+  #pixelsquiz.types.Question{:id 3, :kind :multi, :score 1, :text "The Doctor's ship, the TARDIS, is a... what?", :options ["Police Box" "Gourd-shaped Cigar" "Phone Booth" "Flying Saucer"]}
   #pixelsquiz.types.Question{:id 4, :kind :multi, :score 1, :text "The engines commonly used in larger commercial aircraft are... of what type?", :options ["TurboFans" "TurboJets" "TurboProps" "RamJets"]}
   #pixelsquiz.types.Question{:id 5, :kind :multi, :score 1, :text "What's a Paamayim Nekudotayim?", :options ["A double-colon" "The apocalypse" "A type of bread" "A made up word"]}
   #pixelsquiz.types.Question{:id 6, :kind :multi, :score 1, :text "Where do long period comets (supposedly) come from?", :options ["Oort Cloud" "Kuiper Belt" "Asteroid Belt" "China"]}
@@ -34,7 +34,7 @@
   #pixelsquiz.types.Question{:id 32, :kind :multi, :score 1, :text "What is originally described by RFC 1149?", :options ["IP over Pigeons" "Electricity over IP" "DNS" "ARP"]}
   #pixelsquiz.types.Question{:id 33, :kind :multi, :score 0, :text "Test question: Which one of these is NOT a Jason Bourne movie?", :options ["The Bourne Shell" "The Bourne Supremacy" "The Bourne Ultimatum" "The Bourne Identity"]}
   #pixelsquiz.types.Question{:id 34, :kind :multi, :score 1, :text "What is the name of Google Chrome's web/layout engine?", :options ["Blink" "Gecko" "Trident" "WebKit"]}
-  #pixelsquiz.types.Question{:id 35, :kind :multi, :score 1, :text "What did Edsger Dijkstra consider harmful?", :options ["GOTO" "C++" "COBOL" "Feldgrau"]}
+  #pixelsquiz.types.Question{:id 35, :kind :multi, :score 1, :text "What did Edsger Dijkstra consider harmful?", :options ["GOTO" "C++" "Promises" "Prolog"]}
   #pixelsquiz.types.Question{:id 36, :kind :multi, :score 1, :text "Who's the well-known Linux kernel contributor that, in 2008, was convicted for murder?", :options ["Hans Reiser" "Linus Torvalds" "Alan Cox" "Greg Kroah-Hartman"]}
   #pixelsquiz.types.Question{:id 37, :kind :multi, :score 1, :text "In which company did OpenGL originate, in the early 90's?", :options ["Silicon Graphics" "3dfx" "Nvidia" "Microsoft"]}
   #pixelsquiz.types.Question{:id 38, :kind :multi, :score 1, :text "How do neighbors find each other in an IPv6 network?", :options ["NDP" "SLAAC" "ARPv6" "MLD"]}
