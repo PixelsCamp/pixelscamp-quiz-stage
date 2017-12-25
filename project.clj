@@ -38,4 +38,5 @@
                                    }
                         }]
               }
+  :jvm-opts ["--add-modules" "java.xml.bind"]
   )
