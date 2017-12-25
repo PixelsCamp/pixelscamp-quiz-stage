@@ -146,6 +146,7 @@
 
 (defn right-or-wrong
   [world]
+  (reset! timer-active false)  ;; ...the quizmaster allows out-of-time answers anyway!
   (w-m-d (Event. :buzzed (:current-answer world)))
   false)
 
