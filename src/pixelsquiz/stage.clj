@@ -179,5 +179,6 @@
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
     (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
+    (println "QUIZMASTER: Open http://localhost:3000/static/ in your browser!")
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))
