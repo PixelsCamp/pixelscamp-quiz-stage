@@ -46,8 +46,8 @@
   (case (:kind ev)
     :timer-start (sounds/play-thinking-music)
     :buzzed (do (sounds/stop-thinking-music) (sounds/play :buzz))
-    :timer-update (if (= 0 (-> ev :bag-of-props :value)) (sounds/play :ping) )
-    :show-question-results (sounds/stop-thinking-music)
+    :timer-update (if (= 0 (-> ev :bag-of-props :value)) (sounds/play :timeout))
+    :show-question-results (do (sounds/stop-thinking-music) (sounds/play :ping))
     :default
     )
   )
