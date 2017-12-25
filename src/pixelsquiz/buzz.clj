@@ -20,12 +20,19 @@
 
 
 (defn open-buzz []
-  (try
-    (let [_ (load-hid-natives)
-          manager (HIDManager/getInstance)]
-      (.openById manager 1356 2 ""))
-    (catch Exception e nil))
+  (let [_ (load-hid-natives)
+        manager (HIDManager/getInstance)]
+    (try
+      (let [buzz (.openById manager 0x054c 0x0002 "")]
+        (println "Buzz controllers detected: 054c:0002") buzz)
+    (catch Exception e
+      (try
+        (let [buzz (.openById manager 0x054c 0x1000 "")]
+          (println "Buzz controllers detected: 054c:1000") buzz)
+      (catch Exception e nil)))
+    )
   )
+)
 
 (defn debounce-buttons
   [current previous]
