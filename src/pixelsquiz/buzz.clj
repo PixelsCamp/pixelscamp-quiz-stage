@@ -70,7 +70,7 @@
                                      ;; C b2 2-6
                                      ;; D b2 7 b3 0-3
                                      (bit-and 0x1f b1)
-                                     (bit-and 0x1f (bit-or (bit-shift-left b2 3) (unsigned-bit-shift-right b1 5)))
+                                     (bit-and 0x1f (bit-or (bit-shift-left b2 3) (bit-and 0x7 (unsigned-bit-shift-right b1 5))))
                                      (bit-and 0x1f (unsigned-bit-shift-right b2 2))
                                      (bit-and 0x1f (bit-or (bit-shift-left b3 1) (bit-and 0x1 (unsigned-bit-shift-right b2 7))))
                                      ]
