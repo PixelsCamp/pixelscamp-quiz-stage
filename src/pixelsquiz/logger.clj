@@ -2,7 +2,7 @@
   (:require
     [clj-time.core :as t]
     [clj-time.coerce :as tc]
-    ) 
+    )
   )
 
 (defn print-with-serverity

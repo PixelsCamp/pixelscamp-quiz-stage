@@ -1,4 +1,4 @@
-(ns pixelsquiz.sounds  
+(ns pixelsquiz.sounds
   (:gen-class)
   (:require [dynne.sampled-sound :as s])
   )
@@ -27,7 +27,7 @@
   (when @audio-player (s/stop @audio-player))
   (reset! audio-player nil))
 
-(defn play 
+(defn play
   [sound]
   (if-let [s (sound sounds)]
     (s/play s)))

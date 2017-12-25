@@ -45,7 +45,7 @@
   [ev]
   (case (:kind ev)
     :timer-start (sounds/play-thinking-music)
-    :buzzed (sounds/stop-thinking-music) 
+    :buzzed (sounds/stop-thinking-music)
     :timer-update (if (= 0 (-> ev :bag-of-props :value)) (sounds/play :ping) )
     :show-question-results (sounds/stop-thinking-music)
     :default
@@ -55,25 +55,25 @@
 
 (defn format-for-displays
   [ev]
-  (try 
+  (try
     (case (:kind ev)
       :question-starting {:do :lights-off}
       :timer-update {:do :timer-update :value (-> ev :bag-of-props :value)}
       :buzzed {:do :highlight :team (-> ev :bag-of-props :team-buzzed)}
       :qm-choice {:do :update-lights
-                    :colours (assoc ["off" "off" "off" "off"] 
+                    :colours (assoc ["off" "off" "off" "off"]
                                     (-> ev :bag-of-props :team)
                                     (case (-> ev :bag-of-props :right-wrong)
                                       :select-right "right"
                                       :select-wrong "wrong"))
                     }
-      :update-lights {:do :update-lights 
-                      :colours (mapv #(if (nil? %) 
-                                       "off" 
+      :update-lights {:do :update-lights
+                      :colours (mapv #(if (nil? %)
+                                       "off"
                                        (get button-colours %))
                       (-> ev :bag-of-props :answers)) }
-      :show-question {:do :show-question 
-                      :text (-> ev :bag-of-props :text) 
+      :show-question {:do :show-question
+                      :text (-> ev :bag-of-props :text)
                       :options ["" "" "" ""]
                       }
       :show-options {:do :show-question ; ev bag-of-props Answer
@@ -82,11 +82,11 @@
                      }
       :show-question-results {:do :update-scores  ; ev bag-of-props Answer
                               :scores (-> ev :bag-of-props :scores)
-                              :options 
+                              :options
                               (if (-> ev :bag-of-props :good-buz)
                                 ["" "" "" ""]
-                                (:s (reduce (fn [acc o] 
-                                                     {:t (inc (:t acc)) 
+                                (:s (reduce (fn [acc o]
+                                                     {:t (inc (:t acc))
                                                       :s (if (nil? o)
                                                            (:s acc)
                                                            (assoc (:s acc) o (str (get (:s acc) o) " " (inc (:t acc)))))
@@ -96,7 +96,7 @@
       :update-scores {:do :update-scores :scores (-> ev :bag-of-props :scores) :questionnum (-> ev :bag-of-props :question-index) } ; Round
       :end-of-round {:do :update-all ; ev bag-of-props Round
                      :text "Round ended!"
-                     :options (map #(str "Team " (:team %) " - " (:score %) " points") 
+                     :options (map #(str "Team " (:team %) " - " (:score %) " points")
                                    (sort-teams-by-scores (-> ev :bag-of-props :scores)))
                      :scores (-> ev :bag-of-props :scores)
                      :questionnum (-> ev :bag-of-props :question-index)
@@ -134,7 +134,7 @@
              (recur (<! displays-channel)))
     {:actor :displays
      :chan displays-channel
-     :routes (GET "/displays" req 
+     :routes (GET "/displays" req
                   (with-channel req channel              ; get the channel
                     ;; communicate with client using method defined above
                     (on-close channel (fn [status]
@@ -144,7 +144,7 @@
                     (if (websocket? channel)
                       (do (println "channel conn") (swap! ws-connections assoc channel true))
                       (println "HTTP channel"))
-                    (on-receive channel (fn [data]       
+                    (on-receive channel (fn [data]
                                           ; data received from client
                                           ;; An optional param can pass to send!: close-after-send?
                                           ;; When unspecified, `close-after-send?` defaults to true for HTTP channels

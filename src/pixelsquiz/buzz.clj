@@ -40,7 +40,7 @@
 (defn buzz-to-properties
   [buttons team]
   (map #(assoc {}
-          :button (get controller-buttons %) 
+          :button (get controller-buttons %)
           :button-index (get button-mapping %)
           :pressed (> (bit-and buttons (bit-shift-left 0x1 %)) 0)
           :team team
@@ -51,8 +51,8 @@
     (let [buf (byte-array 5)
           ]
       (loop [br 0
-             previous [0 0 0 0]] 
-        (let [states (if (= br 5) 
+             previous [0 0 0 0]]
+        (let [states (if (= br 5)
                        (let [ts (tc/to-long (t/now))
                              b1 (aget buf 2)
                              b2 (aget buf 3)
@@ -77,7 +77,7 @@
                            )
                          states)
                        previous)
-              ] 
+              ]
           (recur (.readTimeout dev buf -1) states)))
       )
     (catch Exception e nil))
@@ -86,7 +86,7 @@
 (defn open-and-read-buzz-into [channel]
   (loop [dev (open-buzz)]
     (if (nil? dev)
-      (do 
+      (do
         (Thread/sleep 1000)
         (recur (open-buzz)))
       (do

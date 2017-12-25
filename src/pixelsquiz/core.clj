@@ -34,7 +34,7 @@
       (do
         (<! (timeout 1000))
         (>! disp (Event. :timer-update {:value seconds}))
-        (recur (if @timer-active 
+        (recur (if @timer-active
                  (dec seconds)
                  -1))
         )
@@ -71,7 +71,7 @@
   (w-m-d #spy/d (Event. :show-question-results (:current-answer world)))
   false)
 
-(defmacro with-answer 
+(defmacro with-answer
   [& forms]
   `(let [{question :question team-buzzed :team-buzzed good-buzz :good-buzz answers :answers scores :scores} (:current-answer ~'world)]
      ~@forms))
@@ -80,10 +80,10 @@
 (defn acc-answer
   [world event & _]
   (with-answer world
-    (assoc world :current-answer 
+    (assoc world :current-answer
            (case (:kind event) ; XXX this is kinda ugly ...
              :buzz-pressed (Answer. question (-> event :bag-of-props :team) nil answers scores)
-             :select-right (Answer. question team-buzzed true answers (assoc [0 0 0 0] team-buzzed 
+             :select-right (Answer. question team-buzzed true answers (assoc [0 0 0 0] team-buzzed
                                                                              (* buzz-score-modifier (:score question))))
              :select-wrong (Answer. question team-buzzed false answers scores)))))
 
@@ -110,7 +110,7 @@
     (if (or (= answering-team (-> world :current-answer :team-buzzed))
             (not (nil? (get (-> world :current-answer :answers) answering-team))))
       world ; if the team buzzed ignore them
-      (with-answer (assoc world :current-answer (Answer. question team-buzzed good-buzz 
+      (with-answer (assoc world :current-answer (Answer. question team-buzzed good-buzz
                                                                (assoc answers answering-team selected-option)
                                                                (assoc scores answering-team (get question-scores selected-option)))))
     )))
@@ -118,8 +118,8 @@
 (defn qm-choice
   [world event & _]
   (reset! timer-active false)
-  (with-answer world 
-    (w-m-d (Event. :qm-choice 
+  (with-answer world
+    (w-m-d (Event. :qm-choice
                    {:team team-buzzed
                     :right-wrong (:kind event)
                     })))
@@ -135,7 +135,7 @@
 
 (defn fsm-fn
   [world event from-state to-state]
-  
+
   world)
 
 (defn question-on-quizmaster
@@ -183,9 +183,9 @@
   [world event & _]
   (let [question-index (+ 1 (-> world :current-round :question-index))
         current-round (:current-round world)
-        new-world (assoc world 
+        new-world (assoc world
                          :answers (conj (:answers world) (:current-answer world))
-                         :current-round (assoc current-round :scores (mapv + (:scores current-round) 
+                         :current-round (assoc current-round :scores (mapv + (:scores current-round)
                                                                           (-> world :current-answer :scores))
                                                               :question-index question-index)
                          )
@@ -194,7 +194,7 @@
     (w-m-d (Event. :show-question {:text ""}))
     (add-tiebreaker-question-if-necessary new-world)))
 
-(defn start-question 
+(defn start-question
   [answer-chan world event from-state to-state]
   (let [current-round (:current-round world)
         question-index (:question-index current-round)
@@ -204,22 +204,22 @@
                                          {:text text
                                           :original-pos original
                                           :score score})
-                                       (:options question) (range 4) [(:score question) 0 0 0] ; XXX option scores 
+                                       (:options question) (range 4) [(:score question) 0 0 0] ; XXX option scores
                                        ))
         ]
     (if (nil? question)
       (>!! answer-chan (Event. :out-of-questions {:question-index question-index})))
-    (assoc world 
+    (assoc world
            :current-question question
            :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil nil [nil nil nil nil] [0 0 0 0])
            )))
 
 (defn prepare-for-next-round
-  [world event & _] 
+  [world event & _]
     (assoc world
            :past-rounds (conj (:rounds world) (:current-round world)))
   )
-(defn round-setup 
+(defn round-setup
   [world event from-state to-state]
   (let [new-round-number (+ 1 (:round-index world))
         new-round (get (:rounds world) new-round-number)]
@@ -264,8 +264,8 @@
                             {:kind :start-round} -> {:action prepare-for-next-round} :start]
                            ])
         ]
-    (loop [f (game (:state @game-state) 
-                   (merge (:value @game-state) 
+    (loop [f (game (:state @game-state)
+                   (merge (:value @game-state)
                           world
                           {:past-rounds []
                            :answers []}
@@ -280,7 +280,7 @@
   (case what
     :items (merge (read-string (slurp "round-config.edn"))
                   {:questions-repo (read-string (slurp questions-db))})
-    :initial-state (let [saved (try 
+    :initial-state (let [saved (try
                           (read-string (slurp game-state-file))
                           (catch Exception e {:state :start :value {:round-index -1}}))
                          state-fn (ns-resolve *ns* (symbol (name (:state saved))))]
@@ -296,7 +296,7 @@
   [key ref old-state state]
   (let [value (:value state)]
     (spit game-state-file (pr-str {:state (:state state)
-                                   :value (select-keys value [:current-question :current-answer :current-round :round-index]) 
+                                   :value (select-keys value [:current-question :current-answer :current-round :round-index])
                                    }) :append false)
     (spit (str game-state-file "-log") (pr-str state) :append true)
     (clojure.pprint/pprint (:state state))
@@ -307,7 +307,7 @@
   [& args]
   (let [
         game-items (read-from-file :items)
-        stage (setup-stage) 
+        stage (setup-stage)
         ]
     (add-watch game-state nil save-game-state-to-file!)
     (game-loop game-state (assoc game-items :stage stage))
@@ -318,22 +318,22 @@
 ;; evil stuff here -> helpers for OMFG on the repl
 (defonce server (repl/start-server :port 7888))
 
-(defn stage-ch 
+(defn stage-ch
   []
   (-> @game-state :value :stage :displays))
 
-(defn push-to-stage 
-  [title options] 
-  (let [world (:value @game-state)] 
-    (w-m-d {:kind :show-options 
-            :bag-of-props {:question {:text title 
+(defn push-to-stage
+  [title options]
+  (let [world (:value @game-state)]
+    (w-m-d {:kind :show-options
+            :bag-of-props {:question {:text title
                                       :shuffled-options (mapv #(assoc {} :text %) options)}}})
     ))
 
 (defn team-numbers
   []
   (let [world (:value @game-state)]
-    (w-m-d {:kind :team-number} 
+    (w-m-d {:kind :team-number}
     )))
 
 (defn thank-sponsors
