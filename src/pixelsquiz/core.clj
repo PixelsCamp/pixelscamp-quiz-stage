@@ -33,11 +33,11 @@
     (if (> seconds -1)
       (do
         (<! (timeout 1000))
-        (>! disp (Event. :timer-update {:value seconds}))
-        (recur (if @timer-active
-                 (dec seconds)
-                 -1))
-        )
+        (if @timer-active  ;; ...might have stopped in the meanwhile.
+          (do
+            (>! disp (Event. :timer-update {:value seconds}))
+            (recur (if @timer-active (dec seconds) -1))
+          )))
       (do
         (reset! timer-active false)
         (>! c (Event. evkind {})))
