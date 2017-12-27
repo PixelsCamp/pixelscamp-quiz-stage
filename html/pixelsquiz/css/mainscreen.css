@@ -170,27 +170,3 @@ div#scoreboard td:nth-child(3) {
 	background: #ff0;
 	color: #222;
 }
-
-.flipable {
-	-webkit-transition: -webkit-transform 0.5s;
-	-moz-transition: -moz-transform 0.5s;
-	-o-transition: -o-transform 0.5s;
-	transition: transform 0.5s;
-
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	-o-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility: hidden;
-	-o-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-
-.flipped {
-	-webkit-transform: rotateX( 180deg );
-	-moz-transform: rotateX( 180deg );
-	-o-transform: rotateX( 180deg );
-	transform: perspective(600px) rotateX( 180deg );
-}
