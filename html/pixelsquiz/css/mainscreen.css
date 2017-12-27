@@ -65,6 +65,18 @@ div .resp {
 	letter-spacing: 1;
 }
 
+.resp.wrong {
+	background: #777 !important;
+	color: #222 !important;
+}
+
+/*
+.resp.correct:after {
+	content: ' ✓';
+	color: #0f0;
+}
+*/
+
 div#statusline {
 	width: 100%;
 	position: absolute;

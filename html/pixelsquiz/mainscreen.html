@@ -103,6 +103,22 @@ function start() {
             console.log('Updating question number: ' + curr_question);
         }
 
+        // Highlight the correct answer (boy, this is ugly...)
+        if ('options' in msg) {
+            console.log('Updating options list...');
+
+            var options = $('#options .resp');
+            options.removeClass("correct wrong");
+
+            if ('correctidx' in msg) {
+                var items = options.toArray();
+
+                for (var i = 0; i < items.length; i++) {
+                    $(items[i]).addClass(msg.correctidx === i ? "correct" : "wrong");
+                }
+            }
+        }
+
 		if (msg.do === 'timer-update') {
 			throb(msg.value)
 		} else if (msg.do === 'show-question') {
