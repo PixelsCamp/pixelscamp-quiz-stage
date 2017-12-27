@@ -90,14 +90,14 @@
                                                       :s (if (nil? o)
                                                            (:s acc)
                                                            (assoc (:s acc) o (str (get (:s acc) o) " " (inc (:t acc)))))
-                                                      }) {:t 0 :s (mapv #(str (:text %) " - ") (-> ev :bag-of-props :question :shuffled-options))} (-> ev :bag-of-props :answers)
+                                                      }) {:t 0 :s (mapv #(str (:text %) " — ") (-> ev :bag-of-props :question :shuffled-options))} (-> ev :bag-of-props :answers)
                                                    )))
                               :correctidx (.indexOf (mapv #(:original-pos %) (-> ev :bag-of-props :question :shuffled-options)) 0)
                               }
       :update-scores {:do :update-scores :scores (-> ev :bag-of-props :scores) :questionnum (-> ev :bag-of-props :question-index) } ; Round
       :end-of-round {:do :update-all ; ev bag-of-props Round
                      :text "Round ended!"
-                     :options (map #(str "Team " (:team %) " - " (:score %) " points")
+                     :options (map #(str "Team #" (:team %) " — " (:score %) " points")
                                    (sort-teams-by-scores (-> ev :bag-of-props :scores)))
                      :correctidx 0  ;; ...highlight winning team.
                      :scores (-> ev :bag-of-props :scores)
