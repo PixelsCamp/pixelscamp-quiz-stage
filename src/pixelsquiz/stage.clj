@@ -99,6 +99,7 @@
                      :text "Round ended!"
                      :options (map #(str "Team " (:team %) " - " (:score %) " points")
                                    (sort-teams-by-scores (-> ev :bag-of-props :scores)))
+                     :correctidx 0  ;; ...highlight winning team.
                      :scores (-> ev :bag-of-props :scores)
                      :questionnum (-> ev :bag-of-props :question-index)
                      }
