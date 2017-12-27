@@ -105,6 +105,10 @@ div#timer {
 	display: inline-block;
 }
 
+#timernumber.expired {
+	color: #ea282e;
+}
+
 div#scoreboard {
 	position: absolute;
 	right: 30px; bottom: 132px;

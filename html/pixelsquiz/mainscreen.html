@@ -67,13 +67,15 @@ function update_scores(scores) {
 }
 
 function throb (secs) {
-	var td = $('#timer');
 	var timer = $('#timernumber');
 
-	timer.fadeOut(50, function () {
-		timer.text(secs);
-		timer.fadeIn(50);
-	});
+    timer.text(secs);
+
+    if (secs <= 0) {
+        timer.addClass('expired');
+    } else {
+        timer.removeClass('expired');
+    }
 }
 
 function show_question(q,o) {
