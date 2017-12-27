@@ -83,8 +83,8 @@
       :show-question-results {:do :update-scores  ; ev bag-of-props Answer
                               :scores (-> ev :bag-of-props :scores)
                               :options
-                              (if (-> ev :bag-of-props :good-buz)
-                                ["" "" "" ""]
+                              (if (-> ev :bag-of-props :good-buzz)
+                                (mapv #(:text %) (-> ev :bag-of-props :question :shuffled-options))  ;; ...no team numbers.
                                 (:s (reduce (fn [acc o]
                                                      {:t (inc (:t acc))
                                                       :s (if (nil? o)
