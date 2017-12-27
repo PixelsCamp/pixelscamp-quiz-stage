@@ -56,6 +56,21 @@ div#perg {
 	border: none;
 }
 
+#options .opinfo {
+	margin-left: 30px;
+}
+
+#options .opinfo span {
+	display: inline-block;
+	background: #222;
+	color: #fdcf1a;
+	margin: 0 11px;
+	width: 1.2em;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 2em;
+}
+
 div .resp {
 	font-size: 60px;
 	padding: 12px 28px;

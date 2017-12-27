@@ -20,18 +20,10 @@
 			<div id="perg" class="main">The Amazing Quizshow!</div>
 
 			<div id="options">
-				<div id="rAcont" class="flipable">
-					<div id="r0" class="resp blue"></div>
-				</div>
-				<div id="rBcont" class="flipable">
-					<div id="r1" class="resp orange"></div>
-				</div>
-				<div id="rCcont" class="flipable">
-					<div id="r2" class="resp green"></div>
-				</div>
-				<div id="rDcont" class="flipable">
-					<div id="r3" class="resp yellow"></div>
-				</div>
+				<div id="r0" class="resp blue"><span class="optext"></span><span class="opinfo"></span></div>
+				<div id="r1" class="resp orange"><span class="optext"></span><span class="opinfo"></span></div>
+				<div id="r2" class="resp green"><span class="optext"></span><span class="opinfo"></span></div>
+				<div id="r3" class="resp yellow"><span class="optext"></span><span class="opinfo"></span></div>
 			</div>
 		</div>
 		<div id="side">
@@ -84,8 +76,32 @@ function show_question(q,o) {
 }
 function show_options(o) {
 	for (i=0;i<4;i++) {
-		$('#r'+i).text(o[i]);
+		$('#r' + i + ' .optext').text(o[i]);
+        $('#r' + i + ' .opinfo').empty();  // ...remove residue.
 	}
+}
+
+function show_answers(answers) {
+    var choices = [[], [], [], []];
+
+    for (var team = 0; team < answers.length; team++) {
+        if (answers[team] === undefined || answers[team] === null) {
+            continue;
+        }
+
+        choices[answers[team]].push(team);
+    }
+
+    for (var option = 0; option < choices.length; option++) {
+        $('#r' + option + ' .opinfo').empty();  // ...remove residue.
+
+        for (var i = 0; i < choices[option].length; i++) {
+            var elem = '<span>' + (choices[option][i] + 1) + '</span>';
+            console.log("appending... " + elem);
+            $('#r' + option + ' .opinfo').append(elem);
+        }
+    }
+
 }
 
 var ws = null;
@@ -153,6 +169,11 @@ function start() {
 
 			if (msg.options) {
 				show_options(msg.options);
+
+                if ('answers' in msg && msg.answers) {
+                    console.log('Showing team answers...');
+                    show_answers(msg.answers);
+                }
 			}
 		} else if (msg.do == 'lights-off') {
 			show_question("", ["", "", "", ""])

@@ -82,17 +82,9 @@
                      }
       :show-question-results {:do :update-scores  ; ev bag-of-props Answer
                               :scores (-> ev :bag-of-props :scores)
-                              :options
-                              (if (-> ev :bag-of-props :good-buzz)
-                                (mapv #(:text %) (-> ev :bag-of-props :question :shuffled-options))  ;; ...no team numbers.
-                                (:s (reduce (fn [acc o]
-                                                     {:t (inc (:t acc))
-                                                      :s (if (nil? o)
-                                                           (:s acc)
-                                                           (assoc (:s acc) o (str (get (:s acc) o) " " (inc (:t acc)))))
-                                                      }) {:t 0 :s (mapv #(str (:text %) " — ") (-> ev :bag-of-props :question :shuffled-options))} (-> ev :bag-of-props :answers)
-                                                   )))
+                              :options (mapv #(:text %) (-> ev :bag-of-props :question :shuffled-options))
                               :correctidx (.indexOf (mapv #(:original-pos %) (-> ev :bag-of-props :question :shuffled-options)) 0)
+                              :answers (-> ev :bag-of-props :answers)
                               }
       :update-scores {:do :update-scores :scores (-> ev :bag-of-props :scores) :questionnum (-> ev :bag-of-props :question-index) } ; Round
       :end-of-round {:do :update-all ; ev bag-of-props Round
