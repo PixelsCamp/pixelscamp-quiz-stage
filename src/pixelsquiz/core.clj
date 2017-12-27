@@ -28,6 +28,7 @@
   [duration evkind disp c]
   (reset! timer-active true)
   (>!! disp (Event. :timer-start {}))
+  (>!! disp (Event. :timer-update {:value duration}))
   (go-loop
     [seconds (dec duration)]
     (if (> seconds -1)
