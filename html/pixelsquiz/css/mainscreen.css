@@ -34,7 +34,7 @@ div#side {
 div#perg {
 	color: #fff;
 	background: none;
-	font-size: 82px;
+	font-size: 86px;
 	letter-spacing: 1;
 	font-family: 'Gill Sans', Trebuchet, sans-serif;
 	height: 280px;
@@ -57,18 +57,17 @@ div#perg {
 }
 
 #options .opinfo {
-	margin-left: 30px;
+	float: right;
 }
 
 #options .opinfo span {
 	display: inline-block;
 	background: #222;
-	color: #fdcf1a;
+	color: #fff;
 	margin: 0 11px;
 	width: 1.2em;
 	text-align: center;
 	font-weight: bold;
-	border-radius: 2em;
 }
 
 div .resp {
@@ -81,7 +80,7 @@ div .resp {
 }
 
 .resp.wrong {
-	background: #777 !important;
+	background: #555 !important;
 	color: #222 !important;
 }
 
