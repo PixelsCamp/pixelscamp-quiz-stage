@@ -11,7 +11,7 @@
 								 [http-kit                             "2.2.0"] ; Default
 								 [ring                      "1.5.0"]
 								 [ring/ring-defaults        "0.2.1"] ; Includes `ring-anti-forgery`, etc.
-								 [compojure                 "1.5.1"] ; Or routing lib of your choice 
+								 [compojure                 "1.5.1"] ; Or routing lib of your choice
                  [org.clojars.torbjornvatn/hidapi "1.1"]
                  [clj-time "0.12.0"]
                  [cheshire "5.6.3"]
