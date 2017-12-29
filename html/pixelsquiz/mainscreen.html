@@ -25,10 +25,10 @@
 			<div id="scoreboard">
 				<p><span id="nperg">Lets Start!</span></p>
 				<table id="scoreboardtab">
-					<tr><td>Team #1:</td> <td>0</td> <td>points</td></tr>
-					<tr><td>Team #2:</td> <td>0</td> <td>points</td></tr>
-					<tr><td>Team #3:</td> <td>0</td> <td>points</td></tr>
-					<tr><td>Team #4:</td> <td>0</td> <td>points</td></tr>
+					<tr id="s0" class="team"><td>Team #1:</td> <td>0</td> <td>points</td></tr>
+					<tr id="s1" class="team"><td>Team #2:</td> <td>0</td> <td>points</td></tr>
+					<tr id="s2" class="team"><td>Team #3:</td> <td>0</td> <td>points</td></tr>
+					<tr id="s3" class="team"><td>Team #4:</td> <td>0</td> <td>points</td></tr>
 				</table>
 			</div>
 		</div>
@@ -41,7 +41,7 @@ function update_scores(scores) {
 
 	var t = [];
 	for(var i = 1 ; i < 5 ; i++) {
-		t.push('<tr><td>Team #')
+		t.push('<tr id="s' + (i-1) + '" class="team"><td>Team #')
 			t.push(i);
 		t.push(': </td> <td>');
 		t.push(scores[i-1]);
@@ -127,6 +127,13 @@ function start() {
                     $(items[i]).addClass(msg.correctidx === i ? "correct" : "wrong");
                 }
             }
+        }
+
+        // Highlight a team (actually, just the 'highlight' event does it)...
+        $('#scoreboard .team').removeClass('highlight');
+        if ('team' in msg) {
+            console.log('#scoreboard #s' + msg.team + '.team');
+            $('#scoreboard #s' + msg.team + '.team').addClass('highlight');
         }
 
 		if (msg.do === 'timer-update') {

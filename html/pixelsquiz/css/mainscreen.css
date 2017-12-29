@@ -46,6 +46,8 @@ div#perg {
 }
 
 #nperg {
+	display: inline-block;
+	margin-bottom: 10px;
 }
 
 #options {
@@ -132,7 +134,7 @@ div#scoreboard {
 }
 
 div#scoreboard p {
-	margin: 10;
+	margin: 10px;
 	font-family: Avant Pixel;
 	font-size: 46px;
 	color: white;
@@ -143,9 +145,10 @@ div#scoreboard table {
 	margin: 0;
 	background: none;
 	box-shadow: none;
-	padding: 10px 20px;
+	padding: 20px;
 	background: #333;
 	width: 430px;
+	border-spacing: 0;
 }
 
 div#scoreboard td {
@@ -167,6 +170,12 @@ div#scoreboard td:nth-child(2) {
 }
 
 div#scoreboard td:nth-child(3) {
+	padding-right: 12px;
+}
+
+div#scoreboard .highlight {
+	background: #01a7ee;
+    color: #fff;
 }
 
 .blue {
