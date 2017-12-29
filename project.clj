@@ -19,7 +19,7 @@
     [org.craigandera/dynne "0.4.1"]
   ]
   :main ^:skip-aot pixelsquiz.core
-  :target-path "target/%s"
+  :target-path ".target/%s"
   :profiles {:uberjar {:aot :all}}
   :jvm-opts ["--add-modules" "java.xml.bind" "-Djava.awt.headless=true"]
   )
