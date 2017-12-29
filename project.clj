@@ -38,5 +38,5 @@
                                    }
                         }]
               }
-  :jvm-opts ["--add-modules" "java.xml.bind"]
+  :jvm-opts ["--add-modules" "java.xml.bind" "-Djava.awt.headless=true"]
   )
