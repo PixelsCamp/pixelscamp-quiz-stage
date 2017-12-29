@@ -16,8 +16,6 @@
                  [clj-time "0.12.0"]
                  [cheshire "5.6.3"]
                  [org.craigandera/dynne "0.4.1"]
-                 [prismatic/dommy "1.1.0"]
-                 [cljs-ajax "0.5.8"]
 								 ]
   :main ^:skip-aot pixelsquiz.core
   :target-path "target/%s"
@@ -25,18 +23,5 @@
              :dev {
                    :source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
-  :plugins [[lein-figwheel "0.5.0-1"]
-            [lein-cljsbuild "0.3.0"]]
-  :cljsbuild {
-              :builds [{
-                        :id "quizconsole"
-                        :source-paths ["src-cljs/quizconsole"]
-                        :figwheel true
-                        :compiler {:output-to "html/pixelsquiz/autogen/quizconsole.js"
-                                   :optimizations :whitespace
-                                   :pretty-print true
-                                   }
-                        }]
-              }
   :jvm-opts ["--add-modules" "java.xml.bind" "-Djava.awt.headless=true"]
   )
