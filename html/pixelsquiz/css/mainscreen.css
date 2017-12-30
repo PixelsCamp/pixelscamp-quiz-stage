@@ -20,14 +20,14 @@ div, p, table {
 
 div#main {
 	position: absolute;
-	top: 2%; left: 2%;
+	top: 4%; left: 3%;
 	width: 68%; height: 90%;
 	display: table-row;
 }
 
 div#side {
 	position: absolute;
-	top: 5%; right: 2%;
+	top: 7%; right: 2%;
 	width: 30%; height: 90%;
 }
 
@@ -39,7 +39,7 @@ div#perg {
 	font-family: Lato, sans-serif;
 	height: 280px;
 	margin: 40px 10px 60px 10px;
-	padding: 40px 20px 20px 28px;
+	padding: 60px 20px 20px 28px;
 	line-height: 1.1em;
 	display: table-cell;
 	vertical-align: middle;
