@@ -26,10 +26,10 @@
 			<div id="scoreboard">
 				<p><span id="nperg">Lets Start!</span></p>
 				<table id="scoreboardtab">
-					<tr id="s0" class="team"><td>Team #1:</td> <td>0</td> <td>points</td></tr>
-					<tr id="s1" class="team"><td>Team #2:</td> <td>0</td> <td>points</td></tr>
-					<tr id="s2" class="team"><td>Team #3:</td> <td>0</td> <td>points</td></tr>
-					<tr id="s3" class="team"><td>Team #4:</td> <td>0</td> <td>points</td></tr>
+					<tr id="s0" class="team"><td>Team #1:</td> <td class="tscore">0</td> <td>points</td></tr>
+					<tr id="s1" class="team"><td>Team #2:</td> <td class="tscore">0</td> <td>points</td></tr>
+					<tr id="s2" class="team"><td>Team #3:</td> <td class="tscore">0</td> <td>points</td></tr>
+					<tr id="s3" class="team"><td>Team #4:</td> <td class="tscore">0</td> <td>points</td></tr>
 				</table>
 			</div>
 		</div>
@@ -38,17 +38,9 @@
 		<script>
 
 function update_scores(scores) {
-	var scoreb = $('#scoreboardtab');
-
-	var t = [];
-	for(var i = 1 ; i < 5 ; i++) {
-		t.push('<tr id="s' + (i-1) + '" class="team"><td>Team #')
-			t.push(i);
-		t.push(': </td> <td>');
-		t.push(scores[i-1]);
-		t.push('</td> <td>points</td></tr>');
+	for(var team = 0; team < 4; team++) {
+        $('#s' + team + ' .tscore').text(scores[team]);
 	}
-	scoreb.html(t.join(''));
 }
 
 function throb (secs) {

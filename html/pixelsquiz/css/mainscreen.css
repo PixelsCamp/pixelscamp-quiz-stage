@@ -165,7 +165,7 @@ div#scoreboard td:nth-child(1) {
 	padding-right: 20px;
 }
 
-div#scoreboard td:nth-child(2) {
+div#scoreboard td.tscore {
 	color: #fdcf1a;
 	font-weight: bold;
 }
