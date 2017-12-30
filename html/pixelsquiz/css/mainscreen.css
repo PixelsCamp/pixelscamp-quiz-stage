@@ -6,7 +6,7 @@ body {
 	border: solid black;
   	padding: 0em;
 	font-size: 18px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Lato, sans-serif;
 	background: #202020;
 }
 
@@ -35,8 +35,8 @@ div#perg {
 	color: #fff;
 	background: none;
 	font-size: 86px;
-	letter-spacing: 1;
-	font-family: 'Gill Sans', Trebuchet, sans-serif;
+	/*letter-spacing: -1px;*/
+	font-family: Lato, sans-serif;
 	height: 280px;
 	margin: 40px 10px 60px 10px;
 	padding: 40px 20px 20px 28px;
@@ -73,12 +73,12 @@ div#perg {
 }
 
 div .resp {
-	font-size: 60px;
+	font-size: 58px;
 	padding: 12px 28px;
 	margin: 10px;
 	min-height: 72px;
-	font-family: 'Gill Sans', Trebuchet, sans-serif;
-	letter-spacing: 1;
+	font-family: Telex, sans-serif;
+	letter-spacing: -1px;
 }
 
 .resp.wrong {
@@ -113,8 +113,8 @@ div#timer {
 }
 
 #timernumber {
-	font-family: 'Press Start 2P', 'Avant Pixel';
-	font-size: 205px;
+	font-family: 'Press Start 2P';
+	font-size: 210px;
 	color: #fdcf1a;
 	min-width: 410px;
 	text-align: center;
@@ -135,7 +135,7 @@ div#scoreboard {
 
 div#scoreboard p {
 	margin: 10px;
-	font-family: Avant Pixel;
+	font-family: 'Avant Pixel';
 	font-size: 46px;
 	color: white;
 	text-align: center;
@@ -154,14 +154,15 @@ div#scoreboard table {
 div#scoreboard td {
 	text-align: right;
 	border: none;
-	padding: 5px;
+	padding: 6px;
 	background: none;
-	font-family: 'Courier', monospace;
+	font-family: Telex, monospace;
 	font-size: 36px;
+	letter-spacing: 1px;
 }
 
 div#scoreboard td:nth-child(1) {
-	padding-right: 18px;
+	padding-right: 20px;
 }
 
 div#scoreboard td:nth-child(2) {
@@ -170,7 +171,7 @@ div#scoreboard td:nth-child(2) {
 }
 
 div#scoreboard td:nth-child(3) {
-	padding-right: 12px;
+	padding-right: 14px;
 }
 
 div#scoreboard .highlight {
