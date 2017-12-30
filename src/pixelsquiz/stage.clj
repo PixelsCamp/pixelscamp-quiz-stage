@@ -48,6 +48,7 @@
     :buzzed (do (sounds/stop-thinking-music) (sounds/play :buzz))
     :timer-update (if (= 0 (-> ev :bag-of-props :value)) (sounds/play :timeout))
     :show-question-results (do (sounds/stop-thinking-music) (sounds/play :ping))
+    :qm-choice (if (= (-> ev :bag-of-props :right-wrong) :select-wrong) (sounds/play :error))
     :default
     )
   )

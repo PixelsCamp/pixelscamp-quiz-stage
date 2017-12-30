@@ -10,7 +10,7 @@
   :thinking-music (s/read-sound "sounds/thinking.mp3")
   :buzz (s/read-sound "sounds/buzz.mp3")
   :correct (s/read-sound "sounds/correct.mp3")
-  :error (s/read-sound "sounds/error.wav")
+  :error (s/read-sound "sounds/error.mp3")
   :t1 (s/read-sound "sounds/p1.mp3")
   :t2 (s/read-sound "sounds/p2.mp3")
   :t3 (s/read-sound "sounds/p3.mp3")
