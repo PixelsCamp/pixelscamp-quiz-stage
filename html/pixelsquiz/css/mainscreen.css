@@ -166,8 +166,11 @@ div#scoreboard td:nth-child(1) {
 }
 
 div#scoreboard td.tscore {
-	color: #fdcf1a;
 	font-weight: bold;
+}
+
+div#scoreboard td.scored {
+	color: #fdcf1a;
 }
 
 div#scoreboard td:nth-child(3) {

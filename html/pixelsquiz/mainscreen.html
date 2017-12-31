@@ -39,7 +39,14 @@
 
 function update_scores(scores) {
 	for(var team = 0; team < 4; team++) {
-        $('#s' + team + ' .tscore').text(scores[team]);
+        var tscore = $('#s' + team + ' .tscore');
+        tscore.text(scores[team]);
+
+        if (scores[team] > 0) {
+            tscore.addClass('scored');
+        } else {
+            tscore.removeClass('scored');
+        }
 	}
 }
 
