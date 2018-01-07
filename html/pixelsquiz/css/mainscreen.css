@@ -150,28 +150,32 @@ div#scoreboard table {
 	margin: 0;
 	background: none;
 	box-shadow: none;
-	padding: 20px;
-	background: #333;
+	padding-top: 20px;
 	width: 430px;
 	border-spacing: 0;
+	border-top: 3px solid #01a7ee;
 }
 
 div#scoreboard td {
-	text-align: right;
+	text-align: center;
 	border: none;
 	padding: 6px;
 	background: none;
 	font-family: Telex, monospace;
-	font-size: 36px;
+	font-size: 37px;
 	letter-spacing: 1px;
 }
 
 div#scoreboard td:nth-child(1) {
 	padding-right: 20px;
+	text-align: right;
 }
 
 div#scoreboard td.tscore {
 	font-weight: bold;
+	text-align: right;
+	width: 2ch;
+	padding-right: 0.6ch;
 }
 
 div#scoreboard td.scored {
@@ -180,11 +184,13 @@ div#scoreboard td.scored {
 
 div#scoreboard td:nth-child(3) {
 	padding-right: 14px;
+	text-align: left;
 }
 
 div#scoreboard .highlight {
 	background: #01a7ee;
     color: #fff;
+    font-weight: bold;
 }
 
 .blue {
