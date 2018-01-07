@@ -45,6 +45,11 @@ div#perg {
 	vertical-align: middle;
 }
 
+div#perg b {
+	color: #fdcf1a;
+	font-weight: bold;
+}
+
 #nperg {
 	display: inline-block;
 	margin-bottom: 10px;

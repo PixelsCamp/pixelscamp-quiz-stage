@@ -133,6 +133,22 @@
 		border-bottom: 2px solid #fdcf1a;
 	}
 
+	div#pergunta .qz_question {
+	}
+
+	div#pergunta .qz_answer {
+		display: inline-block;
+		margin-top: 0.4em;
+		color: #888;
+		font-size: 0.7em;
+	}
+
+	div#pergunta .qz_answer:before {
+		content: 'Answer: ';
+		font-weight: bold;
+		color: #fdcf1a;
+	}
+
 	input.confirm {
 		width: 100px;
 	height: 100px;
@@ -210,7 +226,7 @@ function start() {
 			if ('getrightwrong' in msg) {
 				get_right_wrong(msg.getrightwrong);
 			} else {
-				$('#pergunta').text(msg.text);
+				$('#pergunta').html(msg.text);
 			}
 		} else {
 			if (msg.do === 'update-all' || msg.do === 'update-scores' || msg.do === 'update-lights') {
