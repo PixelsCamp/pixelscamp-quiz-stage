@@ -1,24 +1,24 @@
 @font-face {
     font-family: 'Avant Pixel';
-    src: url(/static/fonts/avant_pixel.ttf) format('truetype');
+    src: url(../fonts/avant_pixel.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Press Start 2P';
-    src: url(/static/fonts/PressStart2P-Regular.ttf) format('truetype');
+    src: url(../fonts/PressStart2P-Regular.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Telex';
-    src: url(/static/fonts/Telex-Regular.ttf) format('truetype');
+    src: url(../fonts/Telex-Regular.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Lato';
-    src: url(/static/fonts/Lato-Regular.ttf) format('truetype');
+    src: url(../fonts/Lato-Regular.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Ubuntu Mono';
-    src: url(/static/fonts/UbuntuMono-Regular.ttf) format('truetype');
+    src: url(../fonts/UbuntuMono-Regular.ttf) format('truetype');
 }
