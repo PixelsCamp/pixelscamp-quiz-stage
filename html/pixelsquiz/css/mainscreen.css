@@ -131,14 +131,14 @@ div#timer {
 
 div#scoreboard {
 	position: absolute;
-	right: 25px; bottom: 130px;
+	right: 25px; bottom: 140px;
 	padding: 10px;
 	margin: 20px 0 0 20px;
 	text-align: center;
 }
 
 div#scoreboard p {
-	margin: 10px;
+	margin: 35px;
 	font-family: 'Avant Pixel';
 	font-size: 46px;
 	color: white;
@@ -152,6 +152,7 @@ div#scoreboard table {
 	padding-top: 20px;
 	width: 430px;
 	border-spacing: 0;
+    color: #858585;
 }
 
 div#scoreboard td {
