@@ -1,251 +1,35 @@
 <html>
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="css/fonts.css" />
+        <title>Quizconsole</title>
 
-	<title>Quizconsole</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/fonts.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/quizconsole.css" />
 
-	<style type="text/css" media="screen">
-		body {
-			background: #222;
-			color: #eee;
-			font-family: 'Lato';
-			letter-spacing: -1px;
-		}
+    </head>
+    <body>
+        <h1>Quizmaster Console</h1>
+        <div id="framewrap"></div>
 
-		h1 {
-			font-family: 'Avant Pixel';
-			margin: 15px 20px;
-			color: #fdcf1a;
-		}
+        <div id="commands">
+            <button id="start-round">Start Round / Round End OK</button>
+            <button id="start-question">Next Question / Show Scores</button>
+            <button id="show-question">Start Question / Show Text</button>
+            <button id="start-mult">Multiple Choice</button>
+            <div id="command-box">
+                <textarea name="servercmd" id="servercmd" rows="8" cols="20"></textarea>
+                <button id="sendcmd" onclick="sendmanual()">send!</button>
+            </div>
+        </div>
 
-		iframe#mainscreen {
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-			border: solid thin black;
-			}
+        <div id="pergunta"></div>
 
-			XPTO {
-		zoom: 0.75;
-    -moz-transform: scale(0.75);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(0.75);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(0.75);
-		-webkit-transform-origin: 0 0;
-	}
-	div#framewrap {
-		position: absolute;
-		top: 0; left: 0;
-		width: 80%;
-		height: 100%;
-	}
+        <div id="statuswrap">
+            <pre id="status"></pre>
+        </div>
 
-	div#commands {
-		width: 250px;
-		height: 100%;
-		top: 0;
-		right: 0;
-		position: absolute;
-		margin: 40px;
-	}
-
-	button {
-		width: 100%;
-		height: 120px;
-		margin-bottom: 20px;
-		font-size: 20px;
-		font-weight: bold;
-
-		display: inline-block;
-		padding: 15px 25px;
-		font-size: 24px;
-		cursor: pointer;
-		text-align: center;
-		text-decoration: none;
-		outline: none;
-		border: none;
-		border-radius: 15px;
-		box-shadow: 0 9px #777;
-	}
-
-	button#start-round {
-		background: #01a7ee;
-		color: #222;
-	}
-
-	button#start-question {
-		background: #f80;
-		color: #222;
-	}
-
-	button#show-question {
-		background: #0c0;
-		color: #222;
-	}
-
-	button#start-mult {
-		background: #ff0;
-		color: #222;
-	}
-
-	button:hover {
-	    background: #eee !important;
-	}
-
-	button:active {
-		background: #eee !important;
-		box-shadow: 0 5px #666;
-		transform: translateY(4px);
-	}
-
-	#command-box {
-		visibility: hidden;
-	}
-
-	button#sendcmd {
-		height: 50px;
-		margin-bottom: 0px;
-	}
-
-	div#statuswrap {
-		width: 850px;
-		margin: 20px;
-		padding: 20px;
-		position: absolute;
-		bottom: 0; left: 0;
-		height: 45%;
-		overflow: scroll;
-		background: none;
-		font-family: monospace;
-	}
-
-
-	div#pergunta {
-		width: 850px;
-		margin: 20px;
-		padding: 20px;
-		position: absolute;
-		top: 40px; left: 0;
-		height: 25%;
-		font-size: 36px;
-		background: none;
-		border-bottom: 2px solid #fdcf1a;
-	}
-
-	div#pergunta .qz_question {
-	}
-
-	div#pergunta .qz_answer {
-		display: inline-block;
-		margin-top: 0.4em;
-		color: #888;
-		font-size: 0.7em;
-	}
-
-	div#pergunta .qz_answer:before {
-		content: 'Answer: ';
-		font-weight: bold;
-		color: #fdcf1a;
-	}
-
-	input.confirm {
-		width: 100px;
-	height: 100px;
-		margin: 50px;
-	}
-	input.cancel {
-		width: 100px;
-		height: 100px;
-		margin: 50px;
-	}
-	</style>
-</head>
-<body>
-	<h1>Quizmaster Console</h1>
-	<div id="framewrap">
-	</div>
-
-	<div id="commands">
-		<button id="start-round">Start Round / Round End OK</button>
-		<button id="start-question" >Next Question / Show Scores</button>
-		<button id="show-question" >Start Question / Show Text</button>
-		<button id="start-mult" >Multiple Choice</button>
-		<div id="command-box">
-			<textarea name="servercmd" id="servercmd" rows="8" cols="20"></textarea>
-			<button id="sendcmd" onclick="sendmanual()">send!</button>
-		</div>
-	</div>
-	<div id="pergunta">
-	</div>
-	<div id="statuswrap">
-	<pre id="status">
-
-	</pre>
-</div>
-<script src="js/jquery-3.2.1.min.js"></script>
-<script>
-function _send_command(cmd) {
-	$.post('/actions/'+ cmd)
-
-}
-
-function send_command(ev) {
-	_send_command($(ev.target).attr('id'));
-}
-
-function sendmanual() {
-	_send_command($('#servercmd').val());
-}
-
-$("#commands button").each(function (idx) {
- $(this).click(send_command)
-})
-
-function get_right_wrong(team) {
-	var r = window.confirm('Team #'+ (team+1) +' got it right?');
-	if (r) {
-		_send_command('select-right');
-	} else {
-		_send_command('select-wrong');
-	}
-}
-
-var ws = null;
-
-function start() {
-	console.log('starting ws');
-	ws = new WebSocket("ws://" + document.location.host +"/displays");
-	ws.onopen = function (event) {
-		ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
-	}
-	ws.onmessage = function (event) {
-		var msg = JSON.parse(event.data);
-		console.log(event.data);
-		if(msg.do === 'quizmaster-only') {
-			if ('getrightwrong' in msg) {
-				get_right_wrong(msg.getrightwrong);
-			} else {
-				$('#pergunta').html(msg.text);
-			}
-		} else {
-			if (msg.do === 'update-all' || msg.do === 'update-scores' || msg.do === 'update-lights') {
-				$('#status').text(JSON.stringify(msg) + '\n' + $('#status').text());
-			}
-		}
-	}
-}
-
-function check() {
-	if(!ws || ws.readyState == 3) start();
-}
-
-check();
-
-setInterval(check, 3000);
-
-</script>
-</body>
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/quizconsole.js"></script>
+    </body>
 </html>

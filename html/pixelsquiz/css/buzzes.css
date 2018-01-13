@@ -1,0 +1,14 @@
+div.buzz {
+    border: solid black;
+    display: float;
+    float: left;
+    padding: 10px;
+}
+
+a.but {
+    border: solid thin black;
+    display: block;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+}

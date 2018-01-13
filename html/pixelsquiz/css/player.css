@@ -1,0 +1,109 @@
+body {
+    color: #fff;
+    background: #000;
+    font-family: sans-serif;
+}
+
+div#main-sd {
+    min-height: 480px;
+    max-height: 480px;
+    height: 480px;
+    min-width: 640px;
+    max-width: 640px;
+    width: 640px;
+}
+
+div#main-hd {
+    /*text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;*/
+    border: 2px solid green;
+    position: absolute;
+    top: 0; left: 0;
+    min-height: 1080px;
+    max-height: 1080px;
+    height: 1080px;
+    min-width: 1920px;
+    max-width: 1920px;
+    width: 1920px;
+    font-size: 900px;
+    text-align: center;
+}
+
+
+div#main {
+    /*text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;*/
+    /*border: 2px solid green;*/
+    position: absolute;
+    top: 0; left: 0;
+    min-height: 900px;
+    max-height: 900px;
+    height: 900px;
+    min-width: 1440px;
+    max-width: 1440px;
+    width: 1440px;
+    font-size: 800px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.off {
+    background: #000;
+}
+
+.highlight {
+    background: #fff;
+}
+
+.red {
+    background: #EA282E;
+    color: #222;
+}
+
+.orange {
+    background: #EF6946;
+    color: #222;
+}
+
+.yellow {
+    background: #FDCF1A;
+    color: #222;
+}
+
+.green {
+    background: #4FBA49;
+    color: #222;
+}
+
+.blue {
+    background: #01A7EE;
+    color: #222;
+}
+
+.right {
+    background: #0f0;
+    color: #000;
+}
+.wrong {
+    background: #f00;
+    color: #000;
+}
+
+.fail {
+    background: #ea282e url('../images/x-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.love {
+    background: #01A7EE url('../images/heart-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.win {
+    background: #4FBA49 url('../images/cup-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.invader {
+    background: #01A7EE url('../images/invader-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+}
