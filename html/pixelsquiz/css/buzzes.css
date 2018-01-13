@@ -37,3 +37,24 @@ body {
 .button:active {
     background: #fff !important;
 }
+
+
+.red {
+    background: #ff2020;
+}
+
+.blue {
+    background: #01a7ee;
+}
+
+.orange {
+    background: #f80;
+}
+
+.green {
+    background: #0c0;
+}
+
+.yellow {
+    background: #ff0;
+}

@@ -26,7 +26,6 @@ teams.map(function(t) {
         but.href="#";
         but.className = 'button ' + b;
         but.innerHTML = b;
-        but.style.cssText = 'background: '+b;
         $(but).data('team', t);
         $(but).data('button', b)
         but.onclick = send_command
