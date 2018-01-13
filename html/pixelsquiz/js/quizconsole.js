@@ -48,7 +48,7 @@ function start() {
 
         if (msg.do !== 'timer-update') {  // ...reduce noise.
             var status_box = $('#status');
-            status_box.append('' + status_counter + ': ' + JSON.stringify(msg) + '\n');
+            status_box.text(status_box.text() + status_counter + ': ' + event.data + '\n');
             status_box.animate({scrollTop: status_box.prop('scrollHeight')}, 500);
             status_counter++;
         }
