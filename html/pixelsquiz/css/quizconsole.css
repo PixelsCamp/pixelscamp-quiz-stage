@@ -133,10 +133,9 @@ div#question {
 
 div#status {
     margin: 20px 0;
-    padding: 10px;
+    padding: 0;
     height: 200px;
     overflow: scroll;
-    background: none;
     font-size: 13px;
     font-family: 'Courier New', monospace;
     white-space: pre;
