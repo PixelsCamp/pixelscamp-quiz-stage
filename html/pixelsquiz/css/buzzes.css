@@ -33,3 +33,7 @@ body {
     color: transparent;
     border-radius: 6px;
 }
+
+.button:active {
+    background: #fff !important;
+}
