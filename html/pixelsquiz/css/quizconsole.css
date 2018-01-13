@@ -136,9 +136,14 @@ div#main {
 }
 
 div#question {
-    height: 180px;
+    min-height: 120px;
     font-size: 36px;
     background: none;
+}
+
+div#trivia {
+    padding: 10px 0;
+    color: #888;
     border-bottom: 2px solid #fdcf1a;
 }
 

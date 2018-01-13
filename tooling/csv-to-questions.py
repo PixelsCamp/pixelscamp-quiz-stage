@@ -42,9 +42,12 @@ def main():
         question_id = 0
 
         for question in questions:
-            out = ("  #pixelsquiz.types.Question{:id %d, :kind :multi, :score 1, :text \"%s\", :options [\"%s\"]}\n" %
-                   (question_id, question[0].decode("utf-8").replace("\"", "'"),
-                    "\" \"".join([q.decode("utf-8").replace("\"", "'") for q in question[1:]])))
+            question_text = question[0].decode("utf-8").replace("\"", "&quot;")  # ...HTML is allowed here.
+            question_options = "\" \"".join([q.decode("utf-8").replace("\"", "'") for q in question[1:5]])
+            question_trivia = question[5].decode("utf-8").replace("\"", "&quot;") if len(question) > 5 else ""
+
+            out = ("  #pixelsquiz.types.Question{:id %d, :kind :multi, :score 1, :text \"%s\", :options [\"%s\"], :trivia \"%s\"}\n" %
+                   (question_id, question_text, question_options, question_trivia))
 
             f.write(out.encode("utf-8"))
 

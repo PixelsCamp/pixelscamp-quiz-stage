@@ -41,6 +41,7 @@ function start() {
                 get_right_wrong(msg.getrightwrong);
             } else {
                 $('#question').html(msg.text);
+                $('#trivia').html(msg.trivia);
             }
         } else if (msg.do === 'timer-update') {
             $('#timer_number').text(msg.value);
