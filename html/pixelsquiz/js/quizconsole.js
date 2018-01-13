@@ -24,6 +24,7 @@ function get_right_wrong(team) {
 }
 
 var ws = null;
+var status_counter = 0;
 
 function start() {
     console.log('starting ws');
@@ -47,8 +48,9 @@ function start() {
 
         if (msg.do !== 'timer-update') {  // ...reduce noise.
             var status_box = $('#status');
-            status_box.append(JSON.stringify(msg) + '\n');
+            status_box.append('' + status_counter + ': ' + JSON.stringify(msg) + '\n');
             status_box.animate({scrollTop: status_box.prop('scrollHeight')}, 500);
+            status_counter++;
         }
     }
 }
