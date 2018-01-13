@@ -19,12 +19,12 @@ teams.map(function(t) {
     var contdiv = document.createElement('div');
     contdiv.id = 'buzz'+t;
     contdiv.className = 'buzz';
-    contdiv.innerHTML = 'TEAM '+(t+1);
+    contdiv.innerHTML = 'TEAM #'+(t+1);
     buttons.map(function(b) {
         var but = document.createElement('a');
         var signal = b === 'red' ? 'playerbuzzed' : 'playermulti';
         but.href="#";
-        but.className = 'but';
+        but.className = 'button ' + b;
         but.innerHTML = b;
         but.style.cssText = 'background: '+b;
         $(but).data('team', t);
