@@ -82,6 +82,14 @@ button#select-wrong {
     background: #222;
 }
 
+#timer_number {
+    font-family: 'Press Start 2P';
+    font-size: 50px;
+    color: #fdcf1a;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 div#commands {
 }
 
@@ -142,6 +150,7 @@ div#status {
     font-size: 13px;
     font-family: 'Courier New', monospace;
     white-space: pre;
+    color: #888;
 }
 
 div#question .qz_question {

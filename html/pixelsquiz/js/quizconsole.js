@@ -40,16 +40,21 @@ function start() {
     ws.onmessage = function (event) {
         var msg = JSON.parse(event.data);
         console.log(event.data);
-        if(msg.do === 'quizmaster-only') {
+
+        if (msg.do === 'quizmaster-only') {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
                 $('#question').html(msg.text);
             }
-        } else {
-            if (msg.do === 'update-all' || msg.do === 'update-scores' || msg.do === 'update-lights') {
-                $('#status').append(JSON.stringify(msg) + '\n');
-            }
+        } else if (msg.do === 'timer-update') {
+            $('#timer_number').text(msg.value);
+        }
+
+        if (msg.do !== 'timer-update') {  // ...reduce noise.
+            var status_box = $('#status');
+            status_box.append(JSON.stringify(msg) + '\n');
+            status_box.animate({scrollTop: status_box.prop('scrollHeight')}, 500);
         }
     }
 }
