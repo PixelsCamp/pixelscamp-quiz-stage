@@ -19,12 +19,6 @@ $("#buzzed button").each(function (idx) {
 })
 
 function get_right_wrong(team) {
-    /*var r = window.confirm('Team #'+ (team+1) +' got it right?');
-    if (r) {
-        _send_command('select-right');
-    } else {
-        _send_command('select-wrong');
-    }*/
     $("#buzzed .buzzed-team").text(team + 1);
     $("#buzzed .buzzed-text").addClass("text-highlight");
 }
