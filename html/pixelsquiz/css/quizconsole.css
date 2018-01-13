@@ -2,13 +2,13 @@ body {
     background: #222;
     color: #eee;
     font-family: 'Lato';
-    letter-spacing: -1px;
 }
 
 h1 {
     font-family: 'Avant Pixel';
     margin: 20px;
     color: #fdcf1a;
+    letter-spacing: -1px;
 }
 
 
@@ -147,6 +147,7 @@ div#status {
     padding: 0;
     height: 200px;
     overflow: scroll;
+    text-overflow: ellipsis;
     font-size: 13px;
     font-family: 'Courier New', monospace;
     white-space: pre;
