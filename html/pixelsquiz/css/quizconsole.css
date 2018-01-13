@@ -32,7 +32,7 @@ button {
     outline: none;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #777;
+    box-shadow: 4px 4px 8px #000;
 }
 
 div#buzzed {
@@ -67,16 +67,19 @@ div#buzzed .buttons {
 div#buzzed button {
     width: 150px;
     margin-left: 10px;
+    font-size: 16px;
 }
 
 button#select-right {
-    background: #0c0;
-    color: #222;
+    border: 2px solid #0c0;
+    color: #0c0;
+    background: #222;
 }
 
 button#select-wrong {
-    background: #ff2020;
-    color: #222;
+    border: 2px solid #ff2020;
+    color: #ff2020;
+    background: #222;
 }
 
 div#commands {
@@ -112,8 +115,8 @@ button:hover {
 
 button:active {
     background: #eee !important;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+    box-shadow: 0 0 8px #000;
+    transform: translate(4px, 4px);
 }
 
 div#main {
