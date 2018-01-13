@@ -10,23 +10,19 @@
     </head>
     <body>
         <h1>Quizmaster Console</h1>
-        <div id="framewrap"></div>
 
-        <div id="commands">
-            <button id="start-round">Start Round / Round End OK</button>
-            <button id="start-question">Next Question / Show Scores</button>
-            <button id="show-question">Start Question / Show Text</button>
-            <button id="start-mult">Multiple Choice</button>
-            <div id="command-box">
-                <textarea name="servercmd" id="servercmd" rows="8" cols="20"></textarea>
-                <button id="sendcmd" onclick="sendmanual()">send!</button>
-            </div>
+        <div id="main">
+            <div id="question"></div>
+            <div id="status"></div>
         </div>
 
-        <div id="question"></div>
-
-        <div id="statuswrap">
-            <pre id="status"></pre>
+        <div id="side">
+            <div id="commands">
+                <button id="start-round">Start Round / Round End OK</button>
+                <button id="start-question">Next Question / Show Scores</button>
+                <button id="show-question">Start Question / Show Text</button>
+                <button id="start-choices">Multiple Choice</button>
+            </div>
         </div>
 
         <script src="js/jquery-3.2.1.min.js"></script>
