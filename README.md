@@ -12,6 +12,3 @@ Once you have these requirements installed, run `lein run` in the project direct
 The server handles both websocket connections from the several components, as well as webpages for the quizmaster console, main screen, etc. See the checklist at http://localhost:3000/static/ for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
 
 You should find all the necessary bits and pieces inside the quizmaster bag. The only exception are the stand monitors for each team. These monitors are provided by Hipnose (the Pixels Camp producing company).
-
-![mainscreen](https://raw.githubusercontent.com/brpx/pixelscamp-quiz-stage/master/screenshots/mainscreen.png)
-![quizconsole](https://raw.githubusercontent.com/brpx/pixelscamp-quiz-stage/master/screenshots/quizconsole.png)
