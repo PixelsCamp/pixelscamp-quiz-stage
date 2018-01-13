@@ -24,7 +24,7 @@
 				<span id="timernumber">20</span>
 			</div>
 			<div id="scoreboard">
-				<p><span id="nperg">Lets Start!</span></p>
+				<p><span id="nperg">Let's Start!</span></p>
 				<table id="scoreboardtab">
 					<tr id="s0" class="team"><td>Team #1:</td> <td class="tscore">0</td> <td>points</td></tr>
 					<tr id="s1" class="team"><td>Team #2:</td> <td class="tscore">0</td> <td>points</td></tr>
@@ -107,7 +107,7 @@ function start() {
 
 		console.log(msg);
 
-        // Pixels Camp starts tomorrow, lets bring out the big hammer...
+        // Pixels Camp starts tomorrow, let's bring out the big hammer...
         if ('questionnum' in msg && typeof(msg['questionnum']) in {'number':1, 'string':1}) {
             curr_question = msg['questionnum'] + 1;
             console.log('Updating question number: ' + curr_question);
@@ -149,7 +149,7 @@ function start() {
 
                 curr_question_text = 'Question ' + curr_question;
 			} else {
-				show_question("Lets add the scores...", ["", "", "",""])
+				show_question("Let's add the scores...", ["", "", "",""])
                 curr_question_text = 'Total Scores';
 				throb(20);
 			}
