@@ -12,7 +12,7 @@ function update_scores(scores) {
 }
 
 function throb (secs) {
-    var timer = $('#timernumber');
+    var timer = $('#timer_number');
 
     timer.text(secs);
 
@@ -24,7 +24,7 @@ function throb (secs) {
 }
 
 function show_question(q,o) {
-    $('#perg').html(q);
+    $('#question').html(q);
     show_options(o);
 }
 
@@ -143,7 +143,7 @@ function start() {
 
         if (curr_question_text) {  // ...assumes we never blank this item.
             console.log('Setting scores title: ' + curr_question_text);
-            $('#nperg').text(curr_question_text);
+            $('#question_number').text(curr_question_text);
         }
     }
 }

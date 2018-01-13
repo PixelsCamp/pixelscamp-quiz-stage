@@ -39,7 +39,7 @@ function start() {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
-                $('#pergunta').html(msg.text);
+                $('#question').html(msg.text);
             }
         } else {
             if (msg.do === 'update-all' || msg.do === 'update-scores' || msg.do === 'update-lights') {

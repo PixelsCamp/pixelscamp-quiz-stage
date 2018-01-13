@@ -18,15 +18,6 @@ iframe#mainscreen {
     border: solid thin black;
     }
 
-XPTO {
-    zoom: 0.75;
-    -moz-transform: scale(0.75);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(0.75);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(0.75);
-    -webkit-transform-origin: 0 0;
-}
 div#framewrap {
     position: absolute;
     top: 0; left: 0;
@@ -114,7 +105,7 @@ div#statuswrap {
 }
 
 
-div#pergunta {
+div#question {
     width: 850px;
     margin: 20px;
     padding: 20px;
@@ -126,17 +117,17 @@ div#pergunta {
     border-bottom: 2px solid #fdcf1a;
 }
 
-div#pergunta .qz_question {
+div#question .qz_question {
 }
 
-div#pergunta .qz_answer {
+div#question .qz_answer {
     display: inline-block;
     margin-top: 0.4em;
     color: #888;
     font-size: 0.7em;
 }
 
-div#pergunta .qz_answer:before {
+div#question .qz_answer:before {
     content: 'Answer: ';
     font-weight: bold;
     color: #fdcf1a;

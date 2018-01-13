@@ -31,7 +31,7 @@ div#side {
 	width: 30%; height: 90%;
 }
 
-div#perg {
+div#question {
 	color: #fff;
 	background: none;
 	font-size: 82px;
@@ -45,12 +45,12 @@ div#perg {
 	vertical-align: middle;
 }
 
-div#perg b {
+div#question b {
 	color: #01a7ee;
 	font-weight: bold;
 }
 
-#nperg {
+#question_number {
 	display: inline-block;
 	margin-bottom: 10px;
 }
@@ -116,7 +116,7 @@ div#timer {
 	line-height: 230px;
 }
 
-#timernumber {
+#timer_number {
 	font-family: 'Press Start 2P';
 	font-size: 210px;
 	color: #fdcf1a;
@@ -125,7 +125,7 @@ div#timer {
 	display: inline-block;
 }
 
-#timernumber.expired {
+#timer_number.expired {
 	color: #ff2020;
 }
 
