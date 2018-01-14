@@ -14,10 +14,6 @@ div {
     text-align: left;
 }
 
-div, p, table {
-    /*border-radius: 8px;*/
-}
-
 div#main {
     position: absolute;
     top: 4%; left: 3%;
@@ -35,7 +31,6 @@ div#question {
     color: #fff;
     background: none;
     font-size: 82px;
-    /*letter-spacing: -1px;*/
     font-family: Lato, sans-serif;
     height: 280px;
     margin: 40px 10px 60px 10px;
@@ -90,13 +85,6 @@ div .resp {
     background: #555 !important;
     color: #222 !important;
 }
-
-/*
-.resp.correct:after {
-    content: ' ✓';
-    color: #0f0;
-}
-*/
 
 div#statusline {
     width: 100%;

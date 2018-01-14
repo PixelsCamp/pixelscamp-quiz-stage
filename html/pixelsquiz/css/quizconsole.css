@@ -137,7 +137,6 @@ div#main {
 }
 
 div#question {
-    /*height: 180px;*/
     font-size: 36px;
     background: none;
     border-bottom: 2px solid #fdcf1a;
@@ -162,14 +161,6 @@ div#question .qz_question {
     color: #fff;
 }
 
-/*
-div#question .qz_question:before {
-    content: 'Question: ';
-    font-weight: bold;
-    color: #fdcf1a;
-}
-*/
-
 div#question .qz_answer {
     display: inline-block;
     min-height: 2rem;
@@ -180,7 +171,6 @@ div#question .qz_answer {
 
 div#question .qz_answer:before {
     content: 'Answer: ';
-    /*font-weight: bold;*/
     color: #fdcf1a;
     margin-right: 0.3ch;
 }
@@ -192,11 +182,3 @@ div#question .qz_trivia {
     font-size: 0.5em;
     color: #888;
 }
-
-/*
-div#question .qz_trivia:before {
-    content: 'Trivia: ';
-    font-weight: bold;
-    color: #fdcf1a;
-}
-*/
