@@ -16,26 +16,25 @@ div {
 
 div#main {
     position: absolute;
-    top: 4%; left: 3%;
-    width: 68%; height: 90%;
+    top: 4%; left: 5%;
+    width: 63%; height: 90%;
     display: table-row;
 }
 
 div#side {
     position: absolute;
-    top: 7%; right: 2%;
+    top: 4%; right: 4%;
     width: 30%; height: 90%;
 }
 
 div#question {
     color: #fff;
     background: none;
-    font-size: 82px;
+    font-size: 84px;
     font-family: Lato, sans-serif;
-    height: 280px;
-    margin: 40px 10px 60px 10px;
-    padding: 50px 20px 20px 28px;
-    line-height: 1.1em;
+    height: 380px;
+    padding: 60px 30px;
+    line-height: 1.2em;
     display: table-cell;
     vertical-align: middle;
 }
@@ -86,16 +85,9 @@ div .resp {
     color: #222 !important;
 }
 
-div#statusline {
-    width: 100%;
-    position: absolute;
-    left: 0; bottom: 0;
-}
-
 div#timer {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 50px; right: 0;
     padding: 10px;
     margin: 20px;
     text-align: center;
@@ -106,7 +98,7 @@ div#timer {
 
 #timer_number {
     font-family: 'Press Start 2P';
-    font-size: 210px;
+    font-size: 180px;
     color: #fdcf1a;
     min-width: 410px;
     text-align: center;
@@ -119,22 +111,22 @@ div#timer {
 
 div#scoreboard {
     position: absolute;
-    right: 25px; bottom: 140px;
+    right: 15px; bottom: 120px;
     padding: 10px;
     margin: 20px 0 0 20px;
     text-align: center;
 }
 
 div#scoreboard p {
-    margin: 35px;
+    margin: 35px 0;
     font-family: 'Avant Pixel';
-    font-size: 46px;
+    font-size: 48px;
     color: white;
     text-align: center;
 }
 
 div#scoreboard table {
-    margin: 0;
+    margin: 0 10px;
     background: none;
     box-shadow: none;
     padding-top: 20px;
