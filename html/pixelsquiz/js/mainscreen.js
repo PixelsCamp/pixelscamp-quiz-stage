@@ -111,7 +111,7 @@ function start() {
 
                 curr_question_text = 'Question ' + curr_question;
             } else {
-                show_question("Let's add the <b>scores</b>&hellip;", ["", "", "",""])
+                show_question("Let's add the scores...", ["", "", "",""])
                 curr_question_text = 'Total Scores';
                 throb(20);
             }

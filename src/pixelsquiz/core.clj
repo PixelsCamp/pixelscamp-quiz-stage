@@ -227,7 +227,7 @@
   [world event from-state to-state]
   (let [new-round-number (+ 1 (:round-index world))
         new-round (get (:rounds world) new-round-number)]
-    (w-m-d (Event. :show-question {:text (str "Starting <b>Round " (inc new-round-number) "</b>&hellip;")}))
+    (w-m-d (Event. :show-question {:text (str "Starting Round " (inc new-round-number) "...")}))
     (w-m-d (Event. :update-scores {:scores [0 0 0 0] :questionnum 0}))
     (assoc world
            :round-index new-round-number
