@@ -89,7 +89,7 @@
                               }
       :update-scores {:do :update-scores :scores (-> ev :bag-of-props :scores) :questionnum (-> ev :bag-of-props :question-index) } ; Round
       :end-of-round {:do :update-all ; ev bag-of-props Round
-                     :text "Round ended!"
+                     :text "Round ended<b>!</b>"
                      :options (map #(str "Team #" (:team %) " — " (:score %) " points")
                                    (sort-teams-by-scores (-> ev :bag-of-props :scores)))
                      :correctidx 0  ;; ...highlight winning team.
