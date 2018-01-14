@@ -40,8 +40,9 @@ function start() {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
-                $('#question').html(msg.text);
-                $('#trivia').html(msg.trivia);
+                $('#question .qz_question').html(msg.question);
+                $('#question .qz_answer').text(msg.answer);
+                $('#question .qz_trivia').html(msg.trivia);
             }
         } else if (msg.do === 'timer-update') {
             $('#timer_number').text(msg.value);

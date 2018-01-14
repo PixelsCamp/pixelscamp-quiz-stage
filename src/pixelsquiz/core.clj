@@ -141,8 +141,8 @@
 
 (defn question-on-quizmaster
   [world]
-  (w-m-d (Event. :for-quizmaster {:text (str "<span class=\"qz_question\">" (-> world :current-question :text) "</span><br>"
-                                             "<span class=\"qz_answer\">" (get (-> world :current-question :options) 0) "</span>")
+  (w-m-d (Event. :for-quizmaster {:question (-> world :current-question :text)
+                                  :answer (get (-> world :current-question :options) 0)
                                   :trivia (-> world :current-question :trivia)}))
   (w-m-d (Event. :question-starting {}))
   false)

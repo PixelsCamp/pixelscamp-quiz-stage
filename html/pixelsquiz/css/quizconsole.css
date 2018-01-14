@@ -36,7 +36,8 @@ button {
 }
 
 div#buzzed {
-    margin: 30px 0;
+    margin: 20px 0;
+    padding: 0;
     font-size: 26px;
     text-align: right;
 }
@@ -136,15 +137,11 @@ div#main {
 }
 
 div#question {
-    min-height: 120px;
+    /*height: 180px;*/
     font-size: 36px;
     background: none;
-}
-
-div#trivia {
-    padding: 10px 0;
-    color: #888;
     border-bottom: 2px solid #fdcf1a;
+    padding: 20px 0;
 }
 
 div#status {
@@ -160,17 +157,46 @@ div#status {
 }
 
 div#question .qz_question {
+    display: inline-block;
+    min-height: 2.5em;
+    color: #fff;
 }
+
+/*
+div#question .qz_question:before {
+    content: 'Question: ';
+    font-weight: bold;
+    color: #fdcf1a;
+}
+*/
 
 div#question .qz_answer {
     display: inline-block;
-    margin-top: 0.4em;
-    color: #888;
+    min-height: 2rem;
+    margin-top: 1rem;
     font-size: 0.7em;
+    color: #888;
 }
 
 div#question .qz_answer:before {
     content: 'Answer: ';
+    /*font-weight: bold;*/
+    color: #fdcf1a;
+    margin-right: 0.3ch;
+}
+
+div#question .qz_trivia {
+    display: inline-block;
+    min-height: 2rem;
+    margin-top: 1rem;
+    font-size: 0.5em;
+    color: #888;
+}
+
+/*
+div#question .qz_trivia:before {
+    content: 'Trivia: ';
     font-weight: bold;
     color: #fdcf1a;
 }
+*/
