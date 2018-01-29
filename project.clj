@@ -22,4 +22,8 @@
   :target-path ".target/%s"
   :profiles {:uberjar {:aot :all}}
   :jvm-opts ["--add-modules" "java.xml.bind" "-Djava.awt.headless=true"]
-  )
+  :repl-options {
+    :host "127.0.0.1"
+    :port 7888
+  }
+)
