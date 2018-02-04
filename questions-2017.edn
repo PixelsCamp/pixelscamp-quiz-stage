@@ -1,5 +1,5 @@
 [
-  #pixelsquiz.types.Question{:id 0, :kind :multi, :score 1, :text "Test question: How do you exit Vi(m)?", :options ["ESC :q" "Control-C" "C-x C-c" "Alt-F4"], :trivia ""}
+  #pixelsquiz.types.Question{:id 0, :kind :multi, :score 0, :text "Test question: How do you exit Vi(m)?", :options ["ESC :q" "Control-C" "C-x C-c" "Alt-F4"], :trivia ""}
   #pixelsquiz.types.Question{:id 1, :kind :multi, :score 1, :text "Breaking the Enigma machine (WW2) is commonly attributed to which place?", :options ["Bletchley Park" "Bell Labs" "Menlo Park" "Torchwood"], :trivia ""}
   #pixelsquiz.types.Question{:id 2, :kind :multi, :score 1, :text "Elixir (the language) is based on which runtime platform?", :options ["Erlang VM" "JVM" "CLR" "V8"], :trivia ""}
   #pixelsquiz.types.Question{:id 3, :kind :multi, :score 1, :text "The Doctor's ship, the TARDIS, is a... what?", :options ["Police Box" "Gourd-shaped Cigar" "Phone Booth" "Flying Saucer"], :trivia ""}
@@ -10,7 +10,7 @@
   #pixelsquiz.types.Question{:id 8, :kind :multi, :score 1, :text "Who wrote The Martian?", :options ["Andy Weir" "Ridley Scott" "Phillip K. Dick" "H.G. Wells"], :trivia ""}
   #pixelsquiz.types.Question{:id 9, :kind :multi, :score 1, :text "Besides C. Ronaldo, which other portuguese figure appeared in The Simpsons?", :options ["Carlos Lopes" "Salazar" "Emplastro" "Mário Soares"], :trivia ""}
   #pixelsquiz.types.Question{:id 10, :kind :multi, :score 1, :text "Place the following in ascending order: π, √3, e, √2", :options ["√2, √3, e, π" "π, e, √3, √2" "π, √3, √2, e" "√2, π, e, √3"], :trivia ""}
-  #pixelsquiz.types.Question{:id 11, :kind :multi, :score 1, :text "Test question: Who is the original creator of Linux's systemd?", :options ["Lennart Poettering" "Cthulhu" "Sauron" "Zalgo"], :trivia ""}
+  #pixelsquiz.types.Question{:id 11, :kind :multi, :score 0, :text "Test question: Who is the original creator of Linux's systemd?", :options ["Lennart Poettering" "Cthulhu" "Sauron" "Zalgo"], :trivia ""}
   #pixelsquiz.types.Question{:id 12, :kind :multi, :score 1, :text "Who wrote the Three Laws of Robotics?", :options ["Isaac Asimov" "Dean Kamen" "Karel Čapek" "Norbert Wiener"], :trivia ""}
   #pixelsquiz.types.Question{:id 13, :kind :multi, :score 1, :text "How many different DNA base pairs are there?", :options ["2" "4" "3" "6"], :trivia ""}
   #pixelsquiz.types.Question{:id 14, :kind :multi, :score 1, :text "In the name H. R. Giger, what does the H. R. stand for?", :options ["Hans Rudolf" "Harold Ramis" "Honecker Richthofen" "Herbert Richers"], :trivia ""}
@@ -21,7 +21,7 @@
   #pixelsquiz.types.Question{:id 19, :kind :multi, :score 1, :text "Besides &quot;Plan 9 from Bell Labs,&quot; what is Rob Pike best known for?", :options ["Go" "Emacs" "C" "Rust"], :trivia ""}
   #pixelsquiz.types.Question{:id 20, :kind :multi, :score 1, :text "ARM (the architecture) debuted in which brand of computers?", :options ["Acorn" "Amiga" "Apple I" "ZX Spectrum"], :trivia ""}
   #pixelsquiz.types.Question{:id 21, :kind :multi, :score 1, :text "What's the Baader-Meinhof phenomenon?", :options ["Frequency Illusion" "Gambler's Fallacy" "Confirmation Bias" "Not Invented Here Syndrome"], :trivia ""}
-  #pixelsquiz.types.Question{:id 22, :kind :multi, :score 1, :text "Test question: TDD is a...", :options ["Methodology" "Myth" "Sexually Transmitted Disease" "Trap"], :trivia ""}
+  #pixelsquiz.types.Question{:id 22, :kind :multi, :score 0, :text "Test question: TDD is a...", :options ["Methodology" "Myth" "Sexually Transmitted Disease" "Trap"], :trivia ""}
   #pixelsquiz.types.Question{:id 23, :kind :multi, :score 1, :text "Who is the creator of Bitcoin?", :options ["Satoshi Nakamoto" "Yukihiro Matsumoto" "Vitalik Buterin" "Richard Stallman"], :trivia ""}
   #pixelsquiz.types.Question{:id 24, :kind :multi, :score 1, :text "What's the Enterprise's registry number (license plate) in Star Trek TOS?", :options ["NCC-1701" "OV-101" "NX-01" "NCC-1764"], :trivia ""}
   #pixelsquiz.types.Question{:id 25, :kind :multi, :score 1, :text "When Steve Jobs left Apple in 1985, he then founded which company?", :options ["NeXT" "Be Inc." "Copland" "Atari"], :trivia ""}
@@ -32,7 +32,7 @@
   #pixelsquiz.types.Question{:id 30, :kind :multi, :score 1, :text "In the ZX Spectrum game &quot;Jet Set Willy&quot;, what is Willy's profession?", :options ["Miner" "Soldier" "Pilot" "Policeman"], :trivia ""}
   #pixelsquiz.types.Question{:id 31, :kind :multi, :score 1, :text "The cellular automata &quot;Game of Life&quot; was created by whom?", :options ["John Conway" "Brian Silverman" "Edward Moore" "Stephen Wolfram"], :trivia ""}
   #pixelsquiz.types.Question{:id 32, :kind :multi, :score 1, :text "What is originally described by RFC 1149?", :options ["IP over Pigeons" "Electricity over IP" "DNS" "ARP"], :trivia ""}
-  #pixelsquiz.types.Question{:id 33, :kind :multi, :score 1, :text "Test question: Which one of these is NOT a Jason Bourne movie?", :options ["The Bourne Shell" "The Bourne Supremacy" "The Bourne Ultimatum" "The Bourne Identity"], :trivia ""}
+  #pixelsquiz.types.Question{:id 33, :kind :multi, :score 0, :text "Test question: Which one of these is NOT a Jason Bourne movie?", :options ["The Bourne Shell" "The Bourne Supremacy" "The Bourne Ultimatum" "The Bourne Identity"], :trivia ""}
   #pixelsquiz.types.Question{:id 34, :kind :multi, :score 1, :text "What is the name of Google Chrome's web/layout engine?", :options ["Blink" "Gecko" "Trident" "WebKit"], :trivia ""}
   #pixelsquiz.types.Question{:id 35, :kind :multi, :score 1, :text "What did Edsger Dijkstra consider harmful?", :options ["GOTO" "C++" "Promises" "Prolog"], :trivia ""}
   #pixelsquiz.types.Question{:id 36, :kind :multi, :score 1, :text "Who's the well-known Linux kernel contributor that, in 2008, was convicted for murder?", :options ["Hans Reiser" "Linus Torvalds" "Alan Cox" "Greg Kroah-Hartman"], :trivia ""}
