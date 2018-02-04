@@ -24,6 +24,10 @@
 
 (def timer-active (atom false))
 
+;; Emergency patches for the game state (see the "omg-*" helper functions)...
+(def append-question (atom false))
+(def score-adjustments (atom [0 0 0 0]))
+
 (defn run-timer
   [duration evkind disp c]
   (reset! timer-active true)
@@ -173,14 +177,15 @@
 (defn add-tiebreaker-question-if-necessary
   [world]
   (let [current-round (:current-round world)
+        round-number (get-in world [:current-round :number])
         question-number (get (:questions current-round) (:question-index current-round))
         ]
-    (if (and (nil? question-number) (round-tied? current-round))
-      (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) (first (:tiebreaker-pool world))))
-             :tiebreaker-pool (rest (:tiebreaker-pool world)))
-      world
-      )
-    ))
+    (if (and (> (count (:tiebreaker-pool world)) 0) (nil? question-number) (round-tied? current-round))
+      (do
+        (println "Appending tiebreaker question:" (first (:tiebreaker-pool world)))
+        (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) (first (:tiebreaker-pool world))))
+                     :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)))
+      world)))
 
 
 (defn prepare-for-next-question
@@ -275,8 +280,34 @@
                            :answers []}
                           ))]
       (reset! game-state f)
-      (recur (fsm/fsm-event f #spy/d (<!! round-events))))
-  ))
+
+      ;; Patch the scores (see "omg-*" helper functions)...
+      (let [scores [:value :current-round :scores]]
+        (if (not= @score-adjustments [0 0 0 0])
+          (do
+            (println "*** OMG: adjusting round scores:" @score-adjustments)
+            (reset! game-state (assoc-in @game-state scores
+                                (mapv + (get-in @game-state scores) @score-adjustments)))
+            (reset! score-adjustments [0 0 0 0])))
+        (println "*** Current scores:" (get-in @game-state scores)))
+
+      ;; Patch the questions list (see "omg-*" helper functions)...
+      (let [questions [:value :current-round :questions]
+            tiebreaker-pool [:value :tiebreaker-pool]
+            round-number [:value :current-round :number]]
+        (if (and @append-question (> (count (get-in @game-state tiebreaker-pool)) 0))
+          (do
+            (println "*** OMG: appending question to round:" (first (get-in @game-state tiebreaker-pool)))
+            (reset! game-state (assoc-in @game-state questions
+                                (conj (get-in @game-state questions) (first (get-in @game-state tiebreaker-pool)))))
+            (reset! game-state (assoc-in @game-state tiebreaker-pool (subvec (get-in @game-state tiebreaker-pool) 1)))
+            (reset! append-question false)))
+        (println "*** Round" (get-in @game-state round-number) "questions:" (get-in @game-state questions))
+        (println "*** Tiebreaker pool:" (get-in @game-state tiebreaker-pool)))
+
+      (println)
+      (println "Game loop advancing...")
+      (recur (fsm/fsm-event @game-state #spy/d (<!! round-events))))))
 
 
 (defn read-from-file
@@ -319,32 +350,35 @@
   )
 
 
-;; evil stuff here -> helpers for OMFG on the repl
+;; Start a debug REPL, to which you can connect with "lein repl :connect"...
 (defonce server (repl/start-server :port 7888))
 
-(defn stage-ch
-  []
-  (-> @game-state :value :stage :displays))
+;; Run this upon connecting (would be nice if it ran automatically):
+;; (require '[pixelsquiz.core :refer :all])
 
-(defn push-to-stage
-  [title options]
-  (let [world (:value @game-state)]
-    (w-m-d {:kind :show-options
-            :bag-of-props {:question {:text title
-                                      :shuffled-options (mapv #(assoc {} :text %) options)}}})
-    ))
+(defn omg-mainscreen
+  ([question]
+    (omg-mainscreen question ["", "", "", ""]))
+  ([question o1 o2 o3 o4]
+    (let [world (:value @game-state)]
+      (w-m-d {:kind :show-options
+              :bag-of-props {:question {:text question
+                                        :shuffled-options (mapv #(assoc {} :text %) [o1 o2 o3 o4])}}}))))
 
-(defn team-numbers
-  []
-  (let [world (:value @game-state)]
-    (w-m-d {:kind :team-number}
-    )))
+(defn omg-adjust-scores [t1 t2 t3 t4]
+  (reset! score-adjustments [t1 t2 t3 t4])
+  (println "Scores will be adjusted AFTER the next answer (or round end):" @score-adjustments))
 
-(defn thank-sponsors
-  []
-  (push-to-stage "THANKS TO" ["GitHub", "Whitesmith", "Talkdesk", "and all the participants"]))
+(defn omg-last-question-scores []
+  (get-in @game-state [:value :current-answer :scores]))
 
-(defn list-teams
-  []
-  (push-to-stage "" (-> @game-state :value :current-round :teams)))
+(defn omg-revert-scores []
+  (apply omg-adjust-scores (mapv - [0 0 0 0] (omg-last-question-scores))))
 
+(defn omg-append-question []
+  (reset! append-question true)
+  (println "Question" (first (get-in @game-state [:value :tiebreaker-pool])) "will be appended to current round."))
+
+(defn omg-replace-question []
+ (omg-revert-scores)
+ (omg-append-question))
