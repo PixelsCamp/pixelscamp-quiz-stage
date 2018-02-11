@@ -20,7 +20,8 @@
   ]
   :main ^:skip-aot pixelsquiz.core
   :target-path ".target/%s"
-  :profiles {:uberjar {:aot :all}}
+  :profiles {:uberjar {:aot :all}
+             :dev {:source-paths ["dev"]}}
   :jvm-opts ["--add-modules" "java.xml.bind" "-Djava.awt.headless=true"]
   :repl-options {
     :host "127.0.0.1"
