@@ -306,7 +306,7 @@
         (println "*** Tiebreaker pool:" (get-in @game-state tiebreaker-pool)))
 
       (println)
-      (println "Game loop advancing...")
+      (println "Game loop advancing:" (:state @game-state))
       (recur (fsm/fsm-event @game-state #spy/d (<!! round-events))))))
 
 
@@ -380,5 +380,5 @@
   (println "Question" (first (get-in @game-state [:value :tiebreaker-pool])) "will be appended to current round."))
 
 (defn omg-replace-question []
- (omg-revert-scores)
- (omg-append-question))
+  (omg-revert-scores)
+  (omg-append-question))

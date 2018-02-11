@@ -19,17 +19,19 @@
   :timeout (s/read-sound "sounds/timeout.mp3")
 })
 
-(defn play-thinking-music
-  []
-  (reset! audio-player (s/play (:thinking-music sounds))))
-
-(defn stop-thinking-music
-  []
-  (when @audio-player (s/stop @audio-player))
-  (reset! audio-player nil))
-
 (defn play
   [sound]
   (if-let [s (sound sounds)]
-    (s/play s)))
+    (reset! audio-player {:sound sound
+                          :playing (s/play s)})))
 
+(defn stop
+  []
+  (when @audio-player (s/stop (:playing @audio-player))
+  (reset! audio-player nil)))
+
+(defn playing
+  []
+  (if (or (nil? @audio-player) (future-done? (get-in @audio-player [:playing :player])))
+    nil
+    (:sound @audio-player)))

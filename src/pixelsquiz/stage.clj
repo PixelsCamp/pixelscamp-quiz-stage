@@ -44,14 +44,26 @@
 (defn play-sounds-for!
   [ev]
   (case (:kind ev)
-    :timer-start (sounds/play-thinking-music)
-    :buzzed (do (sounds/stop-thinking-music) (sounds/play :buzz))
-    :timer-update (if (= 0 (-> ev :bag-of-props :value)) (sounds/play :timeout))
-    :show-question-results (do (sounds/stop-thinking-music) (sounds/play :ping))
-    :qm-choice (if (= (-> ev :bag-of-props :right-wrong) :select-wrong) (sounds/play :error))
+    :timer-start (do
+                   (sounds/stop)
+                   (sounds/play :thinking-music))
+    :buzzed (do
+              (sounds/stop)
+              (sounds/play :buzz))
+    :timer-update (if (= 0 (-> ev :bag-of-props :value))
+                    (do
+                      (sounds/stop)
+                      (sounds/play :timeout)))
+    :show-question-results (if (not (= (sounds/playing) :timeout))
+                             (do
+                               (sounds/stop)
+                               (sounds/play :ping)))
+    :qm-choice (if (= (-> ev :bag-of-props :right-wrong) :select-wrong)
+                 (do
+                   (sounds/stop)
+                   (sounds/play :error)))
     :default
-    )
-  )
+  ))
 
 
 (defn format-for-displays
