@@ -1,6 +1,14 @@
 # The Amazing Quizshow!
 
-This is the game engine for the Pixels Camp quiz show, to be used for the the live event on-stage. It's a Clojure application so you'll need:
+This is the game engine for [The Amazing Quizshow!](https://quiz.pixels.camp/), as used live at [Pixels Camp](https://pixels.camp/) since 2016.
+
+## Caveat Emptor
+
+This application was written to be used by a **single person**, **once a year**. Expect quirky UX and some roughness around the edges. Having said this, it tries to prevent the quizmaster from making mistakes and should be solid under use. It also provides enough tools (see the embedded REPL) to get out of sticky situations on-stage.
+
+## Running
+
+It's a Clojure application so you'll need:
 
 * [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/)
 * [Leiningen](https://leiningen.org/)
@@ -9,6 +17,25 @@ It was last known to work with JDK 9.0.1 on macOS 10.12.6.
 
 Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start a server on port `tcp/3000`.
 
-The server handles both websocket connections from the several components, as well as webpages for the quizmaster console, main screen, etc. See the checklist at http://localhost:3000/static/ for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
+The server handles both websocket connections from the several components, as well as webpages for the quizmaster console, main screen, team screens, etc. See the checklist at http://localhost:3000/static/ for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
 
-You should find all the necessary bits and pieces inside the quizmaster bag. The only exception are the stand monitors for each team. These monitors are provided by Hipnose (the Pixels Camp producing company).
+To get started you'll need, at a minimum:
+
+  * Your laptop, with a free USB port (no network connection required);
+  * An external **1080p** (1920x1080) screen/projector to show the main screen (the questions);
+  * Wired PlayStation Buzz! controllers.
+
+Buzz! controllers are easy to get on eBay and, besides subtle differences in look from one PlayStation version to the next, should work interchangeably. Wireless controllers haven't been tested, but it looks like they'd work too (although it's debatable if using wireless controllers at a conference would be a good idea).
+
+**Note:** The setup at Pixels Camp also has a dedicated screen for each team (provided by the fine folks at [Hipnose](http://hipnose.com/)). These are completely optional but, if used, must be configured for **1440x900** resolution. We use Raspberry Pis to drive them, with some ugly scripts (not included). You're free to use something better. :)
+
+## Running Your Own Quiz
+
+The included instructions (the quizmaster checklist) is written for the specific setup at Pixels Camp (assuming the contents of the "quizmaster kit"), read it thoroughly and adapt it for your needs. At this point the "OMG" functions available in the REPL aren't documented. See the bottom of `core.clj` for details.
+
+There's a Python script in the `tooling` directory to take a `.csv` and produce a questions file in `.edn` format. Look at the included examples to see what bits you'll need to come up with (ie. questions, possible answers, and quizmaster notes).
+
+The standard quiz model is comprised of four rounds to select four teams to compete in a final round (with more, and harder, questions). This can be adapted for fewer players (eg. two rounds selecting four teams to compete in a third round) by adjusting the `round-config.edn` file.
+
+--
+The Quizmaster
