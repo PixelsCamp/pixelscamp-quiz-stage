@@ -6,7 +6,7 @@ This is the game engine for [The Amazing Quizshow!](https://quiz.pixels.camp/), 
 
 This application was written to be used by a **single person**, **once a year**. Expect quirky UX and some roughness around the edges. Having said this, it tries to prevent the quizmaster from making mistakes and should be solid under use. It also provides enough tools (see the embedded REPL) to get out of sticky situations on-stage.
 
-## Running
+## Running The Engine
 
 It's a Clojure application so you'll need:
 
@@ -17,7 +17,7 @@ It was last known to work with JDK 9.0.1 on macOS 10.12.6.
 
 Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start a server on port `tcp/3000`.
 
-The server handles both websocket connections from the several components, as well as webpages for the quizmaster console, main screen, team screens, etc. See the checklist at http://localhost:3000/static/ for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
+The server handles both websocket connections from the several components, as well as webpages for the quizmaster console, main screen, team screens, etc. See the checklist at `http://localhost:3000/static/` for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
 
 To get started you'll need, at a minimum:
 
@@ -31,11 +31,18 @@ Buzz! controllers are easy to get on eBay and, besides subtle differences in loo
 
 ## Running Your Own Quiz
 
-The included instructions (the quizmaster checklist) is written for the specific setup at Pixels Camp (assuming the contents of the "quizmaster kit"), read it thoroughly and adapt it for your needs. At this point the "OMG" functions available in the REPL aren't documented. See the bottom of `core.clj` for details.
+The [quizmaster checklist](http://localhost:3000/static/) is written for Pixels Camp (ie. assumes the contents of the "quizmaster kit" and a full setup), read it thoroughly and adapt it for your needs.
 
-There's a Python script in the `tooling` directory to take a `.csv` and produce a questions file in `.edn` format. Look at the included examples to see what bits you'll need to come up with (ie. questions, possible answers, and quizmaster notes).
+There's a Python script in the `tooling` directory to take a `.csv` and produce a questions file in `.edn` format (which you should place in the project root, with the name `questions.edn`, to be picked up by the engine on start). Look at the included examples to see what bits you'll need to come up with (ie. questions, answer options, and quizmaster notes).
 
-The standard quiz model is comprised of four rounds to select four teams to compete in a final round (with more, and harder, questions). This can be adapted for fewer players (eg. two rounds selecting four teams to compete in a third round) by adjusting the `round-config.edn` file.
+The standard quiz model is comprised of four rounds to select four teams to compete in a fifth round (with more, and harder, questions). This can be adapted for fewer players (eg. two rounds selecting four teams to compete in a third round) by adjusting the `round-config.edn` file.
 
---
-The Quizmaster
+## Usage Instructions
+
+...
+
+To reset the game to its initial state, stop the engine, delete the `game-state.edn*` files, and start it again.
+
+**Note:** If the engine is stopped and restarted, the previous game state is always loaded from disk. However, previous events won't be re-emitted. If you restart the engine *and* reopen the screens, it will look like the game just started from scratch (it will update on the next state change). So, if you restart the engine on-stage, **keep the browser windows open** and the audience won't notice a thing.
+
+_-- The Quizmaster_
