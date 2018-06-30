@@ -2,6 +2,8 @@
 
 This is the game engine for [The Amazing Quizshow!](https://quiz.pixels.camp/), as used live at [Pixels Camp](https://pixels.camp/) since 2016.
 
+![Main Screen](https://github.com/PixelsCamp/pixelscamp-quiz-stage/raw/master/extras/mainscreen.png)
+
 ## Caveat Emptor
 
 This application was written to be used by a **single person**, **once a year**. Expect quirky UX and some roughness around the edges. Having said this, it tries to prevent the quizmaster from making mistakes and should be solid under use. It also provides enough tools (see the embedded REPL) to get out of sticky situations on-stage.
@@ -13,17 +15,17 @@ It's a Clojure application so you'll need:
 * [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/)
 * [Leiningen](https://leiningen.org/)
 
-It was last known to work with JDK 9.0.1 on macOS 10.12.6.
+It was last known to work with JDK 10.0.1 on macOS 10.12.6.
 
-Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start a server on port `tcp/3000`.
+Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start an HTTP server on port `tcp/3000`.
 
-The server handles both websocket connections from the several components, as well as webpages for the quizmaster console, main screen, team screens, etc. See the checklist at `http://localhost:3000/static/` for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
+The engine serves webpages for the quizmaster console, main screen, team screens, Buzz! simulator (for testing), and handles input from the Buzz! controllers. See the checklist at `http://localhost:3000/static/` for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
 
 To get started you'll need, at a minimum:
 
   * Your laptop, with a free USB port (no network connection required);
   * An external **1080p** (1920x1080) screen/projector to show the main screen (the questions);
-  * Wired PlayStation Buzz! controllers.
+  * Wired PlayStation Buzz! controllers (you can skip this and use the Buzz! simulator page during testing).
 
 Buzz! controllers are easy to get on eBay and, besides subtle differences in look from one PlayStation version to the next, should work interchangeably. Wireless controllers haven't been tested, but it looks like they'd work too (although it's debatable if using wireless controllers at a conference would be a good idea).
 
@@ -39,7 +41,11 @@ The standard quiz model is comprised of four rounds to select four teams to comp
 
 ## Usage Instructions
 
-...
+![Quiz Console](https://github.com/PixelsCamp/pixelscamp-quiz-stage/raw/master/extras/quizconsole.png)
+
+The best way to learn how to use the engine is by starting it and following this [flow chart](https://github.com/PixelsCamp/pixelscamp-quiz-stage/raw/master/extras/engine_flow.pdf). After a few minutes, you should start getting the hang of it, and then it will all make sense (hopefully).
+
+If you're serious about using this on stage, make sure to look at the bottom of the `core.clj` file for a few functions you can call from the REPL while the engine is running. These functions allow the quizmaster to adjust scores, discard a question, and generally fix mistakes.
 
 To reset the game to its initial state, stop the engine, delete the `game-state.edn*` files, and start it again.
 
