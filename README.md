@@ -12,10 +12,10 @@ This application was written to be used by a **single person**, **once a year**.
 
 It's a Clojure application so you'll need:
 
-* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/)
+* [Java SE](http://jdk.java.net/) (OpenJDK is recommended)
 * [Leiningen](https://leiningen.org/)
 
-It was last known to work with JDK 10.0.1 on macOS 10.12.6.
+It was last known to work with OpenJDK 11 on macOS 10.12.6.
 
 Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start an HTTP server on port `tcp/3000`.
 
