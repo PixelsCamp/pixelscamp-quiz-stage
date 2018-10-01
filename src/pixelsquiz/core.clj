@@ -4,6 +4,8 @@
 (require '[pixelsquiz.util :refer :all])
 (require '[pixelsquiz.stage :refer :all])
 (require '[pixelsquiz.types])
+(require '[pixelsquiz.logger :as logger])
+
 (import '(pixelsquiz.types Event Answer Question Round Team GameState))
 
 (require '[reduce-fsm :as fsm])
@@ -11,10 +13,11 @@
            :refer [>! <! >!! <!! go go-loop chan buffer close! thread
                     alts! alts!! timeout]])
 (require '[clojure.edn :as edn])
+(require '[clojure.pprint :refer [pprint]])
+(require '[clojure.string :refer [join]])
 
 (require '[clojure.tools.nrepl.server :as repl])
 
-(require 'spyscope.core)
 (require '[alex-and-georges.debug-repl :refer :all])
 
 (def buzz-score-modifier 2)
@@ -73,7 +76,7 @@
 (defn show-question-results
   [world & _]
   (reset! timer-active false)
-  (w-m-d #spy/d (Event. :show-question-results (:current-answer world)))
+  (w-m-d (Event. :show-question-results (:current-answer world)))
   false)
 
 (defmacro with-answer
@@ -182,7 +185,7 @@
         ]
     (if (and (> (count (:tiebreaker-pool world)) 0) (nil? question-number) (round-tied? current-round))
       (do
-        (println "Appending tiebreaker question:" (first (:tiebreaker-pool world)))
+        (logger/info "Appending tiebreaker question:" (first (:tiebreaker-pool world)))
         (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) (first (:tiebreaker-pool world))))
                      :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)))
       world)))
@@ -241,6 +244,9 @@
 
 
 
+;
+; TODO: This is really messy and could use some (serious) cleanup.
+;
 (defn game-loop
   [game-state world]
   (let [timeout-chan (chan 16)
@@ -281,15 +287,20 @@
                           ))]
       (reset! game-state f)
 
+      (if (not (nil? (get-in @game-state [:value :current-round :number])))
+        (logger/info "Round #" (get-in @game-state [:value :current-round :number])))
+
       ;; Patch the scores (see "omg-*" helper functions)...
       (let [scores [:value :current-round :scores]]
         (if (not= @score-adjustments [0 0 0 0])
           (do
-            (println "*** OMG: adjusting round scores:" @score-adjustments)
+            (logger/warn "OMG: Adjusting round scores: " @score-adjustments)
             (reset! game-state (assoc-in @game-state scores
                                 (mapv + (get-in @game-state scores) @score-adjustments)))
             (reset! score-adjustments [0 0 0 0])))
-        (println "*** Current scores:" (get-in @game-state scores)))
+
+        (if (not (nil? (get-in @game-state scores)))
+          (logger/info "Round scores: [" (join " " (get-in @game-state scores)) "]")))
 
       ;; Patch the questions list (see "omg-*" helper functions)...
       (let [questions [:value :current-round :questions]
@@ -297,17 +308,45 @@
             round-number [:value :current-round :number]]
         (if (and @append-question (> (count (get-in @game-state tiebreaker-pool)) 0))
           (do
-            (println "*** OMG: appending question to round:" (first (get-in @game-state tiebreaker-pool)))
+            (logger/warn "OMG: Appending question " (first (get-in @game-state tiebreaker-pool)) " to round.")
             (reset! game-state (assoc-in @game-state questions
                                 (conj (get-in @game-state questions) (first (get-in @game-state tiebreaker-pool)))))
             (reset! game-state (assoc-in @game-state tiebreaker-pool (subvec (get-in @game-state tiebreaker-pool) 1)))
             (reset! append-question false)))
-        (println "*** Round" (get-in @game-state round-number) "questions:" (get-in @game-state questions))
-        (println "*** Tiebreaker pool:" (get-in @game-state tiebreaker-pool)))
 
-      (println)
-      (println "Game loop advancing:" (:state @game-state))
-      (recur (fsm/fsm-event @game-state #spy/d (<!! round-events))))))
+        (if (not (nil? (get-in @game-state round-number)))
+          (do
+            (logger/info "Round questions [" (count (get-in @game-state questions)) "]:"
+                         " [" (join " " (get-in @game-state questions)) "]")
+            (logger/info "Question pool (" (count (get-in @game-state tiebreaker-pool)) " tiebreakers):"
+                         " [" (join " " (get-in @game-state tiebreaker-pool)) "]"))))
+
+      (logger/info "----> Game STATE: " (:state @game-state))
+
+      (let [current-answer (get-in @game-state [:value :current-answer])]
+        (if (not (nil? current-answer))
+          (do
+            (logger/info "Question #" (+ (get-in @game-state [:value :current-round :question-index]) 1)
+                         " [" (get-in current-answer [:question :score]) "p]: "
+                         (get-in current-answer [:question :text]))
+            (logger/info "Answer: " (first (get-in current-answer [:question :options])))
+            (logger/info "Choices: " (join " :: " (mapv #(% :text)
+                                                    (get-in current-answer [:question :shuffled-options]))))
+
+            (if (not (nil? (get current-answer :team-buzzed)))
+              (logger/info "Team #" (+ (get current-answer :team-buzzed) 1)
+                           " BUZZED in this question: " (case (get current-answer :good-buzz)
+                                                          nil "THINKING"
+                                                          true "CORRECT"
+                                                          false "WRONG")))
+
+            (if (not (nil? (get current-answer :answers)))
+              (logger/info "Team answers: [" (join " " (mapv (fn [answer] (if (nil? answer) "-" (+ answer 1)))
+                                                         (get current-answer :answers))) "]"))
+
+            (logger/info "Answer scores: [" (join " " (get current-answer :scores)) "]"))))
+
+      (recur (fsm/fsm-event @game-state (<!! round-events))))))
 
 
 (defn read-from-file
@@ -334,8 +373,8 @@
                                    :value (select-keys value [:current-question :current-answer :current-round :round-index])
                                    }) :append false)
     (spit (str game-state-file "-log") (pr-str state) :append true)
-    (clojure.pprint/pprint (:state state))
-    (clojure.pprint/pprint (select-keys value [:current-round :current-answer]))
+    ; (pprint (:state state))
+    ; (pprint (select-keys value [:current-round :current-answer]))
     ))
 
 (defn -main
@@ -367,7 +406,7 @@
 
 (defn omg-adjust-scores [t1 t2 t3 t4]
   (reset! score-adjustments [t1 t2 t3 t4])
-  (println "Scores will be adjusted AFTER the next answer (or round end):" @score-adjustments))
+  (logger/warn "OMG: Scores will be adjusted AFTER the next answer (or round end): " @score-adjustments))
 
 (defn omg-last-question-scores []
   (get-in @game-state [:value :current-answer :scores]))
@@ -377,7 +416,7 @@
 
 (defn omg-append-question []
   (reset! append-question true)
-  (println "Question" (first (get-in @game-state [:value :tiebreaker-pool])) "will be appended to current round."))
+  (logger/warn "OMG: Question " (first (get-in @game-state [:value :tiebreaker-pool])) " will be appended to current round."))
 
 (defn omg-replace-question []
   (omg-revert-scores)

@@ -1,26 +1,22 @@
 (ns pixelsquiz.logger
   (:require
-    [clj-time.core :as t]
-    [clj-time.coerce :as tc]
-    )
-  )
+    [clj-time.local :refer [local-now format-local-time]]
+    [clojure.string :refer [join]]
+   ))
 
-(defn print-with-serverity
+(defn print-with-severity
   [severity args]
-  (println severity  (.toString (t/now))  args)
-  true)
+  (let [timestamp (format-local-time (local-now) :rfc822)]
+    (println (join ": " [timestamp severity (join "" args)]))))
 
 (defn info
   [& args]
-  (print-with-serverity "INFO" args )
-  )
+  (print-with-severity "INFO" args))
 
 (defn error
   [& args]
-  (print-with-serverity "ERROR" args)
-  nil)
+  (print-with-severity "ERROR" args))
 
 (defn warn
   [& args]
-  (print-with-serverity "WARN" args))
-
+  (print-with-severity "WARNING" args))

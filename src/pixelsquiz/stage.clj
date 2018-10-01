@@ -20,11 +20,8 @@
 
 (import pixelsquiz.types.Event)
 
-(require 'spyscope.core)
 (require '[alex-and-georges.debug-repl :refer :all])
-
-
-
+(require '[clojure.pprint :refer [pprint]])
 
 
 (defn buttons-actor
@@ -68,6 +65,8 @@
 
 (defn format-for-displays
   [ev]
+  (if (not (= (get ev :kind) :timer-update))
+    (logger/info "Pushing EVENT: " (get ev :kind)))
   (try
     (case (:kind ev)
       :question-starting {:do :lights-off}
@@ -109,8 +108,13 @@
                      :questionnum (-> ev :bag-of-props :question-index)
                      }
       :team-number {:do :team-number}
-      (logger/error "format-for-displays " ev))
-    (catch Exception e (logger/error "exception in format-for-displays" ev e))))
+      :starting {}
+      :for-quizmaster {}
+      :timer-start {}
+      (do
+        (logger/error "Unhandled event in format-for-displays: " ev)
+        (pprint ev)))
+    (catch Exception e (logger/error "Exception in format-for-displays: " ev e))))
 
 (defn format-for-quizmaster
   [ev]
@@ -119,7 +123,7 @@
       :for-quizmaster (merge {:do :quizmaster-only} (:bag-of-props ev))
       :buzzed (assoc {:do :quizmaster-only} :getrightwrong (-> ev :bag-of-props :team-buzzed))
       nil)
-    (catch Exception e (logger/error "exception in format-for-quizmaster" ev e))
+    (catch Exception e (logger/error "Exception in format-for-quizmaster:" ev e))
     ))
 
 (defn displays-actor
@@ -147,10 +151,12 @@
                     (on-close channel (fn [status]
                                         (swap! ws-connections dissoc channel)
                                         (swap! qm-connections dissoc channel)
-                                        (println "channel closed")))
+                                        (logger/info "Display channel closed.")))
                     (if (websocket? channel)
-                      (do (println "channel conn") (swap! ws-connections assoc channel true))
-                      (println "HTTP channel"))
+                      (do
+                        (logger/info "WebSocket display channel connected.")
+                        (swap! ws-connections assoc channel true))
+                      (logger/info "HTTP display channel connected."))
                     (on-receive channel (fn [data]
                                           ; data received from client
                                           ;; An optional param can pass to send!: close-after-send?
@@ -161,7 +167,7 @@
                                                   "quizmaster-auth" (do (swap! qm-connections assoc channel true)
                                                                        (send! channel (json/generate-string {:kind :info
                                                                                                              :text "OK!"})))
-                                                  (logger/warn "received data from displays:" data)))))))
+                                                  (logger/warn "Received display data:" data)))))))
      }))
 
 
@@ -186,6 +192,6 @@
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
     (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
-    (println "QUIZMASTER: Open http://localhost:3000/static/ in your browser!")
+    (logger/info "Pixels Quiz game engine READY! Open http://localhost:3000/static/ for instructions.")
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))

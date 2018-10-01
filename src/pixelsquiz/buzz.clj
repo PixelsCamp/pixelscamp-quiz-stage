@@ -1,6 +1,7 @@
 (ns pixelsquiz.buzz
   (:require
     [pixelsquiz.types :refer :all]
+    [pixelsquiz.logger :as logger]
     [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
                                           alts! alts!! timeout]]
     [clj-time.core :as t]
@@ -24,11 +25,11 @@
         manager (HIDManager/getInstance)]
     (try
       (let [buzz (.openById manager 0x054c 0x0002 "")]
-        (println "Buzz controllers detected: 054c:0002") buzz)
+        (logger/info "Buzz controllers detected: 054c:0002") buzz)
     (catch Exception e
       (try
         (let [buzz (.openById manager 0x054c 0x1000 "")]
-          (println "Buzz controllers detected: 054c:1000") buzz)
+          (logger/info "Buzz controllers detected: 054c:1000") buzz)
       (catch Exception e nil)))
     )
   )
@@ -78,6 +79,7 @@
                          (doseq [props (flatten (map buzz-to-properties (map debounce-buttons states previous) (range 4)))
                                  :when (:pressed props)
                                  ]
+                            (logger/info "Team #" (+ (:team props) 1) " pressed " (:button props))
                             (>!! channel (Event. (case (:button props)
                                                   :red :buzz-pressed
                                                   :option-pressed) props))
