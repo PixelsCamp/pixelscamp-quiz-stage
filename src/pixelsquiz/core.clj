@@ -280,11 +280,7 @@
                            ])
         ]
     (loop [f (game (:state @game-state)
-                   (merge (:value @game-state)
-                          world
-                          {:past-rounds []
-                           :answers []}
-                          ))]
+                   (merge world (:value @game-state) {:past-rounds [] :answers []}))]
       (reset! game-state f)
 
       (if (not (nil? (get-in @game-state [:value :current-round :number])))
@@ -355,38 +351,35 @@
     :items (merge (read-string (slurp "round-config.edn"))
                   {:questions-repo (read-string (slurp questions-db))})
     :initial-state (let [saved (try
-                          (read-string (slurp game-state-file))
-                          (catch Exception e {:state :start :value {:round-index -1}}))
+                                 (read-string (slurp game-state-file))
+                                 (catch Exception e {:state :start :value {:round-index -1}}))
                          state-fn (ns-resolve *ns* (symbol (name (:state saved))))]
-                         (if (ifn? state-fn)
-                           (assoc saved :state (deref state-fn))
-                           saved))
-    ))
+                     (if (ifn? state-fn)
+                       (assoc saved :state (deref state-fn))
+                       saved))))
 
 
-(def game-state (atom (read-from-file :initial-state) ))
+(def game-state (atom (read-from-file :initial-state)))
 
 (defn save-game-state-to-file!
   [key ref old-state state]
   (let [value (:value state)]
     (spit game-state-file (pr-str {:state (:state state)
-                                   :value (select-keys value [:current-question :current-answer :current-round :round-index])
-                                   }) :append false)
-    (spit (str game-state-file "-log") (pr-str state) :append true)
-    ; (pprint (:state state))
-    ; (pprint (select-keys value [:current-round :current-answer]))
-    ))
+                                   :value (select-keys value [:current-question
+                                                              :current-answer
+                                                              :current-round
+                                                              :round-index
+                                                              :tiebreaker-pool])})
+                                   :append false)
+    ; (spit (str game-state-file "-log") (pr-str state) :append true)
+  ))
 
 (defn -main
   [& args]
-  (let [
-        game-items (read-from-file :items)
-        stage (setup-stage)
-        ]
+  (let [game-items (read-from-file :items)
+        stage (setup-stage)]
     (add-watch game-state nil save-game-state-to-file!)
-    (game-loop game-state (assoc game-items :stage stage))
-   )
-  )
+    (game-loop game-state (assoc game-items :stage stage))))
 
 
 ;; Start a debug REPL, to which you can connect with "lein repl :connect"...
