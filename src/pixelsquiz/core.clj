@@ -25,6 +25,7 @@
 
 (def game-state-file "game-state.edn")
 (def questions-db "questions.edn")
+(def config-file "round-config.edn")
 
 (def timer-active (atom false))
 
@@ -361,7 +362,7 @@
 (defn read-from-file
   [what]
   (case what
-    :items (merge (read-string (slurp "round-config.edn"))
+    :items (merge (read-string (slurp config-file))
                   {:questions-repo (read-string (slurp questions-db))})
     :initial-state (let [saved (try
                                  (read-string (slurp game-state-file))
