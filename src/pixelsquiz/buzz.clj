@@ -4,9 +4,7 @@
     [pixelsquiz.logger :as logger]
     [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
                                           alts! alts!! timeout]]
-    [clj-time.core :as t]
-    [clj-time.coerce :as tc]
-    )
+    [clojure.string :refer [upper-case]])
 
   (:import [com.codeminders.hidapi HIDDeviceInfo HIDManager]
            [java.io IOException])
@@ -61,8 +59,7 @@
       (loop [br 0
              previous [0 0 0 0]]
         (let [states (if (= br 5)
-                       (let [ts (tc/to-long (t/now))
-                             b1 (aget buf 2)
+                       (let [b1 (aget buf 2)
                              b2 (aget buf 3)
                              b3 (aget buf 4)
                              states [
@@ -79,7 +76,7 @@
                          (doseq [props (flatten (map buzz-to-properties (map debounce-buttons states previous) (range 4)))
                                  :when (:pressed props)
                                  ]
-                            (logger/info "Team #" (+ (:team props) 1) " pressed " (:button props))
+                            (logger/log :info :bright-cyan "Team #" (+ (:team props) 1) " pressed " (upper-case (name (:button props))) ".")
                             (>!! channel (Event. (case (:button props)
                                                   :red :buzz-pressed
                                                   :option-pressed) props))

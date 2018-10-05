@@ -13,7 +13,8 @@
     [ring/ring-defaults "0.3.2"]
     [compojure "1.6.1"]
     [org.clojars.torbjornvatn/hidapi "1.1"]
-    [clj-time "0.14.4"]
+    [simple-time "0.2.1"]
+    [clj-time "0.14.4"]  ; pulled in by simple-time
     [cheshire "5.8.1"]
     [org.craigandera/dynne "0.4.1"]
     [incanter/incanter-core "1.9.3"]  ; fix override warning (pulled in by dynne)

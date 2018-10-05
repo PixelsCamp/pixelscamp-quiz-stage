@@ -22,6 +22,7 @@
 
 (require '[alex-and-georges.debug-repl :refer :all])
 (require '[clojure.pprint :refer [pprint]])
+(require '[clojure.string :refer [upper-case]])
 
 
 (defn buttons-actor
@@ -31,10 +32,13 @@
     {:actor :buttons
      :chan c
      :routes (POST "/buttons/:action" [action :as request]
-                   (>!! c (Event. (keyword action) (assoc (:params request)
-                                                          :team (read-string (-> request :params :team))
-                                                          :button-index (read-string (-> request :params :button-index)))))
-                   (str "ok " (keyword action) "\n"))
+              (let [team-index (read-string (-> request :params :team))
+                    button-index (read-string (-> request :params :button-index))
+                    button-color (read-string (-> request :params :button))]
+                (logger/log :info :bright-cyan "Team #" (+ team-index 1) " pressed " (upper-case button-color) " (synthetic).")
+                (>!! c (Event. (keyword action) (assoc (:params request) :team team-index
+                                                                         :button-index button-index)))
+                (str "ok " (keyword action) "\n")))
      }
   ))
 
@@ -65,8 +69,8 @@
 
 (defn format-for-displays
   [ev]
-  (if (not (= (get ev :kind) :timer-update))
-    (logger/info "Pushing EVENT: " (get ev :kind)))
+  (if (not (contains? #{:timer-update :starting} (get ev :kind)))
+    (logger/log :info :bright-magenta "Displays: " (name (get ev :kind))))
   (try
     (case (:kind ev)
       :question-starting {:do :lights-off}
@@ -177,8 +181,10 @@
     {:actor :quizmaster
      :chan quizmaster-channel
      :routes (POST "/actions/:action" [action :as request]
-                   (>!! quizmaster-channel (Event. (keyword action) (:params request)))
-                   (str "ok " (keyword action) "\n"))
+               (do
+                 (logger/log :info :bright-cyan "Quizmaster pressed " (upper-case action) ".")
+                 (>!! quizmaster-channel (Event. (keyword action) (:params request))))
+                 (str "ok " (keyword action) "\n"))
      }
     ))
 
@@ -192,6 +198,6 @@
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
     (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
-    (logger/info "Pixels Quiz game engine READY! Open http://localhost:3000/static/ for instructions.")
+    (logger/log :info :bright-white "Pixels Quiz game engine READY at: http://localhost:3000/static/")
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))

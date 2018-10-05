@@ -281,22 +281,56 @@
         ]
     (loop [f (game (:state @game-state)
                    (merge world (:value @game-state) {:past-rounds [] :answers []}))]
-      (reset! game-state f)
+      (let [initial-state (:state @game-state)]
+        (reset! game-state f)
+        (if (not (= initial-state (:state @game-state)))
+          (logger/log :info :bright-green "Game state advancing: " (name (:state @game-state))))
+      )
 
-      (if (not (nil? (get-in @game-state [:value :current-round :number])))
-        (logger/info "Round #" (get-in @game-state [:value :current-round :number])))
+      (logger/info "State (top of game loop): " (name (:state @game-state)))
+
+      ; Dump important bits from the game state into the console...
+      (let [current-answer (get-in @game-state [:value :current-answer])
+            current-round (get-in @game-state [:value :current-round])]
+        (if (not (nil? (get current-round :number)))
+          (logger/info "Round #" (get current-round :number)))
+
+        (if (not (nil? current-answer))
+          (do
+            (logger/info "Question #" (+ (get current-round :question-index) 1) "/" (count (get current-round :questions))
+                         " [+" (get-in current-answer [:question :score]) "]: "
+                         (get-in current-answer [:question :text]))
+            (logger/info "Answer: " (first (get-in current-answer [:question :options])))
+            (logger/info "Choices: " (join " :: " (mapv #(% :text)
+                                                    (get-in current-answer [:question :shuffled-options]))))
+
+            (if (not (nil? (get current-answer :team-buzzed)))
+              (let [color (if (= (:state @game-state) :right-or-wrong) :bright-white :default)]
+                (logger/log :info color "Team #" (+ (get current-answer :team-buzzed) 1)
+                                        " BUZZED in this question: " (case (get current-answer :good-buzz)
+                                                                       nil "THINKING"
+                                                                       true "CORRECT"
+                                                                       false "WRONG"))))
+
+            (if (not (nil? (get current-answer :answers)))
+              (let [color (if (= (:state @game-state) :wait-answers) :bright-white :default)]
+                (logger/log :info color "Team answers: [" (join " " (mapv (fn [answer] (if (nil? answer) "-" (+ answer 1)))
+                                                                          (get current-answer :answers))) "]")))
+
+            (let [color (if (= (:state @game-state) :show-question-results) :bright-white :default)]
+              (logger/log :info color "Scores (question): [" (join " " (get current-answer :scores)) "]")))))
 
       ;; Patch the scores (see "omg-*" helper functions)...
       (let [scores [:value :current-round :scores]]
         (if (not= @score-adjustments [0 0 0 0])
           (do
-            (logger/warn "OMG: Adjusting round scores: " @score-adjustments)
+            (logger/warn "Quizmaster adjusted round scores by " @score-adjustments)
             (reset! game-state (assoc-in @game-state scores
                                 (mapv + (get-in @game-state scores) @score-adjustments)))
             (reset! score-adjustments [0 0 0 0])))
 
         (if (not (nil? (get-in @game-state scores)))
-          (logger/info "Round scores: [" (join " " (get-in @game-state scores)) "]")))
+          (logger/info "Scores (round): [" (join " " (get-in @game-state scores)) "]")))
 
       ;; Patch the questions list (see "omg-*" helper functions)...
       (let [questions [:value :current-round :questions]
@@ -304,7 +338,7 @@
             round-number [:value :current-round :number]]
         (if (and @append-question (> (count (get-in @game-state tiebreaker-pool)) 0))
           (do
-            (logger/warn "OMG: Appending question " (first (get-in @game-state tiebreaker-pool)) " to round.")
+            (logger/warn "Quizmaster appended question " (first (get-in @game-state tiebreaker-pool)) " to round.")
             (reset! game-state (assoc-in @game-state questions
                                 (conj (get-in @game-state questions) (first (get-in @game-state tiebreaker-pool)))))
             (reset! game-state (assoc-in @game-state tiebreaker-pool (subvec (get-in @game-state tiebreaker-pool) 1)))
@@ -312,36 +346,12 @@
 
         (if (not (nil? (get-in @game-state round-number)))
           (do
-            (logger/info "Round questions [" (count (get-in @game-state questions)) "]:"
+            (logger/info "Round (" (count (get-in @game-state questions)) " questions):"
                          " [" (join " " (get-in @game-state questions)) "]")
-            (logger/info "Question pool (" (count (get-in @game-state tiebreaker-pool)) " tiebreakers):"
+            (logger/info "Tiebreakers (" (count (get-in @game-state tiebreaker-pool)) " questions):"
                          " [" (join " " (get-in @game-state tiebreaker-pool)) "]"))))
 
-      (logger/info "----> Game STATE: " (:state @game-state))
-
-      (let [current-answer (get-in @game-state [:value :current-answer])]
-        (if (not (nil? current-answer))
-          (do
-            (logger/info "Question #" (+ (get-in @game-state [:value :current-round :question-index]) 1)
-                         " [" (get-in current-answer [:question :score]) "p]: "
-                         (get-in current-answer [:question :text]))
-            (logger/info "Answer: " (first (get-in current-answer [:question :options])))
-            (logger/info "Choices: " (join " :: " (mapv #(% :text)
-                                                    (get-in current-answer [:question :shuffled-options]))))
-
-            (if (not (nil? (get current-answer :team-buzzed)))
-              (logger/info "Team #" (+ (get current-answer :team-buzzed) 1)
-                           " BUZZED in this question: " (case (get current-answer :good-buzz)
-                                                          nil "THINKING"
-                                                          true "CORRECT"
-                                                          false "WRONG")))
-
-            (if (not (nil? (get current-answer :answers)))
-              (logger/info "Team answers: [" (join " " (mapv (fn [answer] (if (nil? answer) "-" (+ answer 1)))
-                                                         (get current-answer :answers))) "]"))
-
-            (logger/info "Answer scores: [" (join " " (get current-answer :scores)) "]"))))
-
+      (logger/info "State (bottom of game loop): " (name (:state @game-state)))
       (recur (fsm/fsm-event @game-state (<!! round-events))))))
 
 
