@@ -19,6 +19,7 @@
 (require '[clojure.tools.nrepl.server :as repl])
 
 (require '[alex-and-georges.debug-repl :refer :all])
+(require '[org.httpkit.client :as http])
 
 (def buzz-score-modifier 2)
 
@@ -185,7 +186,7 @@
         ]
     (if (and (> (count (:tiebreaker-pool world)) 0) (nil? question-number) (round-tied? current-round))
       (do
-        (logger/info "Appending tiebreaker question:" (first (:tiebreaker-pool world)))
+        (logger/log :info :bright-cyan "Appending tiebreaker question: " (first (:tiebreaker-pool world)))
         (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) (first (:tiebreaker-pool world))))
                      :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)))
       world)))
@@ -295,7 +296,8 @@
         (if (not (nil? (get current-round :number)))
           (logger/info "Round #" (get current-round :number)))
 
-        (if (not (nil? current-answer))
+        (if (and (not (nil? current-answer))
+                 (not (contains? #{:wait-for-question :end-of-round} (:state @game-state))))
           (do
             (logger/info "Question #" (+ (get current-round :question-index) 1) "/" (count (get current-round :questions))
                          " [+" (get-in current-answer [:question :score]) "]: "
@@ -324,13 +326,14 @@
       (let [scores [:value :current-round :scores]]
         (if (not= @score-adjustments [0 0 0 0])
           (do
-            (logger/warn "Quizmaster adjusted round scores by " @score-adjustments)
+            (logger/warn "Quizmaster adjusted round scores by " @score-adjustments ".")
             (reset! game-state (assoc-in @game-state scores
                                 (mapv + (get-in @game-state scores) @score-adjustments)))
             (reset! score-adjustments [0 0 0 0])))
 
         (if (not (nil? (get-in @game-state scores)))
-          (logger/info "Scores (round): [" (join " " (get-in @game-state scores)) "]")))
+          (let [color (if (= (:state @game-state) :wait-for-question) :bright-white :default)]
+            (logger/log :info color "Scores (round): [" (join " " (get-in @game-state scores)) "]"))))
 
       ;; Patch the questions list (see "omg-*" helper functions)...
       (let [questions [:value :current-round :questions]
@@ -407,19 +410,26 @@
               :bag-of-props {:question {:text question
                                         :shuffled-options (mapv #(assoc {} :text %) [o1 o2 o3 o4])}}}))))
 
-(defn omg-adjust-scores [t1 t2 t3 t4]
-  (reset! score-adjustments [t1 t2 t3 t4])
-  (logger/warn "OMG: Scores will be adjusted AFTER the next answer (or round end): " @score-adjustments))
-
 (defn omg-last-question-scores []
   (get-in @game-state [:value :current-answer :scores]))
+
+; TODO: There must be a cleaner way to trigger the main loop... :/
+(defn omg-apply-now []
+  (http/post "http://127.0.0.1:3000/actions/apply-omg")
+  true)
+
+(defn omg-adjust-scores [t1 t2 t3 t4]
+  (reset! score-adjustments [t1 t2 t3 t4])
+  (logger/warn "OMG: Scores adjusted by " @score-adjustments ". Game screen will update when question ends.")
+  (omg-apply-now))
 
 (defn omg-revert-scores []
   (apply omg-adjust-scores (mapv - [0 0 0 0] (omg-last-question-scores))))
 
 (defn omg-append-question []
   (reset! append-question true)
-  (logger/warn "OMG: Question " (first (get-in @game-state [:value :tiebreaker-pool])) " will be appended to current round."))
+  (logger/warn "OMG: Question " (first (get-in @game-state [:value :tiebreaker-pool])) " appended to current round.")
+  (omg-apply-now))
 
 (defn omg-replace-question []
   (omg-revert-scores)
