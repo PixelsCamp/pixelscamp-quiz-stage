@@ -52,3 +52,17 @@ To reset the game to its initial state, stop the engine, delete the `game-state.
 **Note:** If the engine is stopped and restarted, the previous game state is always loaded from disk. However, previous events won't be re-emitted. If you restart the engine *and* reopen the screens, it will look like the game just started from scratch (it will update on the next state change). So, if you restart the engine on-stage, **keep the browser windows open** and the audience won't notice a thing.
 
 _-- The Quizmaster_
+
+## Notes for Linux users
+
+If you have issues getting the controllers to work, the most likely issue is
+lack of permissions to access the HID device. The easiest fix is:
+
+1. Use the `evtest` (needs to be run with `sudo`), and test the controllers to
+   make sure the events are reaching your system. If they're not, the rest of
+   these steps won't help you
+2. Run the whole app with root access as well `sudo lein run`. (This is the lazy
+   approach, I know. I don't know, and don't care, enough about HID to find
+   a proper fix)
+
+_-- @naps62, aka the Mirror Conf Quizmaster_
