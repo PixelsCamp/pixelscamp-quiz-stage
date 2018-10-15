@@ -17,18 +17,19 @@
   (let [bits (System/getProperty "sun.arch.data.model")]
     (clojure.lang.RT/loadLibrary (str "hidapi-jni-" bits))))
 
-
 (defn open-buzz []
+  (logger/info "Trying to open Buzz controllers")
   (let [_ (load-hid-natives)
-        manager (HIDManager/getInstance)]
-    (try
-      (let [buzz (.openById manager 0x054c 0x0002 "")]
-        (logger/info "Buzz controllers detected: 054c:0002") buzz)
-    (catch Exception e
-      (try
-        (let [buzz (.openById manager 0x054c 0x1000 "")]
-          (logger/info "Buzz controllers detected: 054c:1000") buzz)
-      (catch Exception e nil)))
+        manager (HIDManager/getInstance)
+        all_devs (.listDevices manager)
+        filter_pred (fn [dev] (= (.getProduct_string dev) "Buzz"))
+        buzz_dev (first (filter filter_pred all_devs))]
+    (println buzz_dev)
+    (if (nil? buzz_dev)
+      (logger/info "Could not connect Buzz controllers")
+
+      (let [buzz (.openByPath manager (.getPath buzz_dev))]
+        (logger/info "Buzz controllers detected") buzz)
     )
   )
 )
