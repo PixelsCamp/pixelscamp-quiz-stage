@@ -6,16 +6,16 @@ This is the game engine for [The Amazing Quizshow!](https://quiz.pixels.camp/), 
 
 ## Caveat Emptor
 
-This application was written to be used by a **single person**, **once a year**. Expect quirky UX and some roughness around the edges. Having said this, it tries to prevent the quizmaster from making mistakes and should be solid under use. It also provides enough tools (see the embedded REPL) to get out of sticky situations on-stage.
+This application was originally written to be used by a **single person**, **once a year**. Expect quirky UX and some roughness around the edges. Having said this, it tries to prevent the quizmaster from making mistakes and should be solid under use. It also provides enough tools (see the embedded REPL) to get out of sticky situations on-stage.
 
 ## Running The Engine
 
 It's a Clojure application so you'll need:
 
-* [Java SE](http://jdk.java.net/) (OpenJDK is recommended)
+* [Java](http://jdk.java.net/) (OpenJDK is recommended)
 * [Leiningen](https://leiningen.org/)
 
-It was last known to work with OpenJDK 11 on macOS 10.12.6.
+It was last known to work with OpenJDK 11.0.1 on macOS 10.12.6.
 
 Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start an HTTP server on port `tcp/3000`.
 
@@ -50,5 +50,3 @@ If you're serious about using this on stage, make sure to look at the bottom of 
 To reset the game to its initial state, stop the engine, delete the `game-state.edn*` files, and start it again.
 
 **Note:** If the engine is stopped and restarted, the previous game state is always loaded from disk. However, previous events won't be re-emitted. If you restart the engine *and* reopen the screens, it will look like the game just started from scratch (it will update on the next state change). So, if you restart the engine on-stage, **keep the browser windows open** and the audience won't notice a thing.
-
-_-- The Quizmaster_
