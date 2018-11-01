@@ -3,12 +3,7 @@
 
 
 from __future__ import print_function
-from __future__ import division
-from __future__ import unicode_literals
-from __future__ import absolute_import
 
-import sys
-import os
 import csv
 import re
 
@@ -19,7 +14,7 @@ def parse_args():
     """Parse and enforce command-line arguments."""
 
     # Disable the automatic "-h/--help" argument to customize its message...
-    parser = ArgumentParser(description="Convert questions in CSV to EDN." , add_help=False)
+    parser = ArgumentParser(description="Convert questions in CSV to EDN.", add_help=False)
 
     parser.add_argument("filename", help="Input file in CSV format.")
 
@@ -32,26 +27,31 @@ def parse_args():
 
 def main():
     args = parse_args()
+    questions = []
 
-    with open(args.filename, "rb") as f:
-        questions = [r for r in csv.reader(f, delimiter=b",", quotechar=b"\"")][1:]
+    with open(args.filename, "r") as f:
+        for question in csv.reader(f, delimiter=",", quotechar="\""):
+            questions.append(question if f.encoding else [e.decode("utf-8") for e in question])
 
-    with open(re.sub(r"\.csv$", ".edn", args.filename, flags=re.I), "wb") as f:
+    if questions:  # ...drop the header.
+        del questions[0]
+
+    with open(re.sub(r"\.csv$", ".edn", args.filename, flags=re.I), "w") as f:
         f.write("[\n")
 
-        question_id = 0
+        for i, question in enumerate(questions, start=0):
+            text = question[0].replace("\"", "&quot;")  # ...HTML is allowed here.
+            options = "\" \"".join([e.replace("\"", "'") for e in question[1:5]])
+            trivia = question[5].replace("\"", "&quot;") if len(question) > 5 else ""
 
-        for question in questions:
-            question_text = question[0].decode("utf-8").replace("\"", "&quot;")  # ...HTML is allowed here.
-            question_options = "\" \"".join([q.decode("utf-8").replace("\"", "'") for q in question[1:5]])
-            question_trivia = question[5].decode("utf-8").replace("\"", "&quot;") if len(question) > 5 else ""
+            out = ("  #pixelsquiz.types.Question{:id %d, "
+                                                ":kind :multi, "
+                                                ":score 1, "
+                                                ":text \"%s\", "
+                                                ":options [\"%s\"], "
+                                                ":trivia \"%s\"}\n" % (i, text, options, trivia))
 
-            out = ("  #pixelsquiz.types.Question{:id %d, :kind :multi, :score 1, :text \"%s\", :options [\"%s\"], :trivia \"%s\"}\n" %
-                   (question_id, question_text, question_options, question_trivia))
-
-            f.write(out.encode("utf-8"))
-
-            question_id += 1
+            f.write(out if f.encoding else out.encode("utf-8"))
 
         f.write("]")
 
