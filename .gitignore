@@ -2,3 +2,5 @@
 .lein*
 game-state.edn*
 *.log
+questions*.edn
+tooling/*.csv
