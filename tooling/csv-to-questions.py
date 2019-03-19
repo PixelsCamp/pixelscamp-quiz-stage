@@ -41,7 +41,7 @@ def main():
 
         for i, question in enumerate(questions, start=0):
             text = question[0].replace("\"", "&quot;")  # ...HTML is allowed here.
-            options = "\" \"".join([e.replace("\"", "'") for e in question[1:5]])
+            options = "\" \"".join([e.replace("\"", "'").replace("\\", "\\\\") for e in question[1:5]])
             trivia = question[5].replace("\"", "&quot;") if len(question) > 5 else ""
 
             out = ("  #pixelsquiz.types.Question{:id %d, "
