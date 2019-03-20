@@ -16,7 +16,7 @@
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.string :refer [join]])
 
-(require '[clojure.tools.nrepl.server :as repl])
+(require '[nrepl.server])
 
 (require '[alex-and-georges.debug-repl :refer :all])
 (require '[org.httpkit.client :as http])
@@ -397,7 +397,7 @@
 
 
 ;; Start a debug REPL, to which you can connect with "lein repl :connect"...
-(defonce server (repl/start-server :port 7888))
+(defonce server (nrepl.server/start-server :port 7888))
 
 ;; Run this upon connecting (would be nice if it ran automatically):
 ;; (require '[pixelsquiz.core :refer :all])

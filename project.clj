@@ -4,9 +4,9 @@
   :dependencies [
     [org.clojure/clojure "1.9.0"]
     [org.clojure/core.async "0.4.474"]
-    [org.clojure/tools.nrepl "0.2.13"]
     [org.clojure/tools.namespace "0.2.11"]
     [org.clojars.gjahad/debug-repl "0.3.3"]
+    [nrepl "0.6.0"]
     [reduce-fsm "0.1.4"]
     [http-kit "2.3.0"]
     [ring "1.7.0"]
