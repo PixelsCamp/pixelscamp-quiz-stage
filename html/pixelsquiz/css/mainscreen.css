@@ -30,10 +30,10 @@ div#side {
 div#question {
     color: #fff;
     background: none;
-    font-size: 84px;
+    font-size: 80px;
     font-family: Lato, sans-serif;
     height: 380px;
-    padding: 60px 30px;
+    padding: 60px 20px;
     line-height: 1.2em;
     display: table-cell;
     vertical-align: middle;
