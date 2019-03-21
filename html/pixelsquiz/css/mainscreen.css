@@ -58,7 +58,8 @@ div#question b {
 }
 
 #options .opinfo {
-    float: right;
+    position: absolute;
+    right: 20px;
 }
 
 #options .opinfo span {
@@ -100,6 +101,7 @@ div#timer {
     font-family: 'Press Start 2P';
     font-size: 180px;
     color: #fdcf1a;
+    text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
     min-width: 410px;
     text-align: center;
     display: inline-block;

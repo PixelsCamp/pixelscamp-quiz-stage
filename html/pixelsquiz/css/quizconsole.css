@@ -87,6 +87,7 @@ button#select-wrong {
     font-family: 'Press Start 2P';
     font-size: 50px;
     color: #fdcf1a;
+    text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
     text-align: center;
     margin-bottom: 20px;
 }
