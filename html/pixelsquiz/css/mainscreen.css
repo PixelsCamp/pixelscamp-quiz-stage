@@ -3,11 +3,13 @@ body {
     color: #b0b0b0;
     width: 1920;
     height: 1080;
-    border: solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     padding: 0em;
     font-size: 18px;
     font-family: Lato, sans-serif;
     background: #202020;
+    margin: 0px;
 }
 
 div {
