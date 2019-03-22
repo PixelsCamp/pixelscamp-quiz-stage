@@ -34,12 +34,13 @@
         <li>4 Raspberry Pis and their SD cards;</li>
         <li>4 USB power supplies (for the Raspberry Pi);</li>
         <li>4 HDMI cables;</li>
-        <li>4 monitors (<b>1440x900</b>, provided by Hipnose);</li>
+        <li>4 monitors (<b>1920x1080</b>, provided by Hipnose);</li>
         <li>Projector (<b>1920x1080</b>, provided by Hipnose).</li>
     </ul>
 
     <h2>Assembly Checklist</h2>
     <ol>
+        <li>Configure a static address on your laptop (<tt>192.168.114.100/24</tt>);</li>
         <li>Disable your <b>firewall</b>;</li>
         <li>Disable standby/blank screen on your laptop;</li>
         <li>Turn the <b>ethernet switch</b> on;</li>
@@ -65,5 +66,20 @@
         <li>...</li>
         <li>Profit!</li>
     </ol>
+
+    <h2>In-Game Functions (REPL)</h2>
+    <h3>Fix Mistakes</h3>
+    <ul>
+        <li>Add or subtract points: <tt>(omg-adjust-scores 0 0 0 0)</tt></li>
+        <li>Revert last question points (<b>before</b> starting the next question): <tt>(omg-revert-scores)</tt>
+        <li>Replace last question, reverting points (<b>before</b> starting the next question): <tt>(omg-replace-question)</tt>
+    </ul>
+
+    <h3>Other Utilities</h3>
+    <ul>
+        <li>Write text on screen: <tt>(omg-mainscreen "your message here")</tt></li>
+        <li>Last question points (<b>before</b> starting the next question): <tt>(omg-last-question-scores)</tt></li>
+        <li>Add one more question to round: <tt>(omg-append-question)</tt>
+    </ul>
 </body>
 </html>
