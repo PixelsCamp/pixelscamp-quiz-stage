@@ -29,7 +29,7 @@ To get started you'll need, at a minimum:
 
 Buzz! controllers are easy to get on eBay and, besides subtle differences in look from one PlayStation version to the next, should work interchangeably. Wireless controllers haven't been tested, but it looks like they'd work too (although it's debatable if using wireless controllers at a conference would be a good idea).
 
-**Note:** The setup at Pixels Camp also has a dedicated screen for each team (provided by the fine folks at [Hipnose](http://hipnose.com/)). These are completely optional but, if used, must be configured for **1440x900** resolution. We use Raspberry Pis to drive them, with some ugly scripts (not included). You're free to use something better. :)
+**Note:** The setup at Pixels Camp also has a dedicated screen for each team (provided by the fine folks at [Hipnose](http://hipnose.com/)). These are completely optional but, if used, must be configured for **1920x1080** resolution. We use Raspberry Pis to drive them, with some ugly scripts (not included). You're free to use something better. :)
 
 ## Running Your Own Quiz
 
