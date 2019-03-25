@@ -10,6 +10,10 @@ import re
 from argparse import ArgumentParser
 
 
+# Matching questions score no points...
+TEST_QUESTION_RE = re.compile(r"^\s*Test(?:\s+question)?\s*:\s+", re.I)
+
+
 def parse_args():
     """Parse and enforce command-line arguments."""
 
@@ -43,17 +47,18 @@ def main():
             text = question[0].replace("\"", "&quot;")  # ...HTML is allowed here.
             options = "\" \"".join([e.replace("\"", "'").replace("\\", "\\\\") for e in question[1:5]])
             trivia = question[5].replace("\"", "&quot;") if len(question) > 5 else ""
+            score = 0 if TEST_QUESTION_RE.match(text) else 1
 
             out = ("  #pixelsquiz.types.Question{:id %d, "
                                                 ":kind :multi, "
-                                                ":score 1, "
+                                                ":score %d, "
                                                 ":text \"%s\", "
                                                 ":options [\"%s\"], "
-                                                ":trivia \"%s\"}\n" % (i, text, options, trivia))
+                                                ":trivia \"%s\"}\n" % (i, score, text, options, trivia))
 
             f.write(out if f.encoding else out.encode("utf-8"))
 
-        f.write("]")
+        f.write("]\n")
 
 
 if __name__ == "__main__":
