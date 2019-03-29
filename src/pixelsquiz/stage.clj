@@ -20,7 +20,6 @@
 
 (import pixelsquiz.types.Event)
 
-(require '[alex-and-georges.debug-repl :refer :all])
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.string :refer [upper-case]])
 

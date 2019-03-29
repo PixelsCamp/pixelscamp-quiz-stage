@@ -18,7 +18,6 @@
 
 (require '[nrepl.server])
 
-(require '[alex-and-georges.debug-repl :refer :all])
 (require '[org.httpkit.client :as http])
 
 (def buzz-score-modifier 2)
