@@ -32,6 +32,12 @@ function show_options(o) {
     for (i=0;i<4;i++) {
         $('#r' + i + ' .optext').text(o[i]);
         $('#r' + i + ' .opinfo').empty();  // ...remove residue.
+
+        if (o[i].trim().length == 0) {
+            $('#r' + i).addClass("blank");
+        } else {
+            $('#r' + i).removeClass("blank");
+        }
     }
 }
 
