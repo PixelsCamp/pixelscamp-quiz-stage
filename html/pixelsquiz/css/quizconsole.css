@@ -36,8 +36,8 @@ button {
 }
 
 div#buzzed {
-    margin: 20px 0;
-    padding: 0;
+    margin-top: 25px;
+    padding: 0 20px;
     font-size: 26px;
     text-align: right;
 }
@@ -140,26 +140,20 @@ div#main {
 div#question {
     font-size: 36px;
     background: none;
-    border-bottom: 2px solid #fdcf1a;
+    border-bottom: 2px dashed #444;
     padding: 20px 0;
-}
-
-div#status {
-    margin: 20px 0;
-    padding: 0;
-    height: 200px;
-    overflow: scroll;
-    text-overflow: ellipsis;
-    font-size: 13px;
-    font-family: 'Courier New', monospace;
-    white-space: pre;
-    color: #888;
 }
 
 div#question .qz_question {
     display: inline-block;
-    min-height: 2.5em;
+    min-height: 3em;
     color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-top: 8px;
+    background: #333;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 div#question .qz_answer {
@@ -168,6 +162,7 @@ div#question .qz_answer {
     margin-top: 1rem;
     font-size: 0.7em;
     color: #888;
+    padding-left: 8px;
 }
 
 div#question .qz_answer:before {
@@ -182,4 +177,62 @@ div#question .qz_trivia {
     margin-top: 1rem;
     font-size: 0.5em;
     color: #888;
+    padding: 8px 12px;
+}
+
+div#teams {
+    padding: 10px;
+    text-align: center;
+}
+
+div#teams span {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background: #333;
+    border-radius: 8px;
+}
+
+div#teams span.blue {
+    background: #01a7ee;
+    color: #222;
+}
+
+div#teams span.orange {
+    background: #f80;
+    color: #222;
+}
+
+div#teams span.green {
+    background: #0c0;
+    color: #222;
+}
+
+div#teams span.yellow {
+    background: #ff0;
+    color: #222;
+}
+
+div#teams span.wrong {
+    background: #ea282e url('../images/x-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80% 80%;
+}
+
+div#teams span.right {
+    background: #0c0;
+    color: #222;
+}
+
+div#teams span.highlight {
+    background: #01A7EE url('../images/invader-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80% 80%;
+}
+
+div#teams span.no-bg {
+    background: none;
 }

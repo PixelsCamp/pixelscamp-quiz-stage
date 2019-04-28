@@ -24,10 +24,9 @@ function get_right_wrong(team) {
 }
 
 var ws = null;
-var status_counter = 0;
 
 function start() {
-    console.log('starting ws');
+    console.log('connecting websocket...');
     ws = new WebSocket("ws://" + document.location.host +"/displays");
     ws.onopen = function (event) {
         ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
@@ -44,15 +43,30 @@ function start() {
                 $('#question .qz_answer').text(msg.answer);
                 $('#question .qz_trivia').html(msg.trivia);
             }
+
         } else if (msg.do === 'timer-update') {
             $('#timer_number').text(msg.value);
-        }
 
-        if (msg.do !== 'timer-update') {  // ...reduce noise.
-            var status_box = $('#status');
-            status_box.text(status_box.text() + status_counter + ': ' + event.data + '\n');
-            status_box.animate({scrollTop: status_box.prop('scrollHeight')}, 500);
-            status_counter++;
+        } else if (msg.do === 'update-lights') {
+            for (var t = 0; t < 4; t++) {
+                var team = $('#t' + t);
+
+                // Unlike the player screens, here we want
+                // to keep the latest state always visible...
+                if (msg.colours[t] !== 'off') {
+                    team.removeClass();
+                }
+                team.addClass(msg.colours[t]);
+            }
+
+        } else if (msg.do === 'highlight') {
+            $('#teams span').removeClass();
+            $('#t' + msg.team).addClass('highlight');
+
+        } else if (msg.do === 'lights-off') {
+            var teams = $('#teams span');
+            teams.removeClass();
+            teams.text('');
         }
     }
 }
