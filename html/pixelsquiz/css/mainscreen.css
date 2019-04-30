@@ -1,14 +1,16 @@
+html {
+    background: #000;
+}
+
 body {
     color: #b0b0b0;
-    width: 1920;
-    height: 1080;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    padding: 0em;
+    width: 1920px;
+    height: 1080px;
+    padding: 0;
     font-size: 18px;
     font-family: Lato, sans-serif;
     background: #202020;
-    margin: 0px;
+    margin: 0;
 }
 
 div {
@@ -17,14 +19,14 @@ div {
 
 div#main {
     position: absolute;
-    top: 4%; left: 5%;
+    top: 35px; left: 85px;
     width: 63%; height: 90%;
     display: table-row;
 }
 
 div#side {
     position: absolute;
-    top: 4%; right: 4%;
+    top: 35px; right: 70px;
     width: 30%; height: 90%;
 }
 
@@ -88,7 +90,7 @@ div .resp {
 }
 
 .resp.blank {
-    background: #333;
+    background: #444;
 }
 
 div#timer {
@@ -125,7 +127,7 @@ div#scoreboard {
 div#scoreboard p {
     margin: 35px 0;
     font-family: 'Avant Pixel';
-    font-size: 48px;
+    font-size: 50px;
     color: white;
     text-align: center;
 }
@@ -133,9 +135,9 @@ div#scoreboard p {
 div#scoreboard table {
     background: none;
     box-shadow: none;
-    padding-top: 20px;
+    padding-top: 30px;
     border-spacing: 0;
-    color: #858585;
+    color: #888;
 }
 
 div#scoreboard td {
@@ -161,8 +163,12 @@ div#scoreboard td.tscore {
     padding-right: 0.6ch;
 }
 
+div#scoreboard td .hash {
+    font-size: 0.95em;
+}
+
 div#scoreboard td.scored {
-    color: #fdcf1a;
+    color: #fdcf1a !important;
 }
 
 div#scoreboard td:nth-child(3) {
@@ -173,8 +179,11 @@ div#scoreboard td:nth-child(3) {
 div#scoreboard .highlight {
     background: #01a7ee;
     color: #fff;
+}
+
+div#scoreboard .highlight {
+    text-shadow: 0 0 2px;
     box-shadow: 0 0 50px #01a7ee;  /* FIXME: ignored on safari, why? */
-    text-shadow: 0 0 2px #fff;
 }
 
 .blue {
@@ -198,17 +207,17 @@ div#scoreboard .highlight {
 }
 
 .blue.blank {
-    border-left: 28px solid #01a7ee;
+    border-left: 98px solid #01a7ee;
 }
 
 .orange.blank {
-    border-left: 28px solid #f80;
+    border-left: 98px solid #f80;
 }
 
 .green.blank {
-    border-left: 28px solid #0c0;
+    border-left: 98px solid #0c0;
 }
 
 .yellow.blank {
-    border-left: 28px solid #ff0;
+    border-left: 98px solid #ff0;
 }
