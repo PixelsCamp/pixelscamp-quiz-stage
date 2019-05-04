@@ -206,10 +206,14 @@ function start() {
     }
 }
 
-function check() {
-    if(!ws || ws.readyState == 3) start();
-}
 
-check();
+$(document).ready(function() {
+    function check() {
+        if (!ws || ws.readyState == 3) {
+            start();
+        }
+    }
 
-setInterval(check, 3000);
+    check();
+    setInterval(check, 3000);
+});

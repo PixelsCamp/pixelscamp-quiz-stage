@@ -88,12 +88,17 @@ function start() {
     }
 }
 
-function check() {
-    if(!ws || ws.readyState == 3) start();
-}
 
-check();
-setInterval(check, 3000);
+$(document).ready(function() {
+    function check() {
+        if (!ws || ws.readyState == 3) {
+            start();
+        }
+    }
+
+    check();
+    setInterval(check, 3000);
+});
 
 
 var last_clicker_press = 0;
