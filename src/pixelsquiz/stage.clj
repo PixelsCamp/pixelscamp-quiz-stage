@@ -54,7 +54,7 @@
                     (do
                       (sounds/stop)
                       (sounds/play :timeout)))
-    :show-question-results (if (not (= (sounds/playing) :timeout))
+    :show-question-results (if (not (sounds/is-playing :timeout))
                              (do
                                (sounds/stop)
                                (sounds/play :ping)))
