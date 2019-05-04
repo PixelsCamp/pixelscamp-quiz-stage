@@ -98,7 +98,23 @@ function start() {
         var msg = JSON.parse(event.data);
         var curr_question_text = '';
 
-        console.log(msg);
+        if ($.isEmptyObject(msg)) {
+            return;
+        }
+
+        if (msg.do === undefined && msg.kind === undefined) {
+            console.warn('unknown message: ' + event.data);
+            return;
+        }
+
+        if (msg.kind === 'info') {
+            console.log('game engine says: ' + msg.text);
+            return;
+        }
+
+        if (msg.do !== 'timer-update') {
+            console.log('command message: ' + msg.do + ': ', msg);
+        }
 
         // Pixels Camp starts tomorrow, let's bring out the big hammer...
         if ('questionnum' in msg && typeof(msg['questionnum']) in {'number':1, 'string':1}) {

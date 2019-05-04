@@ -26,14 +26,31 @@ function get_right_wrong(team) {
 var ws = null;
 
 function start() {
-    console.log('connecting websocket...');
+    console.log('connecting to game engine...');
     ws = new WebSocket("ws://" + document.location.host +"/displays");
     ws.onopen = function (event) {
         ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
     }
     ws.onmessage = function (event) {
         var msg = JSON.parse(event.data);
-        console.log(event.data);
+
+        if ($.isEmptyObject(msg)) {
+            return;
+        }
+
+        if (msg.do === undefined && msg.kind === undefined) {
+            console.warn('unknown message: ' + event.data);
+            return;
+        }
+
+        if (msg.kind === 'info') {
+            console.log('game engine says: ' + msg.text);
+            return;
+        }
+
+        if (msg.do !== 'timer-update') {
+            console.log('command message: ' + msg.do + ': ', msg);
+        }
 
         if (msg.do === 'quizmaster-only') {
             if ('getrightwrong' in msg) {
