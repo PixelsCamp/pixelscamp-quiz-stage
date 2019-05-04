@@ -104,6 +104,13 @@ $(document).ready(function() {
 var last_clicker_press = 0;
 var min_clicker_interval = 2000;  // milliseconds
 
+var clicker_enabled = false;
+
+if (!clicker_enabled) {
+    console.warn('Quick game advance on Page Up/Down is disabled by default. ' +
+                 'Set "clicker_enabled = true" to enable it if you know what you\'re doing.');
+}
+
 /*
  * If you paid attention to the quiz flowchart, you may have realized that only one
  * command button is active at a time. Actually, there are multiple buttons so that
@@ -120,7 +127,7 @@ var min_clicker_interval = 2000;  // milliseconds
  * may be dangerous if the quizmaster confuses the buttons, so that's not implemented.
  */
 $(document).keyup(function(e) {
-    if (!e.charCode && (e.which === 33 || e.which === 34)) {  // "page up" and "page down".
+    if (clicker_enabled && !e.charCode && (e.which === 33 || e.which === 34)) {  // "page up" and "page down".
         e.preventDefault();
 
         var now = new Date().getTime();
@@ -162,7 +169,7 @@ $(document).keyup(function(e) {
  * This means we need to prevent scrolling from happening on the "keydown" event.
  */
 $(document).keydown(function(e) {
-    if (!e.charCode && (e.which === 33 || e.which === 34)) {  // "page up" and "page down".
+    if (clicker_enabled && !e.charCode && (e.which === 33 || e.which === 34)) {  // "page up" and "page down".
         e.preventDefault();
     }
 });
