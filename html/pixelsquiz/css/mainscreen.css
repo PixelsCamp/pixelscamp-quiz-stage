@@ -185,17 +185,17 @@ div#scoreboard .highlight {
 
 div#scoreboard .option-selected {
     color: #fff;
-    text-shadow: 0 0 4px;
+    text-shadow: 0 0 16px;
 }
 
 div#scoreboard .right {
     color: #0c0;
-    text-shadow: 0 0 4px;
+    text-shadow: 0 0 16px;
 }
 
 div#scoreboard .wrong {
     color: #ff2020;
-    text-shadow: 0 0 4px;
+    text-shadow: 0 0 16px;
 }
 
 .blue {
