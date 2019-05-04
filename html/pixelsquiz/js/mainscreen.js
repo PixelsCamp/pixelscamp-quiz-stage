@@ -11,7 +11,7 @@ function update_scores(scores) {
     }
 }
 
-function throb (secs) {
+function throb(secs) {
     var timer = $('#timer_number');
 
     timer.text(secs);
@@ -64,6 +64,31 @@ function show_answers(answers) {
 
 }
 
+function update_lights(lights) {
+    if (!lights) {
+        console.log("clearing lights")
+        $('#scoreboard .team .name').removeClass('option-selected right wrong');
+        return;
+    }
+
+    var colors = ['blue', 'orange', 'green', 'yellow'];
+
+    for (var team = 0; team < lights.length; team++) {
+        var light = lights[team];
+
+        if (colors.includes(light)) {
+            console.log("setting light " + team + " to " + light)
+            $('#scoreboard #s' + team + '.team .name').addClass('option-selected');
+        } else if (light === 'right') {
+            console.log("setting light " + team + " on " + light)
+            $('#scoreboard #s' + team + '.team .name').addClass('right');
+        } else if (light === 'wrong') {
+            console.log("setting light " + team + " on " + light)
+            $('#scoreboard #s' + team + '.team .name').addClass('wrong');
+        }
+    }
+}
+
 var ws = null;
 var curr_question = 1;
 
@@ -106,6 +131,7 @@ function start() {
 
         if (msg.do === 'timer-update') {
             throb(msg.value)
+
         } else if (msg.do === 'show-question') {
             if (msg.text) {
                 show_question(msg.text, msg.options);
@@ -119,17 +145,22 @@ function start() {
             } else {
                 show_question("Let's add the scores...", ["", "", "",""])
                 curr_question_text = 'Total Scores';
+                update_lights();
                 throb(20);
             }
+
         } else if (msg.do === 'update-all') {
             show_question(msg.text, msg.options);
             update_scores(msg.scores);
+
             if ('text' in msg && (/^\s*round\s+ended/i).test(msg.text)) {
                 console.log("The round has ended.");
                 curr_question_text = 'Final Scores';
+                update_lights();
             } else {
                 curr_question_text = 'Question ' + curr_question;
             }
+
         } else if (msg.do === 'update-scores') {
             update_scores(msg.scores);
             curr_question_text = 'Question ' + curr_question;
@@ -142,9 +173,14 @@ function start() {
                     show_answers(msg.answers);
                 }
             }
+
         } else if (msg.do == 'lights-off') {
-            show_question("", ["", "", "", ""])
+            show_question("", ["", "", "", ""]);
+            update_lights();
             curr_question_text = 'Question ' + curr_question;
+
+        } else if (msg.do == 'update-lights') {
+            update_lights(msg.colours);
         }
 
         if (curr_question_text) {  // ...assumes we never blank this item.

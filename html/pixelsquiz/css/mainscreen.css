@@ -179,11 +179,23 @@ div#scoreboard td:nth-child(3) {
 div#scoreboard .highlight {
     background: #01a7ee;
     color: #fff;
-}
-
-div#scoreboard .highlight {
     text-shadow: 0 0 2px;
     box-shadow: 0 0 50px #01a7ee;  /* FIXME: ignored on safari, why? */
+}
+
+div#scoreboard .option-selected {
+    color: #fff;
+    text-shadow: 0 0 4px;
+}
+
+div#scoreboard .right {
+    color: #0c0;
+    text-shadow: 0 0 4px;
+}
+
+div#scoreboard .wrong {
+    color: #ff2020;
+    text-shadow: 0 0 4px;
 }
 
 .blue {
