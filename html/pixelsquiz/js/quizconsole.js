@@ -111,6 +111,11 @@ var min_clicker_interval = 2000;  // milliseconds
  *
  * This means we can use a wireless clicker to advance the game if we want to. :)
  *
+ * But we must be careful with generating button clicks, because we don't want jump
+ * multiple steps at once (eg. activating the next question and starting the timer
+ * right after it). The sequence of trial clicks must not include a valid sequence
+ * that the quizmaster would perform manually.
+ *
  * We might also want to use the clicker to accept/reject an buzzed answer, but that
  * may be dangerous if the quizmaster confuses the buttons, so that's not implemented.
  */
@@ -132,12 +137,12 @@ $(document).keyup(function(e) {
          * The show question button is clicked twice to show the question immediately.
          * The quizmaster may not be in front of the console to read it, after all.
          *
-         * The start/finish round button isn't included, just because.
+         * The "start-round" button is omitted and the sequence is reversed for safety.
          */
         var buttons = [
-            'start-question',
+            'start-mult',
             'show-question', 'show-question',
-            'start-mult'
+            'start-question'
         ];
 
         console.log('simulating (synchronous) click sequence to advance game');
