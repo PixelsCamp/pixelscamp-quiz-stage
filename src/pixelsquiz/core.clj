@@ -269,7 +269,7 @@
                             {:kind :select-right} -> {:action qm-choice} show-question-results
                             {:kind :select-wrong} -> {:action qm-choice} :wait-before-options]
                            [:wait-before-options {}
-                            {:kind :start-mult} -> {:action (partial options-show-and-timeout timeout-chan)} wait-answers]
+                            {:kind :start-choice} -> {:action (partial options-show-and-timeout timeout-chan)} wait-answers]
                            [wait-answers {}
                             {:kind :option-pressed} -> {:action (partial acc-option timeout-chan)} wait-answers
                             {:kind :options-timeout} -> show-question-results

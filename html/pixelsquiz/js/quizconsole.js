@@ -147,7 +147,7 @@ $(document).keyup(function(e) {
          * The "start-round" button is omitted and the sequence is reversed for safety.
          */
         var buttons = [
-            'start-mult',
+            'start-choice',
             'show-question', 'show-question',
             'start-question'
         ];
