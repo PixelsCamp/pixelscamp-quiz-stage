@@ -126,7 +126,7 @@ function start() {
         if ('options' in msg) {
             console.log('Updating options list...');
 
-            var options = $('#options .resp');
+            var options = $('#options .answer');
             options.removeClass("correct wrong");
 
             if ('correctidx' in msg) {

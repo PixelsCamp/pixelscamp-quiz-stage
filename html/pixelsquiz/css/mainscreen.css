@@ -75,7 +75,7 @@ div#question b {
     font-weight: bold;
 }
 
-div .resp {
+div .answer {
     font-size: 60px;
     padding: 14px 28px;
     margin: 14px 0;
@@ -84,12 +84,12 @@ div .resp {
     letter-spacing: -1px;
 }
 
-.resp.wrong {
+.answer.wrong {
     background: #555 !important;
     color: #222 !important;
 }
 
-.resp.blank {
+.answer.blank {
     background: #444;
 }
 
