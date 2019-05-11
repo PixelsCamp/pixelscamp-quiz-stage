@@ -215,19 +215,28 @@ div#teams span.wrong {
     background: #ea282e url('../images/x-icon.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 80% 80%;
+    background-size: 70% 70%;
 }
 
 div#teams span.right {
-    background: #0c0;
-    color: #222;
+    background: #0c0 url('../images/heart-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70% 70%;
 }
 
 div#teams span.highlight {
     background: #01A7EE url('../images/invader-icon.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 80% 80%;
+    background-size: 70% 70%;
+}
+
+div#teams span.winner {
+    background: #000 url('../images/cup-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70% 70%;
 }
 
 div#teams span.no-bg {

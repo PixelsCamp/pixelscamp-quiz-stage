@@ -65,7 +65,7 @@ function start() {
             $('#timer_number').text(msg.value);
 
         } else if (msg.do === 'update-lights') {
-            for (var t = 0; t < 4; t++) {
+            for (var t = 0; t < msg.colours.length; t++) {
                 var team = $('#t' + t);
 
                 // Unlike the player screens, here we want
@@ -74,6 +74,19 @@ function start() {
                     team.removeClass();
                 }
                 team.addClass(msg.colours[t]);
+            }
+
+        } else if (msg.do === 'update-all') {
+            if ('text' in msg && (/^\s*round\s+ended/i).test(msg.text)) {
+                var winning_team = 0;
+
+                for (var t = 0; t < msg.scores.length; t++) {
+                    if (msg.scores[t] > msg.scores[winning_team]) {
+                        winning_team = t;
+                    }
+                }
+
+                $('#t' + winning_team).addClass('winner');
             }
 
         } else if (msg.do === 'highlight') {

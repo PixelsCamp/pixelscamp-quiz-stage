@@ -1,77 +1,147 @@
 var team = document.location.hash[1] - 1;
-var d = $('#main');
+var content = $('#main');
 
 
-function clear () {
-    d.removeClass();
-}
-
-var ops = {
+var appearance = {
+    'score': function() {
+        content.removeClass('off');
+        content.addClass('score');
+    },
     'highlight': function() {
-        clear();
-        d.addClass('invader');
+        content.removeClass();
+        content.addClass('highlight');
     },
     'right': function() {
-        clear()
-        d.addClass('right');
+        content.removeClass();
+        content.addClass('right');
     },
     'wrong': function() {
-        clear();
-        d.addClass('fail');
+        content.removeClass();
+        content.addClass('wrong');
+    },
+    'winner': function() {
+        content.removeClass();
+        content.addClass('winner');
     },
     'off': function() {
-        clear();
-        d.text('');
-        d.addClass('off');
+        content.removeClass();
+        content.addClass('off');
     },
-
-    'blue': function () {
-        clear();
-        d.addClass('blue');
+    'blue': function() {
+        content.removeClass();
+        content.addClass('blue');
     },
-    'orange': function () {
-        clear();
-        d.addClass('orange');
+    'orange': function() {
+        content.removeClass();
+        content.addClass('orange');
     },
-    'green': function () {
-        clear();
-        d.addClass('green');
+    'green': function() {
+        content.removeClass();
+        content.addClass('green');
     },
     'yellow': function() {
-        clear();
-        d.addClass('yellow');
+        content.removeClass();
+        content.addClass('yellow');
     }
 }
 
-function update_scores(scores) {
-    d.text(scores[team]);
-}
 
-var ws = new WebSocket("ws://" + document.location.host + "/displays");
-ws.onmessage = function (event) {
-    var msg = JSON.parse(event.data);
+var ws = null;
 
-    console.log(event.data);
-    if (msg.do === 'highlight') {
-        if (msg.team == team) {
-            ops.highlight();
+function start() {
+    console.log('connecting to game engine...');
+    ws = new WebSocket("ws://" + document.location.host + "/displays");
+
+    ws.onmessage = function(event) {
+        var msg = JSON.parse(event.data);
+
+        if ($.isEmptyObject(msg)) {
+            return;
         }
-    } else if (msg.do === 'show-question') {
-        if(msg.text != '') ops.off();
-    } else if (msg.do === 'update-lights') {
-        var c = msg.colours[team];
-        ops[c]();
-    } else if (msg.do === 'update-all') {
-        update_scores(msg.scores);
-    } else if (msg.do === 'update-scores') {
-        update_scores(msg.scores);
-    } else if (msg.do === 'lights-off') {
-        ops['off']();
-    } else if (msg.do === 'team-number') {
-        var bg = ["blue", "orange", "green", "yellow"];
-        ops[bg[team]]();
-        d.text(team+1);
+
+        if (msg.do === undefined && msg.kind === undefined) {
+            console.warn('unknown message: ' + event.data);
+            return;
+        }
+
+        if (msg.do !== 'timer-update') {
+            console.log('command message: ' + msg.do + ': ', msg);
+
+        }
+
+        if (msg.do === 'highlight') {
+            if (msg.team === team) {
+                appearance.highlight();
+            }
+
+        } else if (msg.do === 'show-question') {
+            if (msg.text === '') {
+                appearance.off();
+                appearance.score()
+            } else if ((/^\s*starting\s+round\s+[0-9]+/i).test(msg.text)) {
+                appearance.off();
+                content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
+            }
+
+        } else if (msg.do === 'update-lights') {
+            if (content.hasClass('wrong')) {
+                return;  // ...keep wrong indicator during multiple choice.
+            }
+
+            appearance[msg.colours[team]]();
+            content.html('');
+
+        } else if (msg.do === 'update-all') {
+            if ('text' in msg && (/^\s*round\s+ended/i).test(msg.text)) {
+                var max_score = 0;
+
+                for (var i = 0; i < msg.scores.length; i++) {
+                    max_score = Math.max(max_score, msg.scores[i]);
+                }
+
+                if (msg.scores[team] === max_score) {
+                    appearance.winner();
+                } else {
+                    appearance.off();
+                    content.html('');
+                }
+            } else {
+                appearance.score();
+                content.html('<span class="points_' + msg.scores[team] + '">' + msg.scores[team] + '</span>');
+            }
+
+        } else if (msg.do === 'update-scores') {
+            if (msg.questionnum === null) {  // ...start of round.
+                return;
+            }
+
+            appearance.score();
+            content.html('<span class="points_' + msg.scores[team] + '">' + msg.scores[team] + '</span>');
+
+        } else if (msg.do === 'lights-off') {
+            appearance.off();
+            content.html('');
+
+        } else if (msg.do === 'team-number') {
+            appearance[['blue', 'orange', 'green', 'yellow'][team]]();
+            content.html(team + 1);
+        }
     }
 }
 
-ops.off();
+
+$(document).ready(function() {
+    function check() {
+        if (!ws || ws.readyState == 3) {
+            start();
+        }
+    }
+
+    appearance.off();
+    content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
+
+    check();
+    setInterval(check, 3000);
+
+    document.title = 'Quiz Team #' + (team + 1);
+});

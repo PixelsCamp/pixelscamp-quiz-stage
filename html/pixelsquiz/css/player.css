@@ -38,14 +38,30 @@ div#main {
 
 .off {
     background: #000;
+    color: #000;
 }
 
-.highlight {
-    background: #fff;
+.team {
+    display: inline;
+    color: #333;
 }
 
-.red {
-    background: #EA282E;
+.team .hash {
+    font-size: 0.8em;
+    color: #222;
+}
+
+.score {
+    background: #000;
+    color: #FDCF1A;
+}
+
+.points_0 {
+    color: #333;
+}
+
+.blue {
+    background: #01A7EE;
     color: #222;
 }
 
@@ -54,51 +70,44 @@ div#main {
     color: #222;
 }
 
-.yellow {
-    background: #FDCF1A;
-    color: #222;
-}
-
 .green {
     background: #4FBA49;
     color: #222;
 }
 
-.blue {
-    background: #01A7EE;
+.yellow {
+    background: #FDCF1A;
     color: #222;
 }
 
 .right {
-    background: #0f0;
-    color: #000;
+    text-indent: -200%;  /* hide the text offscreen */
+    background: #4FBA49 url('../images/heart-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #222;
 }
 
 .wrong {
-    background: #f00;
-    color: #000;
-}
-
-.fail {
+    text-indent: -200%;  /* hide the text offscreen */
     background: #ea282e url('../images/x-icon.png');
     background-position: center;
     background-repeat: no-repeat;
+    color: #222;
 }
 
-.love {
-    background: #01A7EE url('../images/heart-icon.png');
+.winner {
+    text-indent: -200%;  /* hide the text offscreen */
+    background: #000 url('../images/cup-icon.png');
     background-position: center;
     background-repeat: no-repeat;
+    color: #FDCF1A;
 }
 
-.win {
-    background: #4FBA49 url('../images/cup-icon.png');
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.invader {
+.highlight {
+    text-indent: -200%;  /* hide the text offscreen */
     background: #01A7EE url('../images/invader-icon.png');
     background-position: center;
     background-repeat: no-repeat;
+    color: #FDCF1A;
 }
