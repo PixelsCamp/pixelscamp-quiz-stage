@@ -165,6 +165,7 @@ div#scoreboard td.tscore {
 
 div#scoreboard td .hash {
     font-size: 0.95em;
+    color: #777;
 }
 
 div#scoreboard td.scored {
