@@ -96,6 +96,7 @@
                      :options (map #(:text %) (-> ev :bag-of-props :question :shuffled-options))
                      }
       :show-question-results {:do :update-scores  ; ev bag-of-props Answer
+                              :text (-> ev :bag-of-props :question :text)
                               :scores (-> ev :bag-of-props :scores)
                               :options (mapv #(:text %) (-> ev :bag-of-props :question :shuffled-options))
                               :correctidx (.indexOf (mapv #(:original-pos %) (-> ev :bag-of-props :question :shuffled-options)) 0)

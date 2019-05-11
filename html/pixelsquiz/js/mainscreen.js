@@ -181,8 +181,8 @@ function start() {
             update_scores(msg.scores);
             curr_question_text = 'Question ' + curr_question;
 
-            if (msg.options) {
-                show_options(msg.options);
+            if (msg.text && msg.options) {  // ...showing correct answer.
+                show_question(msg.text, msg.options);
 
                 if ('answers' in msg && msg.answers) {
                     console.log('Showing team answers...');
