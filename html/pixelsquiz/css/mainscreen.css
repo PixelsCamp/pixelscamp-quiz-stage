@@ -119,7 +119,7 @@ div#timer {
 }
 
 #timer-number.expired {
-    color: #ff2020;
+    color: #ea282e;
 }
 
 div#scoreboard {
@@ -206,12 +206,12 @@ div#scoreboard .option-selected td:nth-child(1) {
 }
 
 div#scoreboard .right td:nth-child(1) {
-    color: #0c0;
+    color: #4FBA49;
     text-shadow: 0 0 16px;
 }
 
 div#scoreboard .wrong td:nth-child(1) {
-    color: #ff2020;
+    color: #ea282e;
     text-shadow: 0 0 16px;
 }
 
