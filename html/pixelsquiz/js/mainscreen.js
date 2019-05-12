@@ -1,18 +1,18 @@
 function update_scores(scores) {
     for(var team = 0; team < 4; team++) {
-        var tscore = $('#s' + team + ' .tscore');
+        var tscore = $('#s' + team + ' .score');
         tscore.text(scores[team]);
 
-        if (scores[team] > 0) {
-            tscore.addClass('scored');
+        if (scores[team] <= 0) {
+            tscore.addClass('score-0');
         } else {
-            tscore.removeClass('scored');
+            tscore.removeClass('score-0');
         }
     }
 }
 
 function throb(secs) {
-    var timer = $('#timer_number');
+    var timer = $('#timer-number');
 
     timer.text(secs);
 
@@ -20,6 +20,12 @@ function throb(secs) {
         timer.addClass('expired');
     } else {
         timer.removeClass('expired');
+    }
+
+    if (secs == 20) {
+        timer.addClass('timer-20');
+    } else {
+        timer.removeClass('timer-20');
     }
 }
 
@@ -67,7 +73,7 @@ function show_answers(answers) {
 function update_lights(lights) {
     if (!lights) {
         console.log("clearing lights")
-        $('#scoreboard .team .name').removeClass('option-selected right wrong');
+        $('#scoreboard .team').removeClass('option-selected right wrong');
         return;
     }
 
@@ -78,13 +84,13 @@ function update_lights(lights) {
 
         if (colors.includes(light)) {
             console.log("setting light " + team + " to " + light)
-            $('#scoreboard #s' + team + '.team .name').addClass('option-selected');
+            $('#scoreboard #s' + team + '.team').addClass('option-selected');
         } else if (light === 'right') {
             console.log("setting light " + team + " on " + light)
-            $('#scoreboard #s' + team + '.team .name').addClass('right');
+            $('#scoreboard #s' + team + '.team').addClass('right');
         } else if (light === 'wrong') {
             console.log("setting light " + team + " on " + light)
-            $('#scoreboard #s' + team + '.team .name').addClass('wrong');
+            $('#scoreboard #s' + team + '.team').addClass('wrong');
         }
     }
 }
@@ -201,7 +207,7 @@ function start() {
 
         if (curr_question_text) {  // ...assumes we never blank this item.
             console.log('Setting scores title: ' + curr_question_text);
-            $('#question_number').text(curr_question_text);
+            $('#question-number').text(curr_question_text);
         }
     }
 }

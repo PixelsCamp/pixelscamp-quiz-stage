@@ -47,7 +47,7 @@ div#question b {
     font-weight: bold;
 }
 
-#question_number {
+#question-number {
     display: inline-block;
     margin-bottom: 10px;
 }
@@ -104,7 +104,7 @@ div#timer {
     line-height: 230px;
 }
 
-#timer_number {
+#timer-number {
     font-family: 'Press Start 2P';
     font-size: 180px;
     color: #fdcf1a;
@@ -114,7 +114,11 @@ div#timer {
     display: inline-block;
 }
 
-#timer_number.expired {
+#timer-number.timer-20 {
+    margin-right: -8px;
+}
+
+#timer-number.expired {
     color: #ff2020;
 }
 
@@ -142,6 +146,7 @@ div#scoreboard table {
 
 div#scoreboard td {
     text-align: center;
+    vertical-align: text-bottom;
     border: none;
     padding: 8px 6px;
     background: none;
@@ -156,25 +161,32 @@ div#scoreboard td:nth-child(1) {
     text-align: right;
 }
 
-div#scoreboard td.tscore {
+div#scoreboard td:nth-child(2) {
     font-weight: bold;
     text-align: right;
-    width: 2ch;
+    width: 2.1ch;
     padding-right: 0.6ch;
-}
-
-div#scoreboard td .hash {
-    font-size: 0.95em;
-    color: #777;
-}
-
-div#scoreboard td.scored {
-    color: #fdcf1a !important;
 }
 
 div#scoreboard td:nth-child(3) {
     padding-right: 14px;
     text-align: left;
+}
+
+div#scoreboard .score {
+    color: #fdcf1a;
+}
+
+div#scoreboard .score-0 {
+    color: #888;
+}
+
+div#scoreboard .points-label {
+    font-size: 95%;
+}
+
+div#scoreboard .name .hash {
+    font-size: 95%;
 }
 
 div#scoreboard .highlight {
@@ -184,17 +196,21 @@ div#scoreboard .highlight {
     box-shadow: 0 0 50px #01a7ee;  /* FIXME: ignored on safari, why? */
 }
 
-div#scoreboard .option-selected {
+div#scoreboard .highlight .score-0 {
+    color: #fff;
+}
+
+div#scoreboard .option-selected td:nth-child(1) {
     color: #fff;
     text-shadow: 0 0 16px;
 }
 
-div#scoreboard .right {
+div#scoreboard .right td:nth-child(1) {
     color: #0c0;
     text-shadow: 0 0 16px;
 }
 
-div#scoreboard .wrong {
+div#scoreboard .wrong td:nth-child(1) {
     color: #ff2020;
     text-shadow: 0 0 16px;
 }
