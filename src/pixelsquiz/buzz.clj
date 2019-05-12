@@ -1,15 +1,15 @@
 (ns pixelsquiz.buzz
-  (:require
-    [pixelsquiz.types :refer :all]
-    [pixelsquiz.logger :as logger]
-    [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
-                                          alts! alts!! timeout]]
-    [clojure.string :refer [upper-case]])
+  (:gen-class))
 
-  (:import [com.codeminders.hidapi HIDDeviceInfo HIDManager]
-           [java.io IOException])
-  )
-(import pixelsquiz.types.Event)
+(require '[pixelsquiz.logger :as logger])
+(require '[pixelsquiz.types])
+
+(require '[clojure.string :refer [upper-case]])
+(require '[clojure.core.async :refer [>!!]])
+
+(import '[pixelsquiz.types Event])
+(import '[com.codeminders.hidapi HIDManager])
+
 
 (def controller-buttons [:red :yellow :green :orange :blue])
 

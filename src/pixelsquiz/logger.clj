@@ -1,7 +1,8 @@
 (ns pixelsquiz.logger
-  (:require
-    [simple-time.core :as time]
-    [clojure.string :refer [join upper-case]]))
+  (:gen-class))
+
+(require '[simple-time.core :as time])
+(require '[clojure.string :refer [join upper-case]])
 
 
 (def colors {:reset   "\033[0m"

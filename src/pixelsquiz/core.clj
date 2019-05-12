@@ -1,24 +1,20 @@
 (ns pixelsquiz.core
   (:gen-class))
 
-(require '[pixelsquiz.util :refer :all])
-(require '[pixelsquiz.stage :refer :all])
-(require '[pixelsquiz.types])
+(require '[pixelsquiz.util :refer [sort-teams-by-scores]])
+(require '[pixelsquiz.stage :refer [setup-stage]])
 (require '[pixelsquiz.logger :as logger])
+(require '[pixelsquiz.types])
 
-(import '(pixelsquiz.types Event Answer Question Round Team GameState))
-
-(require '[reduce-fsm :as fsm])
-(require '[clojure.core.async :as async
-           :refer [>! <! >!! <!! go go-loop chan buffer close! thread
-                    alts! alts!! timeout]])
-(require '[clojure.edn :as edn])
+(require '[clojure.core.async :as async :refer [>! <! >!! <!!]])
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.string :refer [join]])
-
-(require '[nrepl.server])
-
+(require '[reduce-fsm :as fsm])
 (require '[org.httpkit.client :as http])
+(require '[nrepl.server :as repl])
+
+(import '[pixelsquiz.types Event Answer])
+
 
 (def buzz-score-modifier 2)
 
@@ -37,11 +33,11 @@
   (reset! timer-active true)
   (>!! disp (Event. :timer-start {}))
   (>!! disp (Event. :timer-update {:value duration}))
-  (go-loop
+  (async/go-loop
     [seconds (dec duration)]
     (if (> seconds -1)
       (do
-        (<! (timeout 1000))
+        (<! (async/timeout 1000))
         (if @timer-active  ;; ...might have stopped in the meanwhile.
           (do
             (>! disp (Event. :timer-update {:value seconds}))
@@ -250,7 +246,7 @@
 ;
 (defn game-loop
   [game-state world]
-  (let [timeout-chan (chan 16)
+  (let [timeout-chan (async/chan 16)
         stage (:stage world)
         round-events (async/merge [(:buttons stage) (:quizmaster stage) timeout-chan])
         game (fsm/fsm-inc [
@@ -396,7 +392,7 @@
 
 
 ;; Start a debug REPL, to which you can connect with "lein repl :connect"...
-(defonce server (nrepl.server/start-server :port 7888))
+(defonce server (repl/start-server :port 7888))
 
 ;; Run this upon connecting (would be nice if it ran automatically):
 ;; (require '[pixelsquiz.core :refer :all])

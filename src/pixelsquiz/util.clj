@@ -1,4 +1,5 @@
-(ns pixelsquiz.util)
+(ns pixelsquiz.util
+  (:gen-class))
 
 
 (defn scores-to-map

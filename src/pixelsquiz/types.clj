@@ -8,4 +8,3 @@
 (defrecord Answer [question team-buzzed good-buzz answers scores])
 (defrecord Round [number teams questions scores])
 (defrecord GameState [round-index current-round question-index current-question])
-

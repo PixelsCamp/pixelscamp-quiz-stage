@@ -1,33 +1,28 @@
 (ns pixelsquiz.stage
+  (:gen-class))
 
-  (:use org.httpkit.server)
+(require '[pixelsquiz.buzz :as buzz])
+(require '[pixelsquiz.sounds :as sounds])
+(require '[pixelsquiz.util :refer [sort-teams-by-scores]])
+(require '[pixelsquiz.logger :as logger])
+(require '[pixelsquiz.types])
 
-  (:require
-    [pixelsquiz.types :refer :all]
-    [pixelsquiz.util :refer :all]
-    [pixelsquiz.sounds :as sounds]
-    [pixelsquiz.buzz :as buzz :refer [open-and-read-buzz-into button-colours]]
-    [pixelsquiz.logger :as logger]
-    [ring.middleware.defaults :refer :all]
-    [compojure.core     :as comp :refer (defroutes GET POST)]
-    [compojure.route    :as route]
-    [clojure.core.async :as async :refer [>! <! >!! <!! go go-loop chan buffer close! thread
-                                          alts! alts!! timeout]]
-    [cheshire.core :as json]
-    )
-
-  )
-
-(import pixelsquiz.types.Event)
-
+(require '[clojure.core.async :as async :refer [<! >!!]])
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.string :refer [upper-case]])
+(require '[compojure.core :as compojure :refer (defroutes GET POST)])
+(require '[compojure.route :as route])
+(require '[cheshire.core :as json])
+(require '[org.httpkit.server :as http :refer [with-channel send! websocket? on-receive on-close]])
+(require '[ring.middleware.defaults :as ring])
+
+(import '[pixelsquiz.types Event])
 
 
 (defn buttons-actor
   []
-  (let [c (chan 16)]
-    (go (open-and-read-buzz-into c))
+  (let [c (async/chan 16)]
+    (async/go (buzz/open-and-read-buzz-into c))
     {:actor :buttons
      :chan c
      :routes (POST "/buttons/:action" [action :as request]
@@ -85,7 +80,7 @@
       :update-lights {:do :update-lights
                       :colours (mapv #(if (nil? %)
                                        "off"
-                                       (get button-colours %))
+                                       (get buzz/button-colours %))
                       (-> ev :bag-of-props :answers)) }
       :show-question {:do :show-question
                       :text (-> ev :bag-of-props :text)
@@ -134,19 +129,20 @@
   []
   (let [ws-connections (atom {})
         qm-connections (atom {})
-        displays-channel (chan 16)]
-    (go-loop [ev {:kind :starting}]
-             (let [message (format-for-displays ev)
-                   qm-mesg (format-for-quizmaster ev)]
-               (play-sounds-for! ev)
-               (if (not (nil? message))
-                 (doseq [client (keys @ws-connections)]
-                   ;; send all, client will filter them
-                   (send! client (json/generate-string message))))
-               (if (not (nil? qm-mesg))
-                 (doseq [client (keys @qm-connections)]
-                   (send! client (json/generate-string qm-mesg)))))
-             (recur (<! displays-channel)))
+        displays-channel (async/chan 16)]
+    (async/go-loop
+      [ev {:kind :starting}]
+      (let [message (format-for-displays ev)
+            qm-mesg (format-for-quizmaster ev)]
+        (play-sounds-for! ev)
+        (if (not (nil? message))
+          (doseq [client (keys @ws-connections)]
+            ;; send all, client will filter them
+            (send! client (json/generate-string message))))
+        (if (not (nil? qm-mesg))
+          (doseq [client (keys @qm-connections)]
+            (send! client (json/generate-string qm-mesg)))))
+      (recur (<! displays-channel)))
     {:actor :displays
      :chan displays-channel
      :routes (GET "/displays" req
@@ -177,7 +173,7 @@
 
 (defn quizmaster-actor
   []
-  (let [quizmaster-channel (chan 16)]
+  (let [quizmaster-channel (async/chan 16)]
     {:actor :quizmaster
      :chan quizmaster-channel
      :routes (POST "/actions/:action" [action :as request]
@@ -197,7 +193,7 @@
                    (:routes (nth actors 2)) ; XXX humm ...
                    (route/files "/static/" {:root "html/pixelsquiz/"})]
         ]
-    (run-server (wrap-defaults (apply comp/routes ui-routes) api-defaults) {:port 3000})
+    (http/run-server (ring/wrap-defaults (apply compojure/routes ui-routes) ring/api-defaults) {:port 3000})
     (logger/log :info :bright-white "Pixels Quiz game engine READY at: http://localhost:3000/static/")
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))
