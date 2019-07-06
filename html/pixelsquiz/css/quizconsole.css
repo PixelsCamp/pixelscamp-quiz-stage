@@ -90,6 +90,11 @@ button#select-wrong {
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+div#commands {
+    margin-top: 40px;
 }
 
 div#commands button {
@@ -142,20 +147,25 @@ div#question {
     padding: 20px 0;
 }
 
+div#question .qz_number {
+    font-size: 0.7em;
+    color: #fdcf1a;
+    margin-right: 0.3ch;
+    padding-left: 8px;
+}
+
 div#question .qz_question {
-    display: inline-block;
+    display: block;
     min-height: 3em;
     color: #fff;
     padding: 8px 12px;
     border-radius: 8px;
-    margin-top: 8px;
-    background: #333;
     width: 100%;
     box-sizing: border-box;
 }
 
 div#question .qz_answer {
-    display: inline-block;
+    display: block;
     min-height: 2rem;
     margin-top: 1rem;
     font-size: 0.7em;
@@ -170,7 +180,7 @@ div#question .qz_answer:before {
 }
 
 div#question .qz_trivia {
-    display: inline-block;
+    display: block;
     min-height: 2rem;
     margin-top: 1rem;
     font-size: 0.5em;

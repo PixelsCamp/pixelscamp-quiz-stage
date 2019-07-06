@@ -122,7 +122,11 @@ function start() {
             console.log('command message: ' + msg.do + ': ', msg);
         }
 
-        // Pixels Camp starts tomorrow, let's bring out the big hammer...
+        /*
+         * FIXME: Figuring out the current question number (ie. never updating the
+         *        number while a previous question is still showing) is very UGLY
+         *        and brittle. This should really be fixed inside the game engine...
+         */
         if ('questionnum' in msg && typeof(msg['questionnum']) in {'number':1, 'string':1}) {
             curr_question = msg['questionnum'] + 1;
             console.log('Updating question number: ' + curr_question);

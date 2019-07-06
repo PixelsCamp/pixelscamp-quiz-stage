@@ -65,13 +65,25 @@ function start() {
             console.log('command message: ' + msg.do + ': ', msg);
         }
 
+        /*
+         * FIXME: I really should do something about this UGLY question number situation,
+         *        like sending it in its own message type every time a question starts.
+         *        Until that's fixed (which means unwinding the hack that's already being
+         *        used in the main screen) let's use it only as another state change hint...
+         */
+        if ("questionnum" in msg) {
+            $("#question_text").text("");
+            $("#question_answer").text("");
+            $("#question_trivia").text("");
+        }
+
         if (msg.do === 'quizmaster-only') {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
-                $('#question .qz_question').html("<span>" + "</span>" + msg.question);
-                $('#question .qz_answer').text(msg.answer);
-                $('#question .qz_trivia').html(msg.trivia);
+                $('#question_text').html("<span>" + "</span>" + (msg.question || ""));
+                $('#question_answer').text(msg.answer || "");
+                $('#question_trivia').html(msg.trivia || "");
             }
 
         } else if (msg.do === 'timer-update') {
