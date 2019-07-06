@@ -23,6 +23,19 @@ function get_right_wrong(team) {
     $("#buzzed .buzzed-text").addClass("text-highlight");
 }
 
+function update_scores(scores) {
+    var scores_line = [];
+
+    for (score of scores) {
+        var td = "<td" + (score > 0 ? "" : " class=\"score-0\"") + ">";
+        scores_line.push(td + score + "</td>");
+    }
+
+    var table = $("#scores table tbody");
+    table.find("tr:last-child").remove();
+    table.prepend("<tr>" + scores_line.join("") + "</tr>");
+}
+
 var ws = null;
 
 function start() {
@@ -56,7 +69,7 @@ function start() {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
-                $('#question .qz_question').html(msg.question);
+                $('#question .qz_question').html("<span>" + "</span>" + msg.question);
                 $('#question .qz_answer').text(msg.answer);
                 $('#question .qz_trivia').html(msg.trivia);
             }
@@ -77,6 +90,8 @@ function start() {
             }
 
         } else if (msg.do === 'update-all') {
+            update_scores(msg.scores);
+
             if ('text' in msg && (/^\s*round\s+ended/i).test(msg.text)) {
                 var winning_team = 0;
 
@@ -88,6 +103,9 @@ function start() {
 
                 $('#t' + winning_team).addClass('winner');
             }
+
+        } else if (msg.do === 'update-scores') {
+            update_scores(msg.scores);
 
         } else if (msg.do === 'highlight') {
             $('#teams span').removeClass();
