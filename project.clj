@@ -1,4 +1,4 @@
-(defproject pixelsquiz "0.2.2"
+(defproject pixelsquiz "0.3.0"
   :description "Game engine for the Pixels Camp quiz"
   :url "https://github.com/pixelscamp/pixelscamp-quiz-stage"
   :dependencies [

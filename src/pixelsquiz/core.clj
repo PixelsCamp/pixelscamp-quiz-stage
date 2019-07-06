@@ -78,7 +78,11 @@
 
 (defmacro with-answer
   [& forms]
-  `(let [{question :question team-buzzed :team-buzzed good-buzz :good-buzz answers :answers scores :scores} (:current-answer ~'world)]
+  `(let [{question :question
+          team-buzzed :team-buzzed
+          good-buzz :good-buzz
+          answers :answers
+          scores :scores} (:current-answer ~'world)]
      ~@forms))
 
 
@@ -116,8 +120,8 @@
             (not (nil? (get (-> world :current-answer :answers) answering-team))))
       world ; if the team buzzed ignore them
       (with-answer (assoc world :current-answer (Answer. question team-buzzed good-buzz
-                                                               (assoc answers answering-team selected-option)
-                                                               (assoc scores answering-team (get question-scores selected-option)))))
+                                                  (assoc answers answering-team selected-option)
+                                                  (assoc scores answering-team (get question-scores selected-option)))))
     )))
 
 (defn qm-choice
