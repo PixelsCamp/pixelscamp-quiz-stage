@@ -76,19 +76,12 @@
   (w-m-d world (Event. :show-question-results (:current-answer world)))
   false)
 
-(defmacro with-answer
-  [world & forms]
-  `(let [{question :question
-          team-buzzed :team-buzzed
-          good-buzz :good-buzz
-          answers :answers
-          scores :scores} (:current-answer ~world)]
-     ~@forms))
-
-
 (defn acc-answer
   [world event & _]
-  (with-answer world
+  (let [{question :question
+         team-buzzed :team-buzzed
+         answers :answers
+         scores :scores} (:current-answer world)]
     (assoc world :current-answer
            (case (:kind event) ; XXX this is kinda ugly ...
              :buzz-pressed (Answer. question (-> event :bag-of-props :team) nil answers scores)
@@ -118,19 +111,21 @@
     (if (or (= answering-team (-> world :current-answer :team-buzzed))
             (not (nil? (get (-> world :current-answer :answers) answering-team))))
       world ; if the team buzzed ignore them
-      (with-answer world
+      (let [{question :question
+             team-buzzed :team-buzzed
+             good-buzz :good-buzz
+             answers :answers
+             scores :scores} (:current-answer world)]
         (assoc world :current-answer (Answer. question team-buzzed good-buzz
-                                        (assoc answers answering-team selected-option)
-                                        (assoc scores answering-team (get question-scores selected-option)))))
+                                       (assoc answers answering-team selected-option)
+                                       (assoc scores answering-team (get question-scores selected-option)))))
     )))
 
 (defn qm-choice
   [world event & _]
   (reset! timer-active false)
-  (with-answer world
-    (w-m-d world (Event. :qm-choice
-                   {:team team-buzzed
-                    :right-wrong (:kind event)})))
+  (w-m-d world (Event. :qm-choice {:team (get-in world [:current-answer :team-buzzed])
+                                   :right-wrong (:kind event)}))
   (acc-answer world event))
 
 
