@@ -1,16 +1,16 @@
-html {
-    background: #000;
-}
-
 body {
     color: #b0b0b0;
-    width: 1920px;
-    height: 1080px;
     padding: 0;
     font-size: 18px;
     font-family: Lato, sans-serif;
     background: #202020;
     margin: 0;
+}
+
+#container {
+    width: 1920px;
+    height: 1080px;
+    outline: 1px dashed green;
 }
 
 div {
@@ -19,24 +19,24 @@ div {
 
 div#main {
     position: absolute;
-    top: 35px; left: 85px;
-    width: 63%; height: 90%;
+    top: 3.5vh; left: 8.5vh;
+    width: 63vw; height: 90vh;
     display: table-row;
 }
 
 div#side {
     position: absolute;
-    top: 35px; right: 70px;
-    width: 30%; height: 90%;
+    top: 3.5vh; right: 6.5vh;
+    width: 30vw; height: 90vh;
 }
 
 div#question {
     color: #fff;
     background: none;
-    font-size: 80px;
+    font-size: 8.2vh;
     font-family: Lato, sans-serif;
-    height: 380px;
-    padding: 60px 20px;
+    height: 35vh;
+    padding: 0 1vw;
     line-height: 1.2em;
     display: table-cell;
     vertical-align: middle;
@@ -49,37 +49,37 @@ div#question b {
 
 #question-number {
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 1.05vw;
 }
 
 #options {
     position: absolute;
-    bottom: 120px; left: 0;
+    bottom: 10vh; left: 0;
     width: 100%;
-    margin-bottom: -30px;
+    margin-bottom: -2.8vh;
     border: none;
 }
 
 #options .opinfo {
     position: absolute;
-    right: 20px;
+    right: 1.05vw;
 }
 
 #options .opinfo span {
     display: inline-block;
     background: #222;
     color: #fff;
-    margin: 0 11px;
+    margin: 0 0.55vw;
     width: 1.2em;
     text-align: center;
     font-weight: bold;
 }
 
 div .answer {
-    font-size: 60px;
-    padding: 14px 28px;
-    margin: 14px 0;
-    min-height: 74px;
+    font-size: 5.75vh;
+    padding: 1.3vh 1.4vw;
+    margin: 1.3vh 0;
+    min-height: 7vh;
     font-family: Telex, sans-serif;
     letter-spacing: -1px;
 }
@@ -95,27 +95,25 @@ div .answer {
 
 div#timer {
     position: absolute;
-    top: 50px; right: 0;
-    padding: 10px;
-    margin: 20px;
+    top: 4.75vh; right: 0;
+    padding: 1vh 0.5vw;
+    margin: 2vh 1vw;
     text-align: center;
-    min-width: 300px;
-    height: 300px;
-    line-height: 230px;
+    line-height: 21.5vh;
 }
 
 #timer-number {
     font-family: 'Press Start 2P';
-    font-size: 180px;
+    font-size: 17vh;
     color: #fdcf1a;
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
-    min-width: 410px;
+    min-width: 21.3vw;
     text-align: center;
     display: inline-block;
 }
 
 #timer-number.timer-20 {
-    margin-right: -8px;
+    margin-right: -0.4vw;
 }
 
 #timer-number.expired {
@@ -124,14 +122,14 @@ div#timer {
 
 div#scoreboard {
     position: absolute;
-    right: 10px; bottom: 120px;
+    right: 0.5vw; bottom: 10vh;
     text-align: center;
 }
 
 div#scoreboard p {
-    margin: 35px 0;
+    margin: 3.5vh 0;
     font-family: 'Avant Pixel';
-    font-size: 50px;
+    font-size: 4.6vh;
     color: white;
     text-align: center;
 }
@@ -139,7 +137,7 @@ div#scoreboard p {
 div#scoreboard table {
     background: none;
     box-shadow: none;
-    padding-top: 30px;
+    padding-top: 3vh;
     border-spacing: 0;
     color: #888;
 }
@@ -148,16 +146,16 @@ div#scoreboard td {
     text-align: center;
     vertical-align: text-bottom;
     border: none;
-    padding: 8px 6px;
+    padding: 0.75vh 0.3vw;
     background: none;
     font-family: Telex, monospace;
-    font-size: 44px;
+    font-size: 4.1vh;
     letter-spacing: 1px;
 }
 
 div#scoreboard td:nth-child(1) {
-    padding-left: 14;
-    padding-right: 20px;
+    padding-left: 0.7vw;
+    padding-right: 1.05vw;
     text-align: right;
 }
 
@@ -169,7 +167,7 @@ div#scoreboard td:nth-child(2) {
 }
 
 div#scoreboard td:nth-child(3) {
-    padding-right: 14px;
+    padding-right: 0.7vw;
     text-align: left;
 }
 
@@ -192,8 +190,8 @@ div#scoreboard .name .hash {
 div#scoreboard .highlight {
     background: #01a7ee;
     color: #fff;
-    text-shadow: 0 0 2px;
-    box-shadow: 0 0 50px #01a7ee;  /* FIXME: ignored on safari, why? */
+    text-shadow: 0 0 0.15vh;
+    box-shadow: 0 0 4.5vh #01a7ee;  /* FIXME: ignored on safari, why? */
 }
 
 div#scoreboard .highlight .score-0 {
@@ -202,17 +200,17 @@ div#scoreboard .highlight .score-0 {
 
 div#scoreboard .option-selected td:nth-child(1) {
     color: #fff;
-    text-shadow: 0 0 16px;
+    text-shadow: 0 0 1.5vh;
 }
 
 div#scoreboard .right td:nth-child(1) {
     color: #4FBA49;
-    text-shadow: 0 0 16px;
+    text-shadow: 0 0 1.5vh;
 }
 
 div#scoreboard .wrong td:nth-child(1) {
     color: #ea282e;
-    text-shadow: 0 0 16px;
+    text-shadow: 0 0 1.5vh;
 }
 
 .blue {
@@ -236,17 +234,17 @@ div#scoreboard .wrong td:nth-child(1) {
 }
 
 .blue.blank {
-    border-left: 98px solid #01a7ee;
+    border-left: 5.1vw solid #01a7ee;
 }
 
 .orange.blank {
-    border-left: 98px solid #f80;
+    border-left: 5.1vw solid #f80;
 }
 
 .green.blank {
-    border-left: 98px solid #0c0;
+    border-left: 5.1vw solid #0c0;
 }
 
 .yellow.blank {
-    border-left: 98px solid #ff0;
+    border-left: 5.1vw solid #ff0;
 }
