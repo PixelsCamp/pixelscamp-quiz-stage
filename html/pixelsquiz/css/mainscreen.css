@@ -247,3 +247,32 @@ div#scoreboard .wrong td:nth-child(1) {
 .yellow.blank {
     border-left: 5.1vw solid #ff0;
 }
+
+#sponsor {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 102%; height: 101%;
+    top: -1%; left: -1%;
+    background: #202020d8;
+    margin: 0; padding: 0;
+    --outline: 1px dashed #333;
+}
+
+#sponsor p {
+    position: absolute;
+    font-size: 3.5vh;
+    font-family: Telex;
+    color: #555;
+    margin: 0; padding: 0;
+    left: 11%; top: 10%;
+}
+
+#sponsor img {
+    height: 30%;
+    margin: 5% 0 0 0;
+    padding: 0;
+    filter: drop-shadow(0 0 0.6vh #f0f0f0);
+    opacity: 0.5;
+}
