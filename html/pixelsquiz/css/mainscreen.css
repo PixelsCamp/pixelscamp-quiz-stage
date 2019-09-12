@@ -33,7 +33,7 @@ div#side {
 div#question {
     color: #fff;
     background: none;
-    font-size: 8vh;
+    font-size: 7.75vh;
     font-family: Lato, sans-serif;
     height: 35vh;
     padding: 0 1vw;
@@ -45,6 +45,17 @@ div#question {
 div#question b {
     color: #01a7ee;
     font-weight: bold;
+}
+
+#question_header {
+    display: block;
+    font-size: 4.5vh;
+    font-family: 'Avant Pixel';
+    font-weight: bold;
+    color: #01a7ee;
+    line-height: 1em;
+    margin-bottom: -2.1em;
+    margin-top: -2.2em;
 }
 
 #question-number {
@@ -126,9 +137,9 @@ div#scoreboard {
 }
 
 div#scoreboard p {
-    margin: 3.5vh 0;
+    margin: 3.5vh 0 6.5vh 0;
     font-family: 'Avant Pixel';
-    font-size: 4.6vh;
+    font-size: 4.5vh;
     color: white;
     text-align: center;
 }
@@ -136,7 +147,6 @@ div#scoreboard p {
 div#scoreboard table {
     background: none;
     box-shadow: none;
-    padding-top: 3vh;
     border-spacing: 0;
     color: #888;
 }
@@ -148,7 +158,7 @@ div#scoreboard td {
     padding: 0.75vh 0.3vw;
     background: none;
     font-family: Telex, monospace;
-    font-size: 4.1vh;
+    font-size: 4vh;
     letter-spacing: 1px;
 }
 

@@ -102,7 +102,7 @@ function start() {
     ws = new WebSocket("ws://" + document.location.host + "/displays");
     ws.onmessage = function (event) {
         var msg = JSON.parse(event.data);
-        var curr_question_text = '';
+        var curr_scores_title = '';
 
         if ($.isEmptyObject(msg)) {
             return;
@@ -167,10 +167,10 @@ function start() {
                     curr_question = 1;
                 }
 
-                curr_question_text = 'Question ' + curr_question;
+                curr_scores_title = 'Question ' + curr_question;
             } else {
                 show_question("Let's add the scores...", ["", "", "",""])
-                curr_question_text = 'Total Scores';
+                curr_scores_title = 'Total Scores';
                 update_lights();
                 throb(20);
             }
@@ -181,15 +181,15 @@ function start() {
 
             if ('text' in msg && (/^\s*round\s+ended/i).test(msg.text)) {
                 console.log("The round has ended.");
-                curr_question_text = 'Final Scores';
+                curr_scores_title = 'Final Scores';
                 update_lights();
             } else {
-                curr_question_text = 'Question ' + curr_question;
+                curr_scores_title = 'Question ' + curr_question;
             }
 
         } else if (msg.do === 'update-scores') {
             update_scores(msg.scores);
-            curr_question_text = 'Question ' + curr_question;
+            curr_scores_title = 'Question ' + curr_question;
 
             if (msg.text && msg.options) {  // ...showing correct answer.
                 show_question(msg.text, msg.options);
@@ -203,15 +203,36 @@ function start() {
         } else if (msg.do == 'lights-off') {
             show_question("", ["", "", "", ""]);
             update_lights();
-            curr_question_text = 'Question ' + curr_question;
+            curr_scores_title = 'Question ' + curr_question;
 
         } else if (msg.do == 'update-lights') {
             update_lights(msg.colours);
         }
 
-        if (curr_question_text) {  // ...assumes we never blank this item.
-            console.log('Setting scores title: ' + curr_question_text);
-            $('#question-number').text(curr_question_text);
+        if (curr_scores_title) {  // ...assumes we never blank this item.
+            console.log('Setting scores title: ' + curr_scores_title);
+            $('#question-number').text(curr_scores_title);
+        }
+
+        question_node = $('#question')
+        curr_question_html = question_node.html();
+
+        if ((/^\s*starting\s+round\s+[0-9]+/i).test(curr_question_html)) {
+            question_node.html(curr_question_html.replace(/round/i, '<b>Round</b>'));
+        } else if ((/^\s*let[^\s]+s\s+add\s+the\s+scores/i).test(curr_question_html)) {
+            question_node.html(curr_question_html.replace(/scores/i, '<b>scores</b>'));
+        } else if ((/^\s*round\s+ended/i).test(curr_question_html)) {
+            question_node.html(curr_question_html.replace(/ended/i, '<b>ended</b>'));
+        } else if ((/^\s*test\s+question:\s+/i).test(curr_question_html)) {
+            question_node.html(curr_question_html.replace(/^\s*test\s+question:\s*/i, '<span id="question_header">Test Question:</span><br>'));
+        } else if ((/^\s*tiebreaker:\s+/i).test(curr_question_html)) {
+            question_node.html(curr_question_html.replace(/^\s*tiebreaker:\s*/i, '<span id="question_header">Tiebreaker:</span><br>'));
+        }
+
+        if ((/^\s*starting\s+[^\s]*round[^\s]*\s+[0-9]+/i).test(curr_question_html)) {
+            $('#sponsor').show();
+        } else {
+            $('#sponsor').hide();
         }
     }
 }
