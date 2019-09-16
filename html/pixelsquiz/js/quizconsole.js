@@ -81,7 +81,15 @@ function start() {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
-                $('#question_text').html("<span>" + "</span>" + (msg.question || ""));
+                question_text = msg.question || "";
+
+                if ((/^\s*test\s+question:\s+/i).test(question_text)) {
+                    question_text = question_text.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<b>Warmup:</b> ');
+                } else if ((/^\s*tiebreaker:\s+/i).test(question_text)) {
+                    question_text = question_text.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<b>Tiebreaker:</b> ');
+                }
+
+                $('#question_text').html(question_text);
                 $('#question_answer').text(msg.answer || "");
                 $('#question_trivia').html(msg.trivia || "");
             }
