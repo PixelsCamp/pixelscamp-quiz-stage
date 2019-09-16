@@ -176,12 +176,14 @@
   (let [current-round (:current-round world)
         round-number (get-in world [:current-round :number])
         question-number (get (:questions current-round) (:question-index current-round))
-        ]
+        tiebreaker-index (first (:tiebreaker-pool world))
+        questions-repo (:questions-repo world)]
     (if (and (> (count (:tiebreaker-pool world)) 0) (nil? question-number) (round-tied? current-round))
       (do
-        (logger/log :info :bright-cyan "Appending tiebreaker question: " (first (:tiebreaker-pool world)))
-        (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) (first (:tiebreaker-pool world))))
-                     :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)))
+        (logger/log :info :bright-cyan "Appending tiebreaker question: " tiebreaker-index)
+        (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) tiebreaker-index))
+                      :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)
+                      :questions-repo (assoc questions-repo tiebreaker-index (update (get questions-repo tiebreaker-index) :text #(str "Tiebreaker: " %)))))
       world)))
 
 
