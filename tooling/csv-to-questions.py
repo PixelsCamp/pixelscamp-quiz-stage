@@ -11,7 +11,7 @@ from argparse import ArgumentParser
 
 
 # Matching questions score no points...
-TEST_QUESTION_RE = re.compile(r"^\s*Test(?:\s+question)?\s*:\s+", re.I)
+TEST_QUESTION_RE = re.compile(r"^\s*(?:Test|Warmup)(?:\s+question)?\s*:\s+", re.I)
 
 
 def parse_args():
