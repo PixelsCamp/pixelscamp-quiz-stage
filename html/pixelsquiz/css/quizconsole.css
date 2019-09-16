@@ -188,6 +188,11 @@ div#question .qz_trivia {
     padding: 8px 12px;
 }
 
+#question_text b {
+    color: #01a7ee;
+    font-weight: bold;
+}
+
 div#teams {
     padding: 10px;
     text-align: center;

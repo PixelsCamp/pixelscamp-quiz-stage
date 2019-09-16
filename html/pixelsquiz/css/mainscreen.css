@@ -33,10 +33,10 @@ div#side {
 div#question {
     color: #fff;
     background: none;
-    font-size: 7.75vh;
+    font-size: 7.2vh;
     font-family: Lato, sans-serif;
     height: 35vh;
-    padding: 0 1vw;
+    padding: 0 0.5vw;
     line-height: 1.2em;
     display: table-cell;
     vertical-align: middle;
@@ -49,13 +49,12 @@ div#question b {
 
 #question_header {
     display: block;
-    font-size: 4.5vh;
+    font-size: 4.2vh;
     font-family: 'Avant Pixel';
     font-weight: bold;
     color: #01a7ee;
     line-height: 1em;
-    margin-bottom: -2.1em;
-    margin-top: -2.2em;
+    margin: -0.5em 0 -1.8em 0.1ch;
 }
 
 #question-number {
