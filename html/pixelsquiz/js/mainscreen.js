@@ -224,9 +224,9 @@ function start() {
         } else if ((/^\s*round\s+ended/i).test(curr_question_html)) {
             question_node.html(curr_question_html.replace(/ended/i, '<b>ended</b>'));
         } else if ((/^\s*test\s+question:\s+/i).test(curr_question_html)) {
-            question_node.html(curr_question_html.replace(/^\s*test\s+question:\s*/i, '<span id="question_header">Test Question:</span><br>'));
+            question_node.html(curr_question_html.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<span id="question_header">Warmup:</span><br>'));
         } else if ((/^\s*tiebreaker:\s+/i).test(curr_question_html)) {
-            question_node.html(curr_question_html.replace(/^\s*tiebreaker:\s*/i, '<span id="question_header">Tiebreaker:</span><br>'));
+            question_node.html(curr_question_html.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<span id="question_header">Tiebreaker:</span><br>'));
         }
 
         if ((/^\s*starting\s+[^\s]*round[^\s]*\s+[0-9]+/i).test(curr_question_html)) {
