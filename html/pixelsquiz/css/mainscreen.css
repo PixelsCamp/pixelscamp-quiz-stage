@@ -10,7 +10,6 @@ body {
 #container {
     width: 1920px;
     height: 1080px;
-    outline: 1px dashed green;
 }
 
 div {
@@ -266,7 +265,6 @@ div#scoreboard .wrong td:nth-child(1) {
     top: -1%; left: -1%;
     background: #202020d8;
     margin: 0; padding: 0;
-    --outline: 1px dashed #333;
 }
 
 #sponsor p {
@@ -284,4 +282,8 @@ div#scoreboard .wrong td:nth-child(1) {
     padding: 0;
     filter: drop-shadow(0 0 0.6vh #f0f0f0);
     opacity: 0.5;
+}
+
+.outlined {
+    outline: 1px dashed green;
 }

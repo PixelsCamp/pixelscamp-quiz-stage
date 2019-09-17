@@ -245,6 +245,15 @@ $(document).ready(function() {
         }
     }
 
+    console.log("Toggle recommended screen resolution (1920x1080) outline by pressing 'S'.");
+    $(window).keyup((e) => {
+        if (e.keyCode == 'S'.charCodeAt(0)) {
+            $('#container').toggleClass('outlined');
+        } else if (e.keyCode == 'Q'.charCodeAt(0)) {
+            $('#question').toggleClass('outlined');
+        }
+    });
+
     check();
     setInterval(check, 3000);
 });
