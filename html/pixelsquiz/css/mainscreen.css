@@ -31,7 +31,7 @@ div#side {
 }
 
 div#question {
-    color: #fff;
+    color: ivory;
     background: none;
     font-size: 7.2vh;
     font-family: Lato, sans-serif;
@@ -140,7 +140,7 @@ div#scoreboard p {
     margin: 3.5vh 0 6.5vh 0;
     font-family: 'Avant Pixel';
     font-size: 4.5vh;
-    color: white;
+    color: ivory;
     text-align: center;
 }
 
@@ -202,17 +202,17 @@ div#scoreboard .name .hash {
 
 div#scoreboard .highlight {
     background: #01a7ee;
-    color: #fff;
+    color: azure;
     text-shadow: 0 0 0.15vh;
     box-shadow: 0 0 4.5vh #01a7ee;  /* FIXME: ignored on safari, why? */
 }
 
 div#scoreboard .highlight .score-0 {
-    color: #fff;
+    color: azure;
 }
 
 div#scoreboard .option-selected td:nth-child(1) {
-    color: #fff;
+    color: ivory;
     text-shadow: 0 0 1.5vh;
 }
 
@@ -286,7 +286,7 @@ div#scoreboard .wrong td:nth-child(1) {
     height: 30%;
     margin: 5% 0 0 0;
     padding: 0;
-    filter: drop-shadow(0 0 0.6vh #f0f0f0);
+    filter: drop-shadow(0 0 0.6vh ivory);
     opacity: 0.5;
 }
 
