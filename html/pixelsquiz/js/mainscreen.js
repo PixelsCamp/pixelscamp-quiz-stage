@@ -16,7 +16,7 @@ function throb(secs) {
 
     timer.text(secs);
 
-    if (secs <= 2) {
+    if (secs <= 3) {
         timer.addClass('expired');
     } else {
         timer.removeClass('expired');
