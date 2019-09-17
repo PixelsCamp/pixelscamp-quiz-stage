@@ -18,14 +18,14 @@ div {
 
 div#main {
     position: absolute;
-    top: 4vh; left: 8.5vh;
+    top: 5vh; left: 8.5vh;
     width: 63vw; height: 90vh;
     display: table-row;
 }
 
 div#side {
     position: absolute;
-    top: 4vh; right: 7vh;
+    top: 5vh; right: 7vh;
     width: 28vw; height: 90vh;
 }
 
@@ -35,6 +35,7 @@ div#question {
     font-size: 7.2vh;
     font-family: Lato, sans-serif;
     height: 35vh;
+    width: 65vw;
     padding: 0 0.5vw;
     line-height: 1.2em;
     display: table-cell;
@@ -115,13 +116,13 @@ div#timer {
     font-size: 18vh;
     color: #fdcf1a;
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
-    min-width: 21vw;
+    width: 38vh;
     text-align: center;
     display: inline-block;
 }
 
 #timer-number.timer-20 {
-    margin-right: -0.4vw;
+    margin-right: -0.065em;
 }
 
 #timer-number.expired {
@@ -147,6 +148,10 @@ div#scoreboard table {
     box-shadow: none;
     border-spacing: 0;
     color: #888;
+}
+
+div#scoreboard tr {
+    height: 6.5vh;
 }
 
 div#scoreboard td {
