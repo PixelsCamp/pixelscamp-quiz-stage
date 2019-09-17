@@ -5,6 +5,7 @@ body {
     font-family: Lato, sans-serif;
     background: #202020;
     margin: 0;
+    overflow: hidden;
 }
 
 #container {

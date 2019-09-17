@@ -14,11 +14,48 @@
 }
 
 @font-face {
+    font-family: 'Ubuntu Mono';
+    src: url(../fonts/UbuntuMono-Regular.ttf) format('truetype');
+}
+
+@font-face {
     font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
     src: url(../fonts/Lato-Regular.ttf) format('truetype');
 }
 
 @font-face {
-    font-family: 'Ubuntu Mono';
-    src: url(../fonts/UbuntuMono-Regular.ttf) format('truetype');
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 400;
+    src: url(../fonts/Lato-RegularItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    src: url(../fonts/Lato-Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 700;
+    src: url(../fonts/Lato-BoldItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 900;
+    src: url(../fonts/Lato-Black.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 900;
+    src: url(../fonts/Lato-BlackItalic.ttf) format('truetype');
 }
