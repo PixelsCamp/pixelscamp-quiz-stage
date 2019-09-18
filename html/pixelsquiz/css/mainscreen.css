@@ -8,11 +8,6 @@ body {
     overflow: hidden;
 }
 
-#container {
-    width: 1920px;
-    height: 1080px;
-}
-
 div {
     text-align: left;
 }
@@ -292,4 +287,35 @@ div#scoreboard .wrong td:nth-child(1) {
 
 .outlined {
     outline: 1px dashed green;
+}
+
+#screens, .screen {
+    position: absolute;
+    background: none;
+    z-index: 10;
+}
+
+.size_4K {
+    width: 3840px;
+    height: 2160px;
+}
+
+.size_1440p {  /* 27" monitor */
+    width: 2560px;
+    height: 1440px;
+}
+
+.size_1080p {  /* Full HD (recommended) */
+    width: 1920px;
+    height: 1080px;
+}
+
+.size_720p {
+    width: 1280px;
+    height: 720px;
+}
+
+.size_432p {  /* for testing */
+    width: 768px;
+    height: 432px;
 }

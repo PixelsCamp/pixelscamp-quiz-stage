@@ -245,12 +245,10 @@ $(document).ready(function() {
         }
     }
 
-    console.log("Toggle recommended screen resolution (1920x1080) outline by pressing 'S'.");
+    console.warn("Press space to toggle 16:9 screen resolution outlines.");
     $(window).keyup((e) => {
-        if (e.keyCode == 'S'.charCodeAt(0)) {
-            $('#container').toggleClass('outlined');
-        } else if (e.keyCode == 'Q'.charCodeAt(0)) {
-            $('#question').toggleClass('outlined');
+        if (e.keyCode == 'S'.charCodeAt(0) || e.keyCode == ' '.charCodeAt(0)) {
+            $('#screens .screen').toggleClass('outlined');
         }
     });
 
