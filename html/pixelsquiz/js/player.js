@@ -138,6 +138,7 @@ $(document).ready(function() {
         }
     }
 
+    // For team number confirmation after setup...
     appearance.off();
     content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
 

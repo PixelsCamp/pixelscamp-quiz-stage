@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 
-div#main-1440x900 {
+#main-1440x900 {
     position: absolute;
     top: 0; left: 0;
     min-height: 900px;
@@ -21,7 +21,7 @@ div#main-1440x900 {
     overflow: hidden;
 }
 
-div#main-1920x1080 {
+#main-1920x1080 {
     position: absolute;
     top: 0; left: 0;
     min-height: 1080px;
@@ -35,7 +35,7 @@ div#main-1920x1080 {
     overflow: hidden;
 }
 
-div#main {
+#main {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
@@ -105,6 +105,7 @@ div#main {
     background: #ea282e url('../images/x-icon.png');
     background-position: center;
     background-repeat: no-repeat;
+    background-size: 75vh !important;  /* the image is bigger than the others */
     color: #222;
 }
 
@@ -134,14 +135,10 @@ div#main {
     z-index: 10;
 }
 
-.size_4K {
-    width: 3840px;
-    height: 2160px;
-}
-
-.size_1440p {  /* 27" monitor */
-    width: 2560px;
-    height: 1440px;
+.size_1440x900 {
+    width: 1440px;
+    height: 900px;
+    outline-color: yellow !important;  /* not 16:9 */
 }
 
 .size_1080p {  /* Full HD (recommended) */
@@ -157,4 +154,9 @@ div#main {
 .size_432p {  /* for testing */
     width: 768px;
     height: 432px;
+}
+
+.size_360p {  /* for testing */
+    width: 512px;
+    height: 288px;
 }
