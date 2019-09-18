@@ -2,11 +2,12 @@ body {
     color: #fff;
     background: #000;
     font-family: sans-serif;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 div#main-1440x900 {
-    /*text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;*/
-    /*border: 2px solid green;*/
     position: absolute;
     top: 0; left: 0;
     min-height: 900px;
@@ -20,9 +21,7 @@ div#main-1440x900 {
     overflow: hidden;
 }
 
-div#main {
-    /*text-shadow: 0px 0px 50px white, 0px 0px 50px white, 0px 0px 50px white;*/
-    /*border: 2px solid green;*/
+div#main-1920x1080 {
     position: absolute;
     top: 0; left: 0;
     min-height: 1080px;
@@ -34,6 +33,19 @@ div#main {
     font-size: 960px;
     text-align: center;
     overflow: hidden;
+}
+
+div#main {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 90vh;
+    text-align: center;
+    overflow: hidden;
+    background-size: 90vh;
+    margin: 0;
+    padding: 0;
 }
 
 .off {
@@ -110,4 +122,39 @@ div#main {
     background-position: center;
     background-repeat: no-repeat;
     color: #FDCF1A;
+}
+
+.outlined {
+    outline: 1px dashed green;
+}
+
+#screens, .screen {
+    position: absolute;
+    background: none;
+    z-index: 10;
+}
+
+.size_4K {
+    width: 3840px;
+    height: 2160px;
+}
+
+.size_1440p {  /* 27" monitor */
+    width: 2560px;
+    height: 1440px;
+}
+
+.size_1080p {  /* Full HD (recommended) */
+    width: 1920px;
+    height: 1080px;
+}
+
+.size_720p {
+    width: 1280px;
+    height: 720px;
+}
+
+.size_432p {  /* for testing */
+    width: 768px;
+    height: 432px;
 }

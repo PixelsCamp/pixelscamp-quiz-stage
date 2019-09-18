@@ -51,6 +51,7 @@ var ws = null;
 function start() {
     console.log('connecting to game engine...');
     ws = new WebSocket("ws://" + document.location.host + "/displays");
+    console.log('OK!');
 
     ws.onmessage = function(event) {
         var msg = JSON.parse(event.data);
@@ -139,6 +140,13 @@ $(document).ready(function() {
 
     appearance.off();
     content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
+
+    console.warn("Press space to toggle 16:9 screen resolution outlines.");
+    $(window).keyup((e) => {
+        if (e.keyCode == 'S'.charCodeAt(0) || e.keyCode == ' '.charCodeAt(0)) {
+            $('#screens .screen').toggleClass('outlined');
+        }
+    });
 
     check();
     setInterval(check, 3000);
