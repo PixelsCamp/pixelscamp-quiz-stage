@@ -100,6 +100,8 @@ var curr_question = 1;
 
 function start() {
     ws = new WebSocket("ws://" + document.location.host + "/displays");
+    console.log('OK!');
+
     ws.onmessage = function (event) {
         var msg = JSON.parse(event.data);
         var curr_scores_title = '';

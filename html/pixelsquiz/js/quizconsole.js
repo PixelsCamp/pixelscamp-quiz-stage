@@ -41,9 +41,12 @@ var ws = null;
 function start() {
     console.log('connecting to game engine...');
     ws = new WebSocket("ws://" + document.location.host +"/displays");
+    console.log('OK!');
+
     ws.onopen = function (event) {
         ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
     }
+
     ws.onmessage = function (event) {
         var msg = JSON.parse(event.data);
 
