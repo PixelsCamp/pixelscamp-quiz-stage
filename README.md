@@ -15,7 +15,7 @@ It's a Clojure application so you'll need:
 * [Java](http://jdk.java.net/) (OpenJDK is recommended)
 * [Leiningen](https://leiningen.org/)
 
-It was last known to work with OpenJDK 12.0.1 on macOS 10.13.6.
+It was last known to work with OpenJDK 13 on macOS 10.13.6.
 
 Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start an HTTP server on port `tcp/3000`.
 
@@ -31,6 +31,8 @@ Buzz! controllers are easy to get on eBay and, besides subtle differences in loo
 
 **Note:** The setup at Pixels Camp also has a dedicated screen for each team (provided by the fine folks at [Hipnose](http://hipnose.com/)). These are completely optional but, if used, must be configured for **1920x1080** resolution. We use Raspberry Pis to drive them, with some ugly scripts (not included). You're free to use something better. :)
 
+![All Screens](https://github.com/PixelsCamp/pixelscamp-quiz-stage/raw/master/extras/screenshot.png)
+
 ## Running Your Own Quiz
 
 The [quizmaster checklist](http://localhost:3000/static/) is written for Pixels Camp (ie. assumes the contents of the "quizmaster kit" and a full setup), read it thoroughly and adapt it for your needs.
@@ -40,8 +42,6 @@ There's a Python script in the `tooling` directory to take a `.csv` and produce 
 The standard quiz model is comprised of four rounds to select four teams to compete in a fifth round (with more, and harder, questions). This can be adapted for fewer players (eg. two rounds selecting four teams to compete in a third round) by adjusting the `round-config.edn` file. You also need to edit this file to adjust the number of tie-breaker questions to match what's available in `questions.edn`.
 
 ## Usage Instructions
-
-![Quiz Console](https://github.com/PixelsCamp/pixelscamp-quiz-stage/raw/master/extras/quizconsole.png)
 
 The best way to learn how to use the engine is by starting it and following this [flow chart](https://github.com/PixelsCamp/pixelscamp-quiz-stage/raw/master/extras/engine_flow.pdf). After a few minutes, you should start getting the hang of it, and then it will all make sense (hopefully).
 
