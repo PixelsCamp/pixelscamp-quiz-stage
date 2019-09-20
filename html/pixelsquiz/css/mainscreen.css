@@ -14,7 +14,7 @@ div {
 
 div#main {
     position: absolute;
-    top: 5vh; left: 8.5vh;
+    top: 5vh; left: 9vh;
     width: 63vw; height: 90vh;
     display: table-row;
 }
@@ -323,4 +323,11 @@ div#scoreboard .wrong td:nth-child(1) {
 .size_360p {  /* for testing */
     width: 512px;
     height: 288px;
+}
+
+.overscan {
+    width: 93vw;
+    height: 93vh;
+    margin: 3.5vh 3.5vw;
+    outline-color: yellow;
 }
