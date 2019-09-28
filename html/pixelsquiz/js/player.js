@@ -138,9 +138,27 @@ $(document).ready(function() {
         }
     }
 
-    // For team number confirmation after setup...
-    appearance.off();
-    content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
+    var classes = ["highlight", "right", "wrong", "winner", "blue", "orange", "green", "yellow", "off"];
+    var class_idx = 0;
+    var class_interval = 1000;  // ...because uzbl chokes if less than one second.
+
+    // Toggle all display possibilities, mostly to preload all icons...
+    var class_toggle = function() {
+        if (class_idx === classes.length) {
+            // For team number confirmation after setup...
+            appearance.off();
+            content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
+
+            return;
+        }
+
+        content.removeClass();
+        content.addClass(classes[class_idx++]);
+
+        setTimeout(class_toggle, class_interval);
+    };
+
+    setTimeout(class_toggle, class_interval);
 
     console.warn('Double-click to toggle 16:9 screen resolution outlines.');
     $(window).dblclick(function(e) {
