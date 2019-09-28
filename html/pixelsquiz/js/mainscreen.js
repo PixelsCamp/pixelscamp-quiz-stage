@@ -247,11 +247,12 @@ $(document).ready(function() {
         }
     }
 
-    console.warn("Press space to toggle 16:9 screen resolution outlines.");
-    $(window).keyup((e) => {
-        if (e.keyCode == 'S'.charCodeAt(0) || e.keyCode == ' '.charCodeAt(0)) {
-            $('#screens .screen').toggleClass('outlined');
-        }
+    console.warn('Double-click to toggle 16:9 screen resolution outlines.');
+    $(window).dblclick(function(e) {
+        var screens = $('#screens');
+
+        screens.find('.screen').toggleClass('outlined');
+        screens.css("display", screens.find('.outlined').length ? 'block': 'none');
     });
 
     check();

@@ -289,6 +289,10 @@ div#scoreboard .wrong td:nth-child(1) {
     outline: 1px dashed green;
 }
 
+#screens {
+    display: none;
+}
+
 #screens, .screen {
     position: absolute;
     background: none;

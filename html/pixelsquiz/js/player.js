@@ -142,11 +142,12 @@ $(document).ready(function() {
     appearance.off();
     content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
 
-    console.warn("Press space to toggle 16:9 screen resolution outlines.");
-    $(window).keyup((e) => {
-        if (e.keyCode == 'S'.charCodeAt(0) || e.keyCode == ' '.charCodeAt(0)) {
-            $('#screens .screen').toggleClass('outlined');
-        }
+    console.warn('Double-click to toggle 16:9 screen resolution outlines.');
+    $(window).dblclick(function(e) {
+        var screens = $('#screens');
+
+        screens.find('.screen').toggleClass('outlined');
+        screens.css("display", screens.find('.outlined').length ? 'block': 'none');
     });
 
     check();
