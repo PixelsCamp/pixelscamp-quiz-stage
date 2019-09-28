@@ -162,8 +162,8 @@ body {
 }
 
 .overscan {
-    width: 93vw;
-    height: 93vh;
-    margin: 3.5vh 3.5vw;
+    width: 90vw;
+    height: 90vh;
+    margin: 5vh 5vw;
     outline-color: yellow;
 }
