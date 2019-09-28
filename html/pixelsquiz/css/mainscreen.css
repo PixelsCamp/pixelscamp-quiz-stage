@@ -15,7 +15,7 @@ div {
 div#main {
     position: absolute;
     top: 5vh; left: 9vh;
-    width: 63vw; height: 90vh;
+    width: 62.5vw; height: 90vh;
     display: table-row;
 }
 
