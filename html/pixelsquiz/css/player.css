@@ -1,38 +1,18 @@
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: url(../fonts/Roboto-Medium.ttf) format('truetype');
+}
+
 body {
     color: #fff;
     background: #000;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
     overflow: hidden;
     margin: 0;
     padding: 0;
-}
-
-#main-1440x900 {
-    position: absolute;
-    top: 0; left: 0;
-    min-height: 900px;
-    max-height: 900px;
-    height: 900px;
-    min-width: 1440px;
-    max-width: 1440px;
-    width: 1440px;
-    font-size: 800px;
-    text-align: center;
-    overflow: hidden;
-}
-
-#main-1920x1080 {
-    position: absolute;
-    top: 0; left: 0;
-    min-height: 1080px;
-    max-height: 1080px;
-    height: 1080px;
-    min-width: 1920px;
-    max-width: 1920px;
-    width: 1920px;
-    font-size: 960px;
-    text-align: center;
-    overflow: hidden;
 }
 
 #main {
@@ -40,10 +20,10 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    font-size: 90vh;
+    font-size: 85vh;
     text-align: center;
     overflow: hidden;
-    background-size: 90vh;
+    background-size: 50%;
     margin: 0;
     padding: 0;
 }
@@ -105,7 +85,7 @@ body {
     background: #ea282e url('../images/x-icon.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 75vh !important;  /* the image is bigger than the others */
+    background-size: 42% !important;  /* the image is bigger than the others */
     color: #222;
 }
 
