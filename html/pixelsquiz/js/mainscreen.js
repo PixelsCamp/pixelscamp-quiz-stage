@@ -216,25 +216,43 @@ function start() {
             $('#question-number').text(curr_scores_title);
         }
 
-        question_node = $('#question')
+        question_node = $('#question');
         curr_question_html = question_node.html();
 
+        // Better looking informational messages...
         if ((/^\s*starting\s+round\s+[0-9]+/i).test(curr_question_html)) {
-            question_node.html(curr_question_html.replace(/round/i, '<b>Round</b>'));
+            curr_question_html = curr_question_html.replace(/.*?([0-9]+).*/i, '<span id="main_title">Starting: <strong>Round $1</strong></span>');
         } else if ((/^\s*let[^\s]+s\s+add\s+the\s+scores/i).test(curr_question_html)) {
-            question_node.html(curr_question_html.replace(/scores/i, '<b>scores</b>'));
+            curr_question_html = '<span id="main_title">Adding the <strong>scores&hellip;</strong></span>';
         } else if ((/^\s*round\s+ended/i).test(curr_question_html)) {
-            question_node.html(curr_question_html.replace(/ended/i, '<b>ended</b>'));
+            curr_question_html = '<span id="main_title">And we have a <strong>WINNER!</strong></span>';
         } else if ((/^\s*test\s+question:\s+/i).test(curr_question_html)) {
-            question_node.html(curr_question_html.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<span id="question_header">Warmup:</span><br>'));
+            curr_question_html = curr_question_html.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<span id="question_header">Warmup:</span><br>');
         } else if ((/^\s*tiebreaker:\s+/i).test(curr_question_html)) {
-            question_node.html(curr_question_html.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<span id="question_header">Tiebreaker:</span><br>'));
+            curr_question_html = curr_question_html.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<span id="question_header">Tiebreaker:</span><br>');
         }
 
-        if ((/^\s*starting\s+[^\s]*round[^\s]*\s+[0-9]+/i).test(curr_question_html)) {
+        question_node.html(curr_question_html);
+
+        /*
+         * Note: The following checks must take into account that in some cases
+         *       an incoming message immediately following the current question
+         *       text rewrite might nullify it so quickly as to not even be seen.
+         *       Therefore, they need to always match the *replaced* text...
+         */
+
+        if ((/\bstarting.*?\bround\s+[0-9]+/i).test(curr_question_html)) {
+            console.log("Showing sponsor logo...");
             $('#sponsor').show();
         } else {
             $('#sponsor').hide();
+        }
+
+        if ((/main_title/i).test(curr_question_html)) {
+            console.log("Inactivating timer...");
+            $('#timer-number').addClass('inactive');
+        } else {
+            $('#timer-number').removeClass('inactive');
         }
     }
 }

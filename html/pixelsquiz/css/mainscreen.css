@@ -58,6 +58,29 @@ div#question b {
     margin-bottom: 1.05vw;
 }
 
+#main_title {
+    display: block;
+    font-family: 'Avant Pixel';
+    font-size: 4.2vh;
+    font-weight: normal;
+    color: #01a7ee;
+}
+
+#main_title b {
+    color: inherit !important;
+    font-weight: normal !important;
+}
+
+#main_title strong {
+    font-family: 'Library 3 am soft';
+    display: block;
+    font-size: 12vh;
+    font-weight: normal;
+    margin: 0.3vh 0 8.5vh -4px;
+    color: ivory;
+    text-shadow: 0 0 10px ivory;
+}
+
 #options {
     position: absolute;
     bottom: 9vh; left: 0;
@@ -123,6 +146,10 @@ div#timer {
 
 #timer-number.expired {
     color: #ea282e;
+}
+
+#timer-number.inactive {
+    color: #444;
 }
 
 div#scoreboard {

@@ -115,3 +115,8 @@
     font-weight: 900;
     src: url(../fonts/Roboto-BlackItalic.ttf) format('truetype');
 }
+
+@font-face {
+    font-family: 'Library 3 am soft';
+    src: url(../fonts/Library-3-am-soft.otf) format('opentype');
+}
