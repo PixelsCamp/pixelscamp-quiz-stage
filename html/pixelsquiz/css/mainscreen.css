@@ -15,7 +15,7 @@ div {
 div#main {
     position: absolute;
     top: 5vh; left: 9vh;
-    width: 62.5vw; height: 90vh;
+    width: 62vw; height: 90vh;
     display: table-row;
 }
 
@@ -32,7 +32,7 @@ div#question {
     font-family: Lato, sans-serif;
     height: 35vh;
     width: 65vw;
-    padding: 0 0.5vw;
+    padding: 0 1.5vw 0 0.5vw;
     line-height: 1.2em;
     display: table-cell;
     vertical-align: middle;
@@ -109,7 +109,7 @@ div .answer {
     padding: 1.3vh 1.4vw;
     margin: 1.3vh 0;
     min-height: 7vh;
-    font-family: Telex, sans-serif;
+    font-family: 'Telex', sans-serif;
     letter-spacing: -1px;
 }
 
@@ -132,7 +132,7 @@ div#timer {
 
 #timer-number {
     font-family: 'Press Start 2P';
-    font-size: 18vh;
+    font-size: 17vh;
     color: #fdcf1a;
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
     width: 38vh;
@@ -183,8 +183,8 @@ div#scoreboard td {
     border: none;
     padding: 0.75vh 0.3vw;
     background: none;
-    font-family: Telex, monospace;
-    font-size: 4vh;
+    font-family: 'Telex', monospace;
+    font-size: 3.95vh;
     letter-spacing: 1px;
 }
 
@@ -298,7 +298,7 @@ div#scoreboard .wrong td:nth-child(1) {
 #sponsor p {
     position: absolute;
     font-size: 3.5vh;
-    font-family: Telex;
+    font-family: 'Telex';
     color: #555;
     margin: 0; padding: 0;
     left: 11%; top: 10%;
