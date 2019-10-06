@@ -346,6 +346,11 @@ div#scoreboard .wrong td:nth-child(1) {
     height: 720px;
 }
 
+.size_648p {  /* for testing */
+    width: 1152px;
+    height: 648px;
+}
+
 .size_432p {  /* for testing */
     width: 768px;
     height: 432px;
