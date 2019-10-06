@@ -168,8 +168,7 @@ $(document).ready(function() {
         screens.css("display", screens.find('.outlined').length ? 'block': 'none');
     });
 
-    // Let the resolution outlines appear without triggering text select on
-    // crummy browsers (ie. the one we use on the Raspberry Pis: "uzbl")...
+    // Let the resolution outlines appear without triggering text select...
     content.attr('unselectable', 'on');
     content.css('user-select', 'none');
     content.on('selectstart dragstart', false);

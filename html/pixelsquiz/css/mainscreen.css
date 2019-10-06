@@ -164,6 +164,7 @@ div#scoreboard p {
     font-size: 4.5vh;
     color: ivory;
     text-align: center;
+    opacity: 0.85;
 }
 
 div#scoreboard table {
@@ -174,12 +175,12 @@ div#scoreboard table {
 }
 
 div#scoreboard tr {
-    height: 6.5vh;
+    height: 6.8vh;
 }
 
 div#scoreboard td {
     text-align: center;
-    vertical-align: text-bottom;
+    vertical-align: middle;
     border: none;
     padding: 0.75vh 0.3vw;
     background: none;
@@ -216,10 +217,12 @@ div#scoreboard .score-0 {
 
 div#scoreboard .points-label {
     font-size: 95%;
+    opacity: 0.85;
 }
 
 div#scoreboard .name .hash {
-    font-size: 95%;
+    font-size: 90%;
+    opacity: 0.85;
 }
 
 div#scoreboard .highlight {
@@ -227,6 +230,10 @@ div#scoreboard .highlight {
     color: azure;
     text-shadow: 0 0 0.15vh;
     box-shadow: 0 0 4.5vh #01a7ee;  /* FIXME: ignored on safari, why? */
+}
+
+div#scoreboard .highlight .score {
+    color: #fddf1a;
 }
 
 div#scoreboard .highlight .score-0 {

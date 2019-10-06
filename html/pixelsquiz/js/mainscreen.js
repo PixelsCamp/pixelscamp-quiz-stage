@@ -273,6 +273,12 @@ $(document).ready(function() {
         screens.css("display", screens.find('.outlined').length ? 'block': 'none');
     });
 
+    // Let the resolution outlines appear without triggering text select...
+    body = $(document.body);
+    body.attr('unselectable', 'on');
+    body.css('user-select', 'none');
+    body.on('selectstart dragstart', false);
+
     check();
     setInterval(check, 3000);
 });
