@@ -217,7 +217,6 @@ div#scoreboard .score-0 {
 
 div#scoreboard .points-label {
     font-size: 95%;
-    opacity: 0.85;
 }
 
 div#scoreboard .name .hash {
@@ -246,12 +245,12 @@ div#scoreboard .option-selected td:nth-child(1) {
 }
 
 div#scoreboard .right td:nth-child(1) {
-    color: #4FBA49;
+    color: #0f0;
     text-shadow: 0 0 1.5vh;
 }
 
 div#scoreboard .wrong td:nth-child(1) {
-    color: #ea282e;
+    color: #f00;
     text-shadow: 0 0 1.5vh;
 }
 
@@ -298,7 +297,7 @@ div#scoreboard .wrong td:nth-child(1) {
     align-items: center;
     width: 102%; height: 101%;
     top: -1%; left: -1%;
-    background: #202020d8;
+    background: #202020a8;
     margin: 0; padding: 0;
 }
 

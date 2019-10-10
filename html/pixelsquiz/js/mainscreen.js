@@ -252,6 +252,7 @@ function start() {
             console.log("Inactivating timer...");
             $('#timer-number').addClass('inactive');
         } else {
+            console.log("Activating timer...");
             $('#timer-number').removeClass('inactive');
         }
     }
