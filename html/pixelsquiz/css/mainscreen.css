@@ -154,7 +154,7 @@ div#timer {
 
 div#scoreboard {
     position: absolute;
-    right: 0.5vw; bottom: 9vh;
+    right: 0.5vw; bottom: 9.5vh;
     text-align: center;
 }
 
@@ -171,7 +171,7 @@ div#scoreboard table {
     background: none;
     box-shadow: none;
     border-spacing: 0;
-    color: #888;
+    color: #777;
 }
 
 div#scoreboard tr {
@@ -179,14 +179,16 @@ div#scoreboard tr {
 }
 
 div#scoreboard td {
+    position: relative;
     text-align: center;
     vertical-align: middle;
     border: none;
     padding: 0.75vh 0.3vw;
     background: none;
-    font-family: 'Telex', monospace;
-    font-size: 3.95vh;
-    letter-spacing: 1px;
+    font-family: 'Nunito', monospace;
+    font-size: 4vh;
+    letter-spacing: 0.7px;
+    font-weight: 600;
 }
 
 div#scoreboard td:nth-child(1) {
@@ -212,11 +214,7 @@ div#scoreboard .score {
 }
 
 div#scoreboard .score-0 {
-    color: #888;
-}
-
-div#scoreboard .points-label {
-    font-size: 95%;
+    color: #777;
 }
 
 div#scoreboard .name .hash {
@@ -224,19 +222,24 @@ div#scoreboard .name .hash {
     opacity: 0.90;
 }
 
-div#scoreboard .highlight {
-    background: #01a7ee;
-    color: azure;
-    text-shadow: 0 0 0.15vh;
-    box-shadow: 0 0 4.5vh #01a7ee;  /* FIXME: ignored on safari, why? */
+div#scoreboard td:nth-child(1):before {
+    position: absolute;
+    font-family: 'FontAwesome';
+    font-weight: normal;
+    font-style: normal;
 }
 
-div#scoreboard .highlight .score {
-    color: #fddf1a;
+div#scoreboard .highlight td:nth-child(1) {
+    color: ivory;
+    text-shadow: 0 0 1.5vh;
 }
 
-div#scoreboard .highlight .score-0 {
-    color: azure;
+div#scoreboard .highlight td:nth-child(1):before {
+    left: -1.7vh;
+    bottom: 1.9vh;
+    font-size: 0.8em;
+    content: '\f0e7';  /* fa-bolt */
+    color: #01a7ee;
 }
 
 div#scoreboard .option-selected td:nth-child(1) {
@@ -249,9 +252,23 @@ div#scoreboard .right td:nth-child(1) {
     text-shadow: 0 0 1.5vh;
 }
 
+div#scoreboard .right td:nth-child(1):before {
+    left: -2.2vh;
+    bottom: 2vh;
+    font-size: 0.7em;
+    content: '\f00c';  /* fa-check */
+}
+
 div#scoreboard .wrong td:nth-child(1) {
     color: #f00;
     text-shadow: 0 0 1.5vh;
+}
+
+div#scoreboard .wrong td:nth-child(1):before {
+    left: -2.3vh;
+    bottom: 1.85vh;
+    font-size: 0.9em;
+    content: '\f00d';  /* fa-times */
 }
 
 .blue {
