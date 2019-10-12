@@ -1,24 +1,4 @@
 @font-face {
-    font-family: 'Avant Pixel';
-    src: url(../fonts/avant_pixel.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Press Start 2P';
-    src: url(../fonts/PressStart2P-Regular.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Telex';
-    src: url(../fonts/Telex-Regular.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Ubuntu Mono';
-    src: url(../fonts/UbuntuMono-Regular.ttf) format('truetype');
-}
-
-@font-face {
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
@@ -61,62 +41,38 @@
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(../fonts/Roboto-Regular.ttf) format('truetype');
+    font-family: 'Avant Pixel';
+    src: url(../fonts/Avant-Pixel.ttf) format('truetype');
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 400;
-    src: url(../fonts/Roboto-RegularItalic.ttf) format('truetype');
+    font-family: 'Press Start 2P';
+    src: url(../fonts/PressStart2P-Regular.ttf) format('truetype');
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(../fonts/Roboto-Regular.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 400;
-    src: url(../fonts/Roboto-RegularItalic.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 500;
-    src: url(../fonts/Roboto-Medium.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 500;
-    src: url(../fonts/Roboto-MediumItalic.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 900;
-    src: url(../fonts/Roboto-Black.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 900;
-    src: url(../fonts/Roboto-BlackItalic.ttf) format('truetype');
+    font-family: 'Telex';
+    src: url(../fonts/Telex-Regular.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Library 3 am soft';
     src: url(../fonts/Library-3-am-soft.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-weight: 600;
+    src: url(../fonts/Nunito-SemiBold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-weight: 700;
+    src: url(../fonts/Nunito-Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url(../fonts/FontAwesome.ttf) format('truetype');
 }

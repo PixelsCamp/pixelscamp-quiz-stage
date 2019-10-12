@@ -2,7 +2,7 @@ body {
     color: #b0b0b0;
     padding: 0;
     font-size: 18px;
-    font-family: Lato, sans-serif;
+    font-family: 'Lato', sans-serif;
     background: #202020;
     margin: 0;
     overflow: hidden;
@@ -29,7 +29,7 @@ div#question {
     color: ivory;
     background: none;
     font-size: 7.2vh;
-    font-family: Lato, sans-serif;
+    font-family: 'Lato', sans-serif;
     height: 35vh;
     width: 65vw;
     padding: 0 1.5vw 0 0.5vw;
@@ -46,7 +46,7 @@ div#question b {
 #question_header {
     display: block;
     font-size: 4.2vh;
-    font-family: 'Avant Pixel';
+    font-family: 'Avant Pixel', sans-serif;
     font-weight: bold;
     color: #01a7ee;
     line-height: 1em;
