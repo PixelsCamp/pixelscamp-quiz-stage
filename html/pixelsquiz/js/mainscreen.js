@@ -151,10 +151,17 @@ function start() {
         }
 
         // Highlight a team (actually, just the 'highlight' event does it)...
-        $('#scoreboard .team').removeClass('highlight');
         if ('team' in msg) {
-            console.log('#scoreboard #s' + msg.team + '.team');
+            console.log('Highlighting team #' + (msg.team + 1) + '...');
             $('#scoreboard #s' + msg.team + '.team').addClass('highlight');
+
+            var buzzed = $('#buzzed');
+
+            buzzed.find('.number').text(msg.team + 1);
+            buzzed.css("visibility", "visible");
+        } else {
+            $('#buzzed').css("visibility", "hidden");
+            $('#scoreboard .team').removeClass('highlight');
         }
 
         if (msg.do === 'timer-update') {
@@ -243,9 +250,9 @@ function start() {
 
         if ((/\bstarting.*?\bround\s+[0-9]+/i).test(curr_question_html)) {
             console.log("Showing sponsor logo...");
-            $('#sponsor').show();
+            $('#sponsor').css("visibility", "visible");
         } else {
-            $('#sponsor').hide();
+            $('#sponsor').css("visibility", "hidden");
         }
 
         if ((/main_title/i).test(curr_question_html)) {

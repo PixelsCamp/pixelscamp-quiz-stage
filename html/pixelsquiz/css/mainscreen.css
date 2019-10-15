@@ -307,7 +307,7 @@ div#scoreboard .wrong td:nth-child(1):before {
     border-left: 5.1vw solid #ff0;
 }
 
-#sponsor {
+.overlay {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -318,7 +318,11 @@ div#scoreboard .wrong td:nth-child(1):before {
     margin: 0; padding: 0;
 }
 
-#sponsor p {
+#sponsor.overlay {
+    visibility: visible;
+}
+
+#sponsor.overlay p {
     position: absolute;
     font-size: 3.5vh;
     font-family: 'Telex';
@@ -327,12 +331,29 @@ div#scoreboard .wrong td:nth-child(1):before {
     left: 11%; top: 10%;
 }
 
-#sponsor img {
+#sponsor.overlay img {
     height: 30%;
     margin: 5% 0 0 0;
     padding: 0;
     filter: drop-shadow(0 0 0.6vh ivory);
     opacity: 0.5;
+}
+
+#buzzed.overlay {
+    visibility: hidden;
+}
+
+#buzzed.overlay .number {
+    font-family: 'Telex';
+    font-size: 22.2vh;
+    font-weight: bold;
+    text-align: center;
+    width: 26vh; height: 26vh;
+    border-radius: 1vh;
+    border: 1.8vh solid ivory;
+    background: #01a7ee;
+    color: ivory;
+    filter: drop-shadow(0 0 1vh ivory);
 }
 
 .outlined {
