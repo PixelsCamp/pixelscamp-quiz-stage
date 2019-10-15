@@ -30,17 +30,18 @@ div#question {
     background: none;
     font-size: 7.2vh;
     font-family: 'Lato', sans-serif;
+    font-weight: bold;
     height: 35vh;
     width: 65vw;
     padding: 0 1.5vw 0 0.5vw;
-    line-height: 1.2em;
+    line-height: 1.25em;
     display: table-cell;
     vertical-align: middle;
 }
 
 div#question b {
     color: #01a7ee;
-    font-weight: bold;
+    font-weight: 900;
 }
 
 #question_header {
