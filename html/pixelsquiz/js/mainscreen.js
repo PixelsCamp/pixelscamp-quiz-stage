@@ -99,8 +99,17 @@ var ws = null;
 var curr_question = 1;
 
 function start() {
+    console.log('Connecting to game engine...');
     ws = new WebSocket("ws://" + document.location.host + "/displays");
-    console.log('OK!');
+
+    ws.onopen = function (event) {
+        $('#disconnected').css('visibility', 'hidden');
+        console.log('Connected!');
+    }
+
+    ws.onerror = function (event) {
+        $('#disconnected').css('visibility', 'visible');
+    }
 
     ws.onmessage = function (event) {
         var msg = JSON.parse(event.data);

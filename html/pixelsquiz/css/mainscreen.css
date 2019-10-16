@@ -415,3 +415,12 @@ div#scoreboard .wrong td:nth-child(1):before {
     margin: 5vh 5vw;
     outline-color: yellow;
 }
+
+#disconnected {
+    position: fixed;
+    bottom: 0; right: 0;
+    color: red;
+    font-family: 'FontAwesome';
+    font-size: 5vh;
+    margin: 3vh;
+}

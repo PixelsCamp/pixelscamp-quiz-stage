@@ -39,12 +39,17 @@ function update_scores(scores) {
 var ws = null;
 
 function start() {
-    console.log('connecting to game engine...');
+    console.log('Connecting to game engine...');
     ws = new WebSocket("ws://" + document.location.host +"/displays");
-    console.log('OK!');
 
     ws.onopen = function (event) {
         ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
+        console.log('Connected!');
+        $('#disconnected').css('visibility', 'hidden');
+    }
+
+    ws.onerror = function (event) {
+        $('#disconnected').css('visibility', 'visible');
     }
 
     ws.onmessage = function (event) {

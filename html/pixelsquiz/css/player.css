@@ -147,3 +147,12 @@ body {
     margin: 5vh 5vw;
     outline-color: yellow;
 }
+
+#disconnected {
+    position: fixed;
+    bottom: 0; right: 0;
+    width: 8vh; height: 8vh;
+    background: red;
+    margin: 6vh;
+    z-index: 100;
+}
