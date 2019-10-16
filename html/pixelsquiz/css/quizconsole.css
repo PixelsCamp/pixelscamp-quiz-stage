@@ -2,45 +2,47 @@ body {
     background: #222;
     color: #eee;
     font-family: 'Lato';
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
     font-family: 'Avant Pixel';
-    margin: 20px;
-    color: #fdcf1a;
+    margin: 4vh;
+    color: #fcdf1a;
     letter-spacing: -1px;
+    font-size: 5vh;
 }
 
 
 div#side {
     top: 0; right: 0;
     position: absolute;
-    width: 220px;
-    margin: 40px;
+    width: 19vw;
+    margin: 6vh;
 }
 
 button {
     width: 100%;
-    margin-bottom: 20px;
-    font-family: Lato, sans-serif;
-    font-size: 20px;
+    margin-bottom: 3vh;
+    font-family: 'Lato', sans-serif;
+    font-size: 3vh;
     font-weight: 900;
     display: inline-block;
-    padding: 15px 25px;
+    padding: 2vh 2vw;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     outline: none;
     border: none;
-    border-radius: 15px;
-    box-shadow: 4px 4px 8px #000;
+    border-radius: 2.2vh;
+    box-shadow: 0.3vw 0.5vh 1vh #000;
 }
 
 div#buzzed {
-    margin-top: 25px;
-    padding: 0 20px;
-    font-size: 26px;
-    text-align: right;
+    margin-top: 4vh;
+    font-size: 3.6vh;
+    text-align: center;
 }
 
 div#buzzed .buzzed-text {
@@ -50,16 +52,16 @@ div#buzzed .buzzed-text {
 }
 
 div#buzzed .text-highlight {
-    color: #fff;
+    color: ivory;
     font-weight: bold;
-    text-shadow: 0 0 6px #fff;
+    text-shadow: 0 0 0.8vh ivory;
 }
 
 div#buzzed .text-highlight:before {
     content: '➡ ';
     color: #f00;
     font-weight: bold;
-    text-shadow: 0 0 6px #f00;
+    text-shadow: 0 0 0.8vh #f00;
 }
 
 div#buzzed .buttons {
@@ -67,9 +69,9 @@ div#buzzed .buttons {
 }
 
 div#buzzed button {
-    width: 150px;
-    margin-left: 10px;
-    font-size: 16px;
+    width: 12vw;
+    margin-left: 0.8vw;
+    font-size: 2.4vh;
 }
 
 button#select-right {
@@ -86,21 +88,22 @@ button#select-wrong {
 
 #timer_number {
     font-family: 'Press Start 2P';
-    font-size: 50px;
+    font-size: 7.5vh;
+    font-weight: bold;
     color: #fdcf1a;
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: 10px;
+    margin-bottom: 3vh;
+    margin-top: 1.5vh;
 }
 
 div#commands {
-    margin-top: 40px;
+    margin-top: 6vh;
 }
 
 div#commands button {
-    height: 100px;
-    margin-bottom: 25px;
+    height: 14vh;
+    margin-bottom: 3.8vh;
 }
 
 button#start-round {
@@ -135,43 +138,49 @@ button:active {
 
 div#main {
     width: 70%;
-    margin: 20px;
-    padding: 20px;
+    margin: 3vh;
+    padding: 3vh;
     position: absolute;
-    top: 40px; left: 0;
+    top: 6vh; left: 0;
 }
 
 div#question {
-    font-size: 36px;
+    font-size: 5.3vh;
     background: none;
     border-bottom: 2px dashed #444;
-    padding: 20px 0;
+    padding: 3vh 0;
 }
 
 div#question .qz_number {
     font-size: 0.7em;
     color: #fdcf1a;
     margin-right: 0.3ch;
-    padding-left: 8px;
+    padding-left: 0.6vw;
 }
 
 div#question .qz_question {
     display: block;
     min-height: 3em;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 8px;
+    color: ivory;
+    padding: 1vh 0.8vw;
+    border-radius: 0.6vh;
     width: 100%;
     box-sizing: border-box;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+div#question .qz_question b {
+    font-weight: 900;
 }
 
 div#question .qz_answer {
     display: block;
-    min-height: 2rem;
-    margin-top: 1rem;
+    min-height: 5vh;
+    margin-top: 1vh;
     font-size: 0.7em;
     color: #888;
-    padding-left: 8px;
+    padding-left: 0.6vw;
 }
 
 div#question .qz_answer:before {
@@ -182,11 +191,11 @@ div#question .qz_answer:before {
 
 div#question .qz_trivia {
     display: block;
-    min-height: 2rem;
-    margin-top: 1rem;
+    min-height: 6.5vh;
+    margin-top: 1vh;
     font-size: 0.5em;
     color: #888;
-    padding: 8px 12px;
+    padding: 1vh 0.8vw;
 }
 
 #question_text b {
@@ -195,17 +204,17 @@ div#question .qz_trivia {
 }
 
 div#teams {
-    padding: 10px;
+    padding: 1.5vh;
     text-align: center;
 }
 
 div#teams span {
     display: inline-block;
-    width: 120px;
-    height: 120px;
-    margin: 10px;
+    width: 16vh;
+    height: 16vh;
+    margin: 2.5vh 1vw;
     background: #333;
-    border-radius: 8px;
+    border-radius: 1vh;
 }
 
 div#teams span.blue {
@@ -262,9 +271,9 @@ div#teams span.no-bg {
 
 div#scores {
     float: right;
-    width: 170px;
-    height: 120px;
-    margin: 22px 20px 10px 30px;
+    width: 14vw;
+    height: 18vh;
+    margin: 3.2vh 1.5vw 1.5vh 2vw;
 }
 
 div#scores table {
@@ -281,6 +290,7 @@ div#scores td {
     font-weight: bold;
     font-family: 'Courier', 'Courier New', monospace;
     color: #888;
+    font-size: 2.5vh;
 }
 
 div#scores tr:first-of-type {
@@ -300,6 +310,6 @@ div#scores td.score-0 {
     bottom: 0; right: 0;
     color: red;
     font-family: 'FontAwesome';
-    font-size: 5vh;
+    font-size: 4vh;
     margin: 3vh;
 }
