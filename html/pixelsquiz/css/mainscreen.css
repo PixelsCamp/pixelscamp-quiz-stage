@@ -134,6 +134,7 @@ div#timer {
 #timer-number {
     font-family: 'Press Start 2P';
     font-size: 17vh;
+    font-weight: bold;
     color: #fdcf1a;
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
     width: 38vh;
@@ -173,6 +174,8 @@ div#scoreboard table {
     box-shadow: none;
     border-spacing: 0;
     color: #777;
+    background: linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(255,255,255,0.05) 80%, rgba(255,255,255,0.08) 100%);
+    padding: 0.2vh 0.3vw;
 }
 
 div#scoreboard tr {
