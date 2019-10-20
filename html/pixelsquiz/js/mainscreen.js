@@ -246,6 +246,8 @@ function start() {
             curr_question_html = curr_question_html.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<span id="question_header">Warmup:</span><br>');
         } else if ((/^\s*tiebreaker:\s+/i).test(curr_question_html)) {
             curr_question_html = curr_question_html.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<span id="question_header">Tiebreaker:</span><br>');
+        } else if ((/^\s*(?:these\s+are\s+|calling)the\s+teams/i).test(curr_question_html)) {
+            curr_question_html = '<span id="main_title">These are <strong>the teams:</strong></span>';
         }
 
         question_node.html(curr_question_html);

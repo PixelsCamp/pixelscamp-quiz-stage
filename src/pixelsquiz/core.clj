@@ -405,6 +405,9 @@
                     :bag-of-props {:question {:text question
                                               :shuffled-options (mapv #(assoc {} :text %) [o1 o2 o3 o4])}}}))))
 
+(defn omg-teams [t1 t2 t3 t4]
+  (omg-mainscreen "These are the teams:" t1 t2 t3 t4))
+
 (defn omg-last-question-scores []
   (get-in @game-state [:value :current-answer :scores]))
 
