@@ -410,9 +410,9 @@ div#scoreboard .wrong td:nth-child(1):before {
 }
 
 .overscan {
-    width: 90vw;
-    height: 90vh;
-    margin: 5vh 5vw;
+    width: 95vw;
+    height: 95vh;
+    margin: 2.5vh 2.5vw;
     outline-color: yellow;
 }
 
@@ -422,5 +422,5 @@ div#scoreboard .wrong td:nth-child(1):before {
     color: red;
     font-family: 'FontAwesome';
     font-size: 5vh;
-    margin: 3vh;
+    margin: 5vh 4vw;
 }
