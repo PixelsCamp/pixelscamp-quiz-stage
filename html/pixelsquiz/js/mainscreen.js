@@ -102,16 +102,16 @@ function start() {
     console.log('Connecting to game engine...');
     ws = new WebSocket("ws://" + document.location.host + "/displays");
 
-    ws.onopen = function (event) {
+    ws.onopen = function(event) {
         $('#disconnected').css('visibility', 'hidden');
         console.log('Connected!');
     }
 
-    ws.onerror = function (event) {
+    ws.onerror = function(event) {
         $('#disconnected').css('visibility', 'visible');
     }
 
-    ws.onmessage = function (event) {
+    ws.onmessage = function(event) {
         var msg = JSON.parse(event.data);
         var curr_scores_title = '';
 
@@ -278,6 +278,7 @@ function start() {
 $(document).ready(function() {
     function check() {
         if (!ws || ws.readyState == 3) {
+            $('#disconnected').css('visibility', 'visible');
             start();
         }
     }

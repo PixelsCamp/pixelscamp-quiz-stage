@@ -42,17 +42,17 @@ function start() {
     console.log('Connecting to game engine...');
     ws = new WebSocket("ws://" + document.location.host +"/displays");
 
-    ws.onopen = function (event) {
+    ws.onopen = function(event) {
         ws.send(JSON.stringify({"kind": "quizmaster-auth"}))
         console.log('Connected!');
         $('#disconnected').css('visibility', 'hidden');
     }
 
-    ws.onerror = function (event) {
+    ws.onerror = function(event) {
         $('#disconnected').css('visibility', 'visible');
     }
 
-    ws.onmessage = function (event) {
+    ws.onmessage = function(event) {
         var msg = JSON.parse(event.data);
 
         if ($.isEmptyObject(msg)) {
@@ -151,6 +151,7 @@ function start() {
 $(document).ready(function() {
     function check() {
         if (!ws || ws.readyState == 3) {
+            $('#disconnected').css('visibility', 'visible');
             start();
         }
     }
