@@ -29,9 +29,19 @@ function throb(secs) {
     }
 }
 
-function show_question(q,o) {
+function show_question(question, options) {
+    // The question container uses flex layout, so the text must always be properly wrapped...
+    if ((/^\s*image(?:\[[a-z0-9_-]+\])?:\s*[^\s]+\.[^\s]+\s+/i).test(question)) {
+        q = question.replace(/^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.*)$/i, '<img class="$1" src="images/questions/$2"><span class="question_text">$3</span>');
+    } else if ((/\s+image(?:\[[a-z0-9_-]+\])?:\s*[^\s]+\.[^\s]+\s*$/i).test(question)) {
+        q = question.replace(/^(.*)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i, '<span class="question_text">$1</span><img class="$2" src="images/questions/$3">');
+    } else {
+        q = '<span class="question_text">' + question + '</span>'
+    }
+
     $('#question').html(q);
-    show_options(o);
+
+    show_options(options);
 }
 
 function show_options(o) {
@@ -232,7 +242,7 @@ function start() {
             $('#question-number').text(curr_scores_title);
         }
 
-        question_node = $('#question');
+        question_node = $('#question .question_text');
         curr_question_html = question_node.html();
 
         // Better looking informational messages...
@@ -242,7 +252,7 @@ function start() {
             curr_question_html = '<span id="main_title">Adding the <strong>scores&hellip;</strong></span>';
         } else if ((/^\s*round\s+ended/i).test(curr_question_html)) {
             curr_question_html = '<span id="main_title">And we have a <strong>WINNER!</strong></span>';
-        } else if ((/^\s*test\s+question:\s+/i).test(curr_question_html)) {
+        } else if ((/^\s*(?:test|warmup)(?:\s+question)?:\s+/i).test(curr_question_html)) {
             curr_question_html = curr_question_html.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<span id="question_header">Warmup:</span><br>');
         } else if ((/^\s*tiebreaker:\s+/i).test(curr_question_html)) {
             curr_question_html = curr_question_html.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<span id="question_header">Tiebreaker:</span><br>');

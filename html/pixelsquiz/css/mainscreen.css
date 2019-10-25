@@ -32,16 +32,33 @@ div#question {
     font-family: 'Lato', sans-serif;
     font-weight: bold;
     height: 35vh;
-    width: 65vw;
-    padding: 0 1.5vw 0 0.5vw;
+    width: 100%;
     line-height: 1.25em;
-    display: table-cell;
-    vertical-align: middle;
+    display: flex;
+    align-items: center;
+}
+
+div#question .question_text {
+    padding: 0 1.5vw 0 0.5vw;
 }
 
 div#question b {
     color: #01a7ee;
     font-weight: 900;
+}
+
+div#question img:first-child {
+    height: 95%;
+    margin-right: 1.2ch;
+}
+
+div#question img:last-child {
+    height: 95%;
+    margin-left: 1.2ch;
+}
+
+div#question img.photo {
+    border: 6px solid ivory;
 }
 
 #question_header {
