@@ -30,13 +30,16 @@ function throb(secs) {
 }
 
 function show_question(question, options) {
+    var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
+    var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i;
+
     // The question container uses flex layout, so the text must always be properly wrapped...
-    if ((/^\s*image(?:\[[a-z0-9_-]+\])?:\s*[^\s]+\.[^\s]+\s+/i).test(question)) {
-        q = question.replace(/^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.*)$/i, '<img class="$1" src="images/questions/$2"><span class="question_text">$3</span>');
-    } else if ((/\s+image(?:\[[a-z0-9_-]+\])?:\s*[^\s]+\.[^\s]+\s*$/i).test(question)) {
-        q = question.replace(/^(.*)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i, '<span class="question_text">$1</span><img class="$2" src="images/questions/$3">');
+    if (left_image.test(question)) {
+        q = question.replace(left_image, '<img class="$1" src="images/questions/$2"><span class="text">$3</span>');
+    } else if (right_image.test(question)) {
+        q = question.replace(right_image, '<span class="text">$1</span><img class="$2" src="images/questions/$3">');
     } else {
-        q = '<span class="question_text">' + question + '</span>'
+        q = '<span class="text">' + question + '</span>'
     }
 
     $('#question').html(q);
@@ -242,7 +245,7 @@ function start() {
             $('#question-number').text(curr_scores_title);
         }
 
-        question_node = $('#question .question_text');
+        question_node = $('#question .text');
         curr_question_html = question_node.html();
 
         // Better looking informational messages...

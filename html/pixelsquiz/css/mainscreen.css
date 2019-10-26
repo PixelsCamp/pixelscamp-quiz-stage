@@ -15,14 +15,14 @@ div {
 div#main {
     position: absolute;
     top: 5vh; left: 9vh;
-    width: 62vw; height: 90vh;
+    width: 62vw; height: 91vh;
     display: table-row;
 }
 
 div#side {
     position: absolute;
     top: 5vh; right: 7vh;
-    width: 28vw; height: 90vh;
+    width: 28vw; height: 91vh;
 }
 
 div#question {
@@ -38,7 +38,7 @@ div#question {
     align-items: center;
 }
 
-div#question .question_text {
+div#question .text {
     padding: 0 1.5vw 0 0.5vw;
 }
 
@@ -47,18 +47,22 @@ div#question b {
     font-weight: 900;
 }
 
-div#question img:first-child {
+div#question img {
     height: 95%;
+    margin-top: 2%;
+}
+
+div#question img:first-child {
     margin-right: 1.2ch;
 }
 
 div#question img:last-child {
-    height: 95%;
     margin-left: 1.2ch;
 }
 
-div#question img.photo {
+div#question img.frame {
     border: 6px solid ivory;
+    background: ivory;
 }
 
 #question_header {
@@ -142,7 +146,7 @@ div .answer {
 
 div#timer {
     position: absolute;
-    top: 5.5vh; right: 0;
+    top: 5vh; right: 0;
     padding: 1vh 0.5vw;
     margin: 2vh 1vw;
     text-align: center;
@@ -150,7 +154,7 @@ div#timer {
 
 #timer-number {
     font-family: 'Press Start 2P';
-    font-size: 17vh;
+    font-size: 18vh;
     font-weight: bold;
     color: #fdcf1a;
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
