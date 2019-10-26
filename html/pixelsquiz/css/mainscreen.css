@@ -3,7 +3,7 @@ body {
     padding: 0;
     font-size: 18px;
     font-family: 'Lato', sans-serif;
-    background: #202020;
+    background: #1c1c1c;
     margin: 0;
     overflow: hidden;
 }
@@ -14,14 +14,14 @@ div {
 
 div#main {
     position: absolute;
-    top: 5vh; left: 9vh;
+    top: 6vh; left: 9vh;
     width: 62vw; height: 91vh;
     display: table-row;
 }
 
 div#side {
     position: absolute;
-    top: 5vh; right: 7vh;
+    top: 6vh; right: 7vh;
     width: 28vw; height: 91vh;
 }
 
@@ -141,7 +141,7 @@ div .answer {
 }
 
 .answer.blank {
-    background: #444;
+    background: #333;
 }
 
 div#timer {
@@ -156,6 +156,7 @@ div#timer {
     font-family: 'Press Start 2P';
     font-size: 18vh;
     font-weight: bold;
+    letter-spacing: 0.6vh;
     color: #fdcf1a;
     text-shadow: 0 0 2px #222;  /* fix rendering issue in chrome */
     width: 38vh;
@@ -164,7 +165,7 @@ div#timer {
 }
 
 #timer-number.timer-20 {
-    margin-right: -0.065em;
+    margin-right: -1.8vh;
 }
 
 #timer-number.expired {
@@ -195,7 +196,7 @@ div#scoreboard table {
     box-shadow: none;
     border-spacing: 0;
     color: #777;
-    background: linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(255,255,255,0.05) 80%, rgba(255,255,255,0.08) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(255,255,255,0.04) 80%, rgba(255,255,255,0.06) 100%);
     padding: 0.2vh 0.3vw;
 }
 
@@ -339,7 +340,7 @@ div#scoreboard .wrong td:nth-child(1):before {
     align-items: center;
     width: 102%; height: 101%;
     top: -1%; left: -1%;
-    background: #202020a8;
+    background: #1c1c1ca8;
     margin: 0; padding: 0;
 }
 
@@ -442,6 +443,6 @@ div#scoreboard .wrong td:nth-child(1):before {
     bottom: 0; right: 0;
     color: red;
     font-family: 'FontAwesome';
-    font-size: 5vh;
+    font-size: 4vh;
     margin: 5vh 4vw;
 }

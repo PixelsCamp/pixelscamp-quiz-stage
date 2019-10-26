@@ -1,5 +1,5 @@
 body {
-    background: #222;
+    background: #1c1c1c;
     color: #eee;
     font-family: 'Lato';
     margin: 0;
@@ -50,7 +50,7 @@ div#buzzed .buzzed-text {
     width: 42vw;
     text-align: right;
     vertical-align: middle;
-    color: #444;
+    color: #333;
     margin-right: 1ch;
 }
 
@@ -80,13 +80,13 @@ div#buzzed button {
 button#select-right {
     border: 2px solid #0c0;
     color: #0c0;
-    background: #222;
+    background: none;
 }
 
 button#select-wrong {
     border: 2px solid #ff2020;
     color: #ff2020;
-    background: #222;
+    background: none;
 }
 
 #timer_number {
@@ -150,7 +150,7 @@ div#main {
 div#question {
     font-size: 5.3vh;
     background: none;
-    border-bottom: 2px dashed #444;
+    border-bottom: 2px dashed #333;
     padding: 3vh 0;
 }
 
@@ -221,7 +221,7 @@ div#teams span {
     width: 16vh;
     height: 16vh;
     margin: 2.5vh 1vw;
-    background: #333;
+    background: #222;
     border-radius: 1vh;
 }
 
@@ -302,7 +302,7 @@ div#scores td {
 }
 
 div#scores tr:first-of-type {
-    outline: 1px solid #444;
+    outline: 1px solid #333;
 }
 
 div#scores tr:first-of-type td {
@@ -310,7 +310,7 @@ div#scores tr:first-of-type td {
 }
 
 div#scores td.score-0 {
-    color: #555 !important;
+    color: #333 !important;
 }
 
 #disconnected {
