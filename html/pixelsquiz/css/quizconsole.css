@@ -180,10 +180,12 @@ div#question .qz_answer {
 }
 
 div#question .qz_answer:before {
+    display: inline-block;
     content: 'Answer: ';
-    color: #0c0;
-    font-weight: bold;
-    margin-right: 0.3ch;
+    color: #01a7ee;
+    margin: 1.1vh 0.3ch 0 0.1vw;
+    font-family: 'Avant Pixel';
+    font-size: 3.4vh;
 }
 
 div#question .qz_trivia {
@@ -209,6 +211,15 @@ div#question .qz_trivia {
 #question_text b {
     color: #01a7ee;
     font-weight: bold;
+}
+
+#question_text .question_header {
+    display: inline-block;
+    color: #01a7ee;
+    margin-top: -4vh;
+    margin-bottom: 1vh;
+    font-family: 'Avant Pixel';
+    font-size: 3.4vh;
 }
 
 div#teams {

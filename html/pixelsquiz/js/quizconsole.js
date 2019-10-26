@@ -34,10 +34,13 @@ function show_question(question, answer, trivia) {
     var question_node = $('#question_text .text');
     var question_text = question_node.html();
 
-    if ((/^\s*test\s+question:\s+/i).test(question_text)) {
-        q = question_text.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<b>Warmup:</b> ');
-    } else if ((/^\s*tiebreaker:\s+/i).test(question_text)) {
-        q = question_text.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<b>Tiebreaker:</b> ');
+    var warmup = /^\s*(?:test|warmup)(?:\s+question)?:\s+/i;
+    var tiebreaker = /^\s*tiebreaker(?:\s+question)?:\s*/i;
+
+    if (warmup.test(question_text)) {
+        q = question_text.replace(warmup, '<span class="question_header">Warmup:</span><br>');
+    } else if (tiebreaker.test(question_text)) {
+        q = question_text.replace(tiebreaker, '<span class="question_header">Tiebreaker:</span><br>');
     }
 
     question_node.html(q);
