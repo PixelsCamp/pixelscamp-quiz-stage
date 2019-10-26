@@ -1,23 +1,3 @@
-function _send_command(cmd) {
-    $.post('/actions/'+ cmd)
-
-}
-
-function send_command(ev) {
-    _send_command($(ev.target).attr('id'));
-}
-
-$("#commands button").each(function (idx) {
-    $(this).click(send_command);
-})
-
-$("#buzzed button").each(function (idx) {
-    $(this).click(function (e) {
-        _send_command($(e.target).attr('id'));
-        $("#buzzed .buzzed-text").removeClass("text-highlight");
-    });
-})
-
 function get_right_wrong(team) {
     $("#buzzed .buzzed-team").text(team + 1);
     $("#buzzed .buzzed-text").addClass("text-highlight");
@@ -34,6 +14,36 @@ function update_scores(scores) {
     var table = $("#scores table tbody");
     table.find("tr:last-child").remove();
     table.prepend("<tr>" + scores_line.join("") + "</tr>");
+}
+
+function show_question(question, answer, trivia) {
+    var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
+    var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i;
+
+    // Keep the image on the left regardless, since it's just to remind the quizmaster...
+    if (left_image.test(question)) {
+        q = question.replace(left_image, '<img class="$1" src="images/questions/$2"><span class="text">$3</span>');
+    } else if (right_image.test(question)) {
+        q = question.replace(right_image, '<img class="$2" src="images/questions/$3"><span class="text">$1</span>');
+    } else {
+        q = '<span class="text">' + question + '</span>'
+    }
+
+    $('#question_text').html(q);
+
+    var question_node = $('#question_text .text');
+    var question_text = question_node.html();
+
+    if ((/^\s*test\s+question:\s+/i).test(question_text)) {
+        q = question_text.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<b>Warmup:</b> ');
+    } else if ((/^\s*tiebreaker:\s+/i).test(question_text)) {
+        q = question_text.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<b>Tiebreaker:</b> ');
+    }
+
+    question_node.html(q);
+
+    $('#question_answer').text(answer);
+    $('#question_trivia').html(trivia);
 }
 
 var ws = null;
@@ -80,26 +90,14 @@ function start() {
          *        used in the main screen) let's use it only as another state change hint...
          */
         if ("questionnum" in msg) {
-            $("#question_text").text("");
-            $("#question_answer").text("");
-            $("#question_trivia").text("");
+            show_question("", "", "");
         }
 
         if (msg.do === 'quizmaster-only') {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
-                question_text = msg.question || "";
-
-                if ((/^\s*test\s+question:\s+/i).test(question_text)) {
-                    question_text = question_text.replace(/^\s*(?:test|warmup)(?:\s+question)?\s*:\s+/i, '<b>Warmup:</b> ');
-                } else if ((/^\s*tiebreaker:\s+/i).test(question_text)) {
-                    question_text = question_text.replace(/^\s*tiebreaker(?:\s+question)?\s*:\s*/i, '<b>Tiebreaker:</b> ');
-                }
-
-                $('#question_text').html(question_text);
-                $('#question_answer').text(msg.answer || "");
-                $('#question_trivia').html(msg.trivia || "");
+                show_question(msg.question || "", msg.answer || "", msg.trivia || "");
             }
 
         } else if (msg.do === 'timer-update') {
@@ -149,6 +147,19 @@ function start() {
 
 
 $(document).ready(function() {
+    $("#commands button").each(function() {
+        $(this).click(function (e) {
+            $.post('/actions/' + $(e.target).attr('id'));
+        });
+    })
+
+    $("#buzzed button").each(function() {
+        $(this).click(function(e) {
+            $.post('/actions/' + $(e.target).attr('id'));
+            $("#buzzed .buzzed-text").removeClass("text-highlight");
+        });
+    })
+
     function check() {
         if (!ws || ws.readyState == 3) {
             $('#disconnected').css('visibility', 'visible');
@@ -160,6 +171,11 @@ $(document).ready(function() {
     setInterval(check, 3000);
 });
 
+
+/*
+ * Clicker experimental feature:
+ * -----------------------------
+ */
 
 var last_clicker_press = 0;
 var min_clicker_interval = 2000;  // milliseconds

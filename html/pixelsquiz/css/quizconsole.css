@@ -154,18 +154,11 @@ div#question {
     padding: 3vh 0;
 }
 
-div#question .qz_number {
-    font-size: 0.7em;
-    color: #fdcf1a;
-    margin-right: 0.3ch;
-    padding-left: 0.6vw;
-}
-
 div#question .qz_question {
     display: block;
-    min-height: 3em;
+    height: 3.8em;
     color: ivory;
-    padding: 1vh 0.8vw;
+    padding: 1vh 0.6vw;
     border-radius: 0.6vh;
     width: 100%;
     box-sizing: border-box;
@@ -188,7 +181,8 @@ div#question .qz_answer {
 
 div#question .qz_answer:before {
     content: 'Answer: ';
-    color: #fdcf1a;
+    color: #0c0;
+    font-weight: bold;
     margin-right: 0.3ch;
 }
 
@@ -199,6 +193,17 @@ div#question .qz_trivia {
     font-size: 0.5em;
     color: #888;
     padding: 1vh 0.8vw;
+}
+
+#question_text {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#question_text img {
+    margin-right: 1ch;
+    height: 100%;
 }
 
 #question_text b {
