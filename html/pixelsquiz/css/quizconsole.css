@@ -222,6 +222,10 @@ div#question .qz_trivia {
     font-size: 3.4vh;
 }
 
+#question_trivia b {
+    color: ivory;
+}
+
 div#teams {
     padding: 1.5vh;
     text-align: center;
