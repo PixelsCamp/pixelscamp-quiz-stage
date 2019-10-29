@@ -171,7 +171,7 @@ $(document).ready(function() {
     }
 
     check();
-    setInterval(check, 3000);
+    setInterval(check, 1000);
 });
 
 

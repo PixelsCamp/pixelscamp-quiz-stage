@@ -313,5 +313,5 @@ $(document).ready(function() {
     body.on('selectstart dragstart', false);
 
     check();
-    setInterval(check, 3000);
+    setInterval(check, 1000);
 });
