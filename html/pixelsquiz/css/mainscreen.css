@@ -340,7 +340,7 @@ div#scoreboard .wrong td:nth-child(1):before {
     align-items: center;
     width: 102%; height: 101%;
     top: -1%; left: -1%;
-    background: #1c1c1ca8;
+    background: #1c1c1c80;
     margin: 0; padding: 0;
 }
 
