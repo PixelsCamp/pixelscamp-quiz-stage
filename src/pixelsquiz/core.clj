@@ -16,6 +16,7 @@
 (import '[pixelsquiz.types Event Answer])
 
 
+(def game-channel (async/chan 16))
 (def buzz-score-modifier 2)
 
 (def game-state-file "game-state.edn")
@@ -29,10 +30,10 @@
 (def score-adjustments (atom [0 0 0 0]))
 
 (defn run-timer
-  [duration evkind disp c]
+  [duration type displays-channel notify-channel]
   (reset! timer-active true)
-  (>!! disp (Event. :timer-start {}))
-  (>!! disp (Event. :timer-update {:value duration}))
+  (>!! displays-channel (Event. :timer-start {}))
+  (>!! displays-channel (Event. :timer-update {:value duration}))
   (async/go-loop
     [seconds (dec duration)]
     (if (> seconds -1)
@@ -40,12 +41,12 @@
         (<! (async/timeout 1000))
         (if @timer-active  ;; ...might have stopped in the meanwhile.
           (do
-            (>! disp (Event. :timer-update {:value seconds}))
+            (>! displays-channel (Event. :timer-update {:value seconds}))
             (recur (if @timer-active (dec seconds) -1))
           )))
       (do
         (reset! timer-active false)
-        (>! c (Event. evkind {})))
+        (>! notify-channel (Event. type {})))
       )))
 
 
@@ -55,13 +56,13 @@
 
 
 (defn buzz-timer
-  [c world & _]
-  (run-timer 20 :buzz-timeout (-> world :stage :displays) c)
+  [world & _]
+  (run-timer 20 :buzz-timeout (-> world :stage :displays) game-channel)
   world)
 
 (defn options-timer
-  [c world & _]
-  (run-timer 20 :options-timeout (-> world :stage :displays) c)
+  [world & _]
+  (run-timer 20 :options-timeout (-> world :stage :displays) game-channel)
   world)
 
 
@@ -100,14 +101,14 @@
                                              answering-team (:team-buzzed current-answer))))))
   )
 
-(defn acc-option
-  [timeout-chan world event & _]
+(defn accumulate-options
+  [world event & _]
   (let [question-scores (mapv #(:score %) (-> world :current-answer :question :shuffled-options))
         answering-team  (-> event :bag-of-props :team)
         selected-option  (-> event :bag-of-props :button-index)
         ]
     (when (all-teams-answered? answering-team (:current-answer world))
-      (>!! timeout-chan (Event. :all-pressed {})))
+      (>!! game-channel (Event. :all-pressed {})))
     (if (or (= answering-team (-> world :current-answer :team-buzzed))
             (not (nil? (get (-> world :current-answer :answers) answering-team))))
       world ; if the team buzzed ignore them
@@ -130,9 +131,9 @@
 
 
 (defn options-show-and-timeout
-  [c world & _]
+  [world & _]
   (w-m-d world (Event. :show-options (:current-answer world)))
-  (options-timer c world)
+  (options-timer world)
   world)
 
 (defn fsm-fn
@@ -203,7 +204,7 @@
     (add-tiebreaker-question-if-necessary new-world)))
 
 (defn start-question
-  [answer-chan world event from-state to-state]
+  [world event from-state to-state]
   (let [current-round (:current-round world)
         question-index (:question-index current-round)
         question-number (get (:questions current-round) question-index)
@@ -216,7 +217,7 @@
                                        ))
         ]
     (if (nil? question)
-      (>!! answer-chan (Event. :out-of-questions {:question-index question-index})))
+      (>!! game-channel (Event. :out-of-questions {:question-index question-index})))
     (assoc world
            :current-question question
            :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil nil [nil nil nil nil] [0 0 0 0])
@@ -245,17 +246,16 @@
 ;
 (defn game-loop
   [game-state world]
-  (let [timeout-chan (async/chan 16)
-        stage (:stage world)
-        round-events (async/merge [(:buttons stage) (:quizmaster stage) timeout-chan])
+  (let [stage (:stage world)
+        round-events (async/merge [(:buttons stage) (:quizmaster stage) game-channel])
         game (fsm/fsm-inc [
                            [:start {}
                             {:kind :start-round} -> {:action round-setup} :wait-for-question]
                            [:wait-for-question {}
-                            {:kind :start-question} -> {:action (partial start-question timeout-chan)} question-on-quizmaster]
+                            {:kind :start-question} -> {:action start-question} question-on-quizmaster]
                            [question-on-quizmaster {}
                             {:kind :out-of-questions} -> end-of-round
-                            {:kind :show-question} -> {:action (partial buzz-timer timeout-chan)} :wait-buzz]
+                            {:kind :show-question} -> {:action buzz-timer} :wait-buzz]
                            [:wait-buzz {}
                             {:kind :show-question} -> {:action show-question} :wait-buzz
                             {:kind :buzz-timeout} ->  :wait-before-options
@@ -264,9 +264,9 @@
                             {:kind :select-right} -> {:action qm-choice} show-question-results
                             {:kind :select-wrong} -> {:action qm-choice} :wait-before-options]
                            [:wait-before-options {}
-                            {:kind :start-choice} -> {:action (partial options-show-and-timeout timeout-chan)} wait-answers]
+                            {:kind :start-choice} -> {:action options-show-and-timeout} wait-answers]
                            [wait-answers {}
-                            {:kind :option-pressed} -> {:action (partial acc-option timeout-chan)} wait-answers
+                            {:kind :option-pressed} -> {:action accumulate-options} wait-answers
                             {:kind :options-timeout} -> show-question-results
                             {:kind :all-pressed} -> show-question-results]
                            [show-question-results {}
