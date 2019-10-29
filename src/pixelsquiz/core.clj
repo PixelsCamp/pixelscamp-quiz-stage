@@ -8,7 +8,7 @@
 
 (require '[clojure.core.async :as async :refer [>! <! >!! <!!]])
 (require '[clojure.pprint :refer [pprint]])
-(require '[clojure.string :refer [join]])
+(require '[clojure.string :refer [join starts-with?]])
 (require '[reduce-fsm :as fsm])
 (require '[org.httpkit.client :as http])
 (require '[nrepl.server :as repl])
@@ -362,6 +362,7 @@
                                  (read-string (slurp game-state-file))
                                  (catch Exception e {:state :start :value {:round-index -1}}))
                          state-fn (ns-resolve *ns* (symbol (name (:state saved))))]
+                     (logger/log :info :bright-green "Game state (initial): " (name (:state saved)))
                      (if (ifn? state-fn)
                        (assoc saved :state (deref state-fn))
                        saved))))
@@ -371,23 +372,38 @@
 
 (defn save-game-state-to-file!
   [key ref old-state state]
-  (let [value (:value state)]
-    (spit game-state-file (pr-str {:state (:state state)
-                                   :value (select-keys value [:current-question
-                                                              :current-answer
-                                                              :current-round
-                                                              :round-index
-                                                              :tiebreaker-pool])})
-                                   :append false)
-    ; (spit (str game-state-file "-log") (pr-str state) :append true)
-  ))
+  (let [value (:value state)
+        current-state (:state state)
+        full-state (pr-str {:state current-state
+                            :value (select-keys value [:current-question
+                                                       :current-answer
+                                                       :current-round
+                                                       :round-index
+                                                       :tiebreaker-pool])})]
+    ; If the current state is a function, is means the engine was stopped in the middle of a function-state and
+    ; has just been restarted. If we saved the state now the engine could not be restarted again because function
+    ; states cannot be used as initial state. This is not a problem, it will save on the next state transition.
+    (if (starts-with? (name current-state) "fn-")
+      (logger/warn "Probably recovering from a crash. Logging state but NOT saving it.")
+      (spit game-state-file full-state :append false))
+    (spit (str game-state-file ".log") (str full-state "\n") :append true)))  ; ...record *all* states.
 
 (defn -main
   [& args]
   (let [game-items (read-from-file :items)
-        stage (setup-stage)]
+        stage (setup-stage)
+        world (assoc game-items :stage stage)
+        current-state (:state @game-state)]
     (add-watch game-state nil save-game-state-to-file!)
-    (game-loop game-state (assoc game-items :stage stage))))
+    (if (= current-state :wait-buzz)
+      (do
+        (logger/warn "Restarting buzz timer...")
+        (buzz-timer world)))
+    (if (= current-state (deref (ns-resolve *ns* (symbol (name :wait-answers)))))
+      (do
+        (logger/warn "Restarting options timer...")
+        (options-timer world)))
+    (game-loop game-state world)))
 
 
 ;; Start a debug REPL, to which you can connect with "lein repl :connect"...
