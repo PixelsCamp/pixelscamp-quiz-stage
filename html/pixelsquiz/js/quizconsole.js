@@ -22,9 +22,9 @@ function show_question(question, answer, trivia) {
 
     // Keep the image on the left regardless, since it's just to remind the quizmaster...
     if (left_image.test(question)) {
-        q = question.replace(left_image, '<img class="$1" src="images/questions/$2"><span class="text">$3</span>');
+        q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
     } else if (right_image.test(question)) {
-        q = question.replace(right_image, '<img class="$2" src="images/questions/$3"><span class="text">$1</span>');
+        q = question.replace(right_image, '<img class="$2" src="questions/$3"><span class="text">$1</span>');
     } else {
         q = '<span class="text">' + question + '</span>'
     }

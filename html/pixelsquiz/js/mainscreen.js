@@ -35,9 +35,9 @@ function show_question(question, options) {
 
     // The question container uses flex layout, so the text must always be properly wrapped...
     if (left_image.test(question)) {
-        q = question.replace(left_image, '<img class="$1" src="images/questions/$2"><span class="text">$3</span>');
+        q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
     } else if (right_image.test(question)) {
-        q = question.replace(right_image, '<span class="text">$1</span><img class="$2" src="images/questions/$3">');
+        q = question.replace(right_image, '<span class="text">$1</span><img class="$2" src="questions/$3">');
     } else {
         q = '<span class="text">' + question + '</span>'
     }
