@@ -2,30 +2,26 @@
     :rounds [
         #pixelsquiz.types.Round{
             :number 1,
-            :teams ["Team_1_P1 Team_1_P2" "Team_2_P1 Team_2_P2" "Team_3_P1 Team_3_P2" "Team_4_P1 Team_4_P2"],
             :questions [0 1 2 3 4 5 6 7 8 9 10],
             :scores [0 0 0 0]
         }
         #pixelsquiz.types.Round{
             :number 2,
-            :teams ["Team_5_P1 Team_5_P2" "Team_6_P1 Team_6_P2" "Team_7_P1 Team_7_P2" "Team_8_P1 Team_8_P2"],
             :questions [11 12 13 14 15 16 17 18 19 20 21],
             :scores [0 0 0 0]
         }
         #pixelsquiz.types.Round{
             :number 3,
-            :teams ["Team_9_P1 Team_9_P2" "Team_10_P1 Team_10_P2" "Team_11_P1 Team_11_P2" "Team_12_P1 Team_12_P2"],
             :questions [22 23 24 25 26 27 28 29 30 31 32],
             :scores [0 0 0 0]
         }
         #pixelsquiz.types.Round{
             :number 4,
-            :teams ["Team_13_P1 Team_13_P2" "Team_14_P1 Team_14_P2" "Team_15_P1 Team_15_P2" "Team_16_P1 Team_16_P2"],
             :questions [33 34 35 36 37 38 39 40 41 42 43],
             :scores [0 0 0 0]
         }
         #pixelsquiz.types.Round{
-            :number 5, :teams ["R1_Winner_P1 R1_Winner_P2" "R2_Winner_P1 R2_Winner_P2" "R3_Winner_P1 R3_Winner_P2" "R4_Winner_P1 R4_Winner_P2"],
+            :number 5,
             :questions [44 45 46 47 48 49 50 51 52 53 54 55 56 57 58],
             :scores [0 0 0 0]
         }
