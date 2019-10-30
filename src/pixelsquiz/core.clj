@@ -399,7 +399,7 @@
                                (catch Exception e {:state :start
                                                    :value {:round-index -1}}))
                        state-fn (ns-resolve *ns* (symbol (name (:state saved))))]
-                   (logger/log :info :bright-green "Game state loaded from file [" game-state-file "]: " (:state saved))
+                   (logger/warn "Crash recovery: Loaded '" game-state-file "' with previous state: " (:state saved))
                    (if (ifn? state-fn)
                      (assoc saved :state (deref state-fn))
                      saved))))
@@ -423,8 +423,8 @@
     ; has just been restarted. If we saved the state now the engine could not be restarted again because function
     ; states cannot be used as initial state. This is not a problem, it will save on the next state transition.
     (if (starts-with? (name current-state) "fn-")
-      (logger/warn "Crash recovery: game state will be logged, but only saved on the NEXT state change.")
-      (spit game-state-file full-state :append false))
+      (logger/warn "Crash recovery: Game state will be logged, but only saved on the NEXT state change.")
+      (spit game-state-file (str full-state "\n") :append false))
     (spit (str game-state-file ".log") (str full-state "\n") :append true)))  ; ...record *all* states.
 
 
@@ -436,11 +436,11 @@
     (Thread/sleep 4000)  ; ...give displays a chance to connect before start sending events.
     (if (= current-state :wait-buzz)
       (do
-        (logger/warn "Restarting buzz timer...")
+        (logger/warn "Crash recovery: Restarting buzz timer...")
         (buzz-timer initial-world)))
     (if (= current-state (deref (ns-resolve *ns* (symbol (name :wait-answers)))))
       (do
-        (logger/warn "Restarting options timer...")
+        (logger/warn "Crash recovery: Restarting options timer...")
         (options-timer initial-world)))
     (game-loop game-state initial-world)))
 
