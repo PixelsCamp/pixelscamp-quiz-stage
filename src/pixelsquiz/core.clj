@@ -29,6 +29,7 @@
 (def append-question (atom false))
 (def score-adjustments (atom [0 0 0 0]))
 
+
 (defn run-timer
   [duration type displays-channel notify-channel]
   (reset! timer-active true)
@@ -101,6 +102,7 @@
                                              answering-team (:team-buzzed current-answer))))))
   )
 
+
 (defn accumulate-options
   [world event & _]
   (let [question-scores (mapv #(:score %) (-> world :current-answer :question :shuffled-options))
@@ -149,16 +151,19 @@
   (w-m-d world (Event. :question-starting {}))
   false)
 
+
 (defn right-or-wrong
   [world]
   (reset! timer-active false)  ;; ...the quizmaster allows out-of-time answers anyway!
   (w-m-d world (Event. :buzzed (:current-answer world)))
   false)
 
+
 (defn wait-answers
   [world]
   (w-m-d world (Event. :update-lights (:current-answer world) ))
   false)
+
 
 (defn end-of-round
   [world]
@@ -171,6 +176,7 @@
   (let [teamscores (sort-teams-by-scores (:scores round))]
    (= (:score (first teamscores)) (:score (second teamscores)))
   ))
+
 
 (defn add-tiebreaker-question-if-necessary
   [world]
@@ -203,6 +209,7 @@
     (w-m-d world (Event. :show-question {:text ""}))
     (add-tiebreaker-question-if-necessary new-world)))
 
+
 (defn start-question
   [world event from-state to-state]
   (let [current-round (:current-round world)
@@ -222,6 +229,7 @@
            :current-question question
            :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil nil [nil nil nil nil] [0 0 0 0])
            )))
+
 
 (defn prepare-for-next-round
   [world event & _]
@@ -388,6 +396,7 @@
       (spit game-state-file full-state :append false))
     (spit (str game-state-file ".log") (str full-state "\n") :append true)))  ; ...record *all* states.
 
+
 (defn -main
   [& args]
   (let [game-items (read-from-file :items)
@@ -409,8 +418,6 @@
 ;; Start a debug REPL, to which you can connect with "lein repl :connect"...
 (defonce server (repl/start-server :port 7888))
 
-;; Run this upon connecting (would be nice if it ran automatically):
-;; (require '[pixelsquiz.core :refer :all])
 
 (defn omg-mainscreen
   ([question]
@@ -420,6 +427,7 @@
       (w-m-d world {:kind :show-options
                     :bag-of-props {:question {:text question
                                               :shuffled-options (mapv #(assoc {} :text %) [o1 o2 o3 o4])}}}))))
+
 
 (defn omg-teams [t1 t2 t3 t4]
   (omg-mainscreen "These are the teams:" t1 t2 t3 t4))
