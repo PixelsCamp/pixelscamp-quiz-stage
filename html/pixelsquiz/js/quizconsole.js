@@ -20,6 +20,9 @@ function show_question(question, answer, trivia) {
     var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
     var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i;
 
+    // Insert an audio player, wherever it appears in the question (which should be in the beginning or end)...
+    question = question.replace(/(\s*)sound:\s*([^\s]+)(\s*)/i, '$1<audio src="questions/$2" preload="auto" controls></audio>$3');
+
     // Keep the image on the left regardless, since it's just to remind the quizmaster...
     if (left_image.test(question)) {
         q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
