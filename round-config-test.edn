@@ -1,0 +1,8 @@
+{
+  :rounds [
+    #pixelsquiz.types.Round{:number 1, :questions [0 1 2 3], :scores [0 0 0 0]}
+    #pixelsquiz.types.Round{:number 2, :questions [4 5 6 7], :scores [0 0 0 0]}
+    #pixelsquiz.types.Round{:number 3, :questions [8 9 10 11 12 13], :scores [0 0 0 0]}
+  ]
+  :tiebreaker-pool [14 15 16 17 18 19]
+}
