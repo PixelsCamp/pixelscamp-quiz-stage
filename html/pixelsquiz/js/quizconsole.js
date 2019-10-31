@@ -19,17 +19,14 @@ function update_scores(scores) {
 }
 
 function show_question(question, answer, trivia) {
-    var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
-    var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i;
-
-    // Insert an audio player, wherever it appears in the question (which should be in the beginning or end)...
-    question = question.replace(/(\s*)sound:\s*([^\s]+)(\s*)/i, '$1<audio src="questions/$2" preload="auto" controls></audio>$3');
+    var left_image = /^(\s*sound:\s*[^\s]+\b)?\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
+    var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)(\s+sound:\s*[^\s]+)?\s*$/i;
 
     // Keep the image on the left regardless, since it's just to remind the quizmaster...
     if (left_image.test(question)) {
-        q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
+        q = question.replace(left_image, '<img class="$2" src="questions/$3"><span class="text">$4$1</span>');
     } else if (right_image.test(question)) {
-        q = question.replace(right_image, '<img class="$2" src="questions/$3"><span class="text">$1</span>');
+        q = question.replace(right_image, '<img class="$2" src="questions/$3"><span class="text">$1$4</span>');
     } else {
         q = '<span class="text">' + question + '</span>'
     }
@@ -38,6 +35,9 @@ function show_question(question, answer, trivia) {
 
     var question_node = $('#question_text .text');
     var question_text = question_node.html();
+
+    // Insert an audio player, always on the right...
+    q = question_text.replace(/^(.*?)\s*sound:\s*([^\s]+)(.*)$/i, '$1$3<audio src="questions/$2" preload="auto" controls></audio>');
 
     var warmup = /^\s*(?:test|warmup)(?:\s+question)?:\s+/i;
     var tiebreaker = /^\s*tiebreaker(?:\s+question)?:\s*/i;
