@@ -1,4 +1,6 @@
 function update_scores(scores) {
+    scores = (scores && scores.length) ? scores : [0, 0, 0, 0];
+
     for(var team = 0; team < 4; team++) {
         var tscore = $('#s' + team + ' .score');
         tscore.text(scores[team]);
@@ -50,12 +52,14 @@ function show_question(question, options) {
     show_options(options);
 }
 
-function show_options(o) {
+function show_options(options) {
+    options = (options && options.length) ? options : ["", "", "", ""];
+
     for (i=0;i<4;i++) {
-        $('#r' + i + ' .optext').text(o[i]);
+        $('#r' + i + ' .optext').text(options[i]);
         $('#r' + i + ' .opinfo').empty();  // ...remove residue.
 
-        if (o[i].trim().length == 0) {
+        if (options[i].trim().length == 0) {
             $('#r' + i).addClass("blank");
         } else {
             $('#r' + i).removeClass("blank");

@@ -4,6 +4,8 @@ function get_right_wrong(team) {
 }
 
 function update_scores(scores) {
+    scores = (scores && scores.length) ? scores : [0, 0, 0, 0];
+
     var scores_line = [];
 
     for (score of scores) {
@@ -127,7 +129,7 @@ function start() {
             if ('text' in msg && (/^\s*round\s+ended/i).test(msg.text)) {
                 var winning_team = 0;
 
-                for (var t = 0; t < msg.scores.length; t++) {
+                for (var t = 0; msg.scores && t < msg.scores.length; t++) {
                     if (msg.scores[t] > msg.scores[winning_team]) {
                         winning_team = t;
                     }
