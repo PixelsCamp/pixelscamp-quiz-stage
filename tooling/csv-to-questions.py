@@ -80,7 +80,7 @@ def main():
         for n in range(NUM_ROUNDS):
             num_questions = NUM_FINAL_QUESTIONS if n == (NUM_ROUNDS - 1) else NUM_ROUND_QUESTIONS
 
-            question_indexes = range(n * num_questions, (n * num_questions) + num_questions)
+            question_indexes = range(n * NUM_ROUND_QUESTIONS, (n * NUM_ROUND_QUESTIONS) + num_questions)
             question_indexes = " ".join(str(i) for i in question_indexes)
 
             f.write("    #pixelsquiz.types.Round{:number %d, "
