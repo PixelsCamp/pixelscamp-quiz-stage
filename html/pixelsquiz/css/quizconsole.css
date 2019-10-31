@@ -222,6 +222,15 @@ div#question .qz_trivia {
     font-weight: bold;
 }
 
+#question_text audio {
+    display: inline-block;
+    margin: 0 1ch;
+    height: 5vh;
+    width: 40vh;
+    vertical-align: bottom;
+    opacity: 0.25;
+}
+
 #question_text .question_header {
     display: inline-block;
     color: #01a7ee;

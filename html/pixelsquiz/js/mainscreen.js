@@ -33,6 +33,9 @@ function show_question(question, options) {
     var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
     var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i;
 
+    // Sound annotation has no use on the mainscreen (also assumes it never appears in the middle of the text)...
+    question = question.replace(/\s*sound:\s*[^\s]+\s*/i, '');
+
     // The question container uses flex layout, so the text must always be properly wrapped...
     if (left_image.test(question)) {
         q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
