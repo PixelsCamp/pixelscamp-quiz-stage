@@ -263,13 +263,14 @@
 
 (defn round-setup
   [world event from-state to-state]
-  (let [new-round-number (+ 1 (:round-index world))
-        new-round (get (:rounds world) new-round-number)]
-    (w-m-d world (Event. :show-question {:text (str "Starting Round " (inc new-round-number) "...")}))
+  (let [new-round-index (inc (:round-index world))
+        new-round (get (:rounds world) new-round-index)]
+    (w-m-d world (Event. :show-question {:text (if (= (inc new-round-index) (count (:rounds world)))
+                                                 "Starting Final Round..."
+                                                 (str "Starting Round " (inc new-round-index) "..."))}))
     (w-m-d world (Event. :update-scores {:scores [0 0 0 0] :questionnum 0}))
-    (assoc world
-           :round-index new-round-number
-           :current-round (assoc new-round :question-index 0))))
+    (assoc world :round-index new-round-index
+                 :current-round (assoc new-round :question-index 0))))
 
 
 ; The game must flow...

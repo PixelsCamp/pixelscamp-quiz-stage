@@ -200,7 +200,7 @@ function start() {
             if (msg.text) {
                 show_question(msg.text, msg.options);
 
-                if ((/^\s*starting\s+round\s+[0-9]+/i).test(msg.text)) {
+                if ((/^\s*starting\s+(?:round\s+[0-9]+|final\s+round)/i).test(msg.text)) {
                     console.log("The round is starting.");
                     curr_question = 1;
                 }
@@ -258,6 +258,8 @@ function start() {
         // Better looking informational messages...
         if ((/^\s*starting\s+round\s+[0-9]+/i).test(curr_question_html)) {
             curr_question_html = curr_question_html.replace(/.*?([0-9]+).*/i, '<span id="main_title">Starting: <strong>Round $1</strong></span>');
+        } else if ((/^\s*starting\s+final\s+round/i).test(curr_question_html)) {
+            curr_question_html = curr_question_html.replace(/.*/i, '<span id="main_title">Starting: <strong>Final Round</strong></span>');
         } else if ((/^\s*let[^\s]+s\s+add\s+the\s+scores/i).test(curr_question_html)) {
             curr_question_html = '<span id="main_title">Adding the <strong>scores&hellip;</strong></span>';
         } else if ((/^\s*round\s+ended/i).test(curr_question_html)) {
@@ -279,7 +281,7 @@ function start() {
          *       Therefore, they need to always match the *replaced* text...
          */
 
-        if ((/\bstarting.*?\bround\s+[0-9]+/i).test(curr_question_html)) {
+        if ((/\bstarting.*?\b(?:round\s+[0-9]+|final\s+round)/i).test(curr_question_html)) {
             console.log("Showing sponsor logo...");
             $('#sponsor').css("visibility", "visible");
         } else {
