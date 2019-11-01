@@ -13,7 +13,7 @@
 (require '[org.httpkit.client :as http])
 (require '[nrepl.server :as repl])
 
-(import '[pixelsquiz.types Event Answer])
+(import '[pixelsquiz.types Event Question Answer])
 
 
 (def game-channel (async/chan 16))
@@ -205,15 +205,29 @@
   (let [current-round (:current-round world)
         round-number (get-in world [:current-round :number])
         question-number (get (:questions current-round) (:question-index current-round))
-        tiebreaker-index (first (:tiebreaker-pool world))
-        questions-repo (:questions-repo world)]
-    (if (and (> (count (:tiebreaker-pool world)) 0) (nil? question-number) (round-tied? current-round))
-      (do
-        (logger/log :info :bright-cyan "Appending tiebreaker question: " tiebreaker-index)
-        (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) tiebreaker-index))
-                     :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)
-                     :questions-repo (assoc questions-repo tiebreaker-index (update (get questions-repo tiebreaker-index) :text #(str "Tiebreaker: " %)))))
-      world)))
+        questions-repo (:questions-repo world)
+        tiebreaker-pool (:tiebreaker-pool world)]
+    (if-not (and (nil? question-number) (round-tied? current-round))
+      world  ; ...there are still regular questions left in the round, or the round ended with no ties.
+      (if-not (empty? tiebreaker-pool)
+        ; Move the next question from the tiebreaker pool into the round...
+        (let [tiebreaker-index (first tiebreaker-pool)]
+          (logger/log :info :bright-cyan "Appending tiebreaker question: " tiebreaker-index)
+          (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) tiebreaker-index))
+                       :tiebreaker-pool (subvec tiebreaker-pool 1)
+                       :questions-repo (assoc questions-repo tiebreaker-index (update (get questions-repo tiebreaker-index)
+                                                                                      :text #(str "Tiebreaker: " %)))))
+
+        ; When there are no more questions in the tiebreaker pool, the luckiest team wins...
+        (let [chance-index (count questions-repo)
+              chance-question (Question. chance-index :multi 1 "Tiebreaker: It's down to luck now..."
+                                                               ["?", "?", "?", "?"]
+                                                               (str "Ask the teams that are <b>not tied</b> to step aside. "
+                                                                    "Immediately accept the team that presses the buzzer. "
+                                                                    "All options look the same on multiple choice."))]
+          (logger/warn "Appending failsafe tiebreaker question: " chance-index)
+          (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) chance-index))
+                       :questions-repo (assoc questions-repo chance-index chance-question)))))))
 
 
 (defn prepare-for-next-question
@@ -277,7 +291,7 @@
     [:between-questions {}
       {:kind :start-question} -> {:action start-question} new-question]
     [new-question {}
-      {:kind :out-of-questions} -> end-of-round
+      {:kind :out-of-questions} -> end-of-round  ; ...just a failsafe, should never happen.
       {:kind :show-question} -> {:action buzz-timer} :wait-buzz]
     [:wait-buzz {}
       {:kind :show-question} -> {:action show-question} :wait-buzz
