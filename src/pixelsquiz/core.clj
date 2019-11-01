@@ -345,6 +345,7 @@
   (let [stage (:stage world)
         round-events (async/merge [(:buttons stage) (:quizmaster stage) game-channel])]
     (loop [new-game-state (state-machine (:state @game-state) (merge world (:value @game-state) {:answers []}))]
+
       (let [initial-state (:state @game-state)
             new-state (:state new-game-state)]
         (if (not (= initial-state new-state))
@@ -352,62 +353,65 @@
           (logger/log :info :bright-green "Game state advancing: " initial-state " -> " new-state)))
 
       (reset! game-state new-game-state)
-      (logger/info "State (top of game loop): " (:state @game-state))
 
-      ; Print the current game state...
-      (let [current-answer (get-in @game-state [:value :current-answer])
-            current-round (get-in @game-state [:value :current-round])]
-        (if (not (nil? (get current-round :number)))
-          (logger/info "Round #" (get current-round :number)))
+      (when-not (= (:state @game-state) :end-of-game)  ; ...go catatonic when the game ends.
+        (logger/info "State (top of game loop): " (:state @game-state))
 
-        (if (and (not (nil? current-answer))
-                 (not (contains? #{:between-questions :end-of-round} (:state @game-state))))
-          (do
-            (logger/info "Question #" (+ (get current-round :question-index) 1) "/" (count (get current-round :questions))
-                          " [+" (get-in current-answer [:question :score]) "]: "
-                          (get-in current-answer [:question :text]))
-            (logger/info "Answer: " (first (get-in current-answer [:question :options])))
-            (logger/info "Choices: " (join " :: " (mapv #(% :text)
-                                                    (get-in current-answer [:question :shuffled-options]))))
+         ; Print the current game state...
+        (let [current-answer (get-in @game-state [:value :current-answer])
+              current-round (get-in @game-state [:value :current-round])]
+          (if (not (nil? (get current-round :number)))
+            (logger/info "Round #" (get current-round :number)))
 
-            (if (not (nil? (get current-answer :team-buzzed)))
-              (let [color (if (= (:state @game-state) :right-or-wrong) :bright-white :default)]
-                (logger/log :info color "Team #" (+ (get current-answer :team-buzzed) 1)
-                                        " BUZZED in this question: " (case (get current-answer :good-buzz)
-                                                                        nil "THINKING"
-                                                                        true "CORRECT"
-                                                                        false "WRONG"))))
+          (if (and (not (nil? current-answer))
+                   (not (contains? #{:between-questions :end-of-round} (:state @game-state))))
+            (do
+              (logger/info "Question #" (+ (get current-round :question-index) 1) "/" (count (get current-round :questions))
+                            " [+" (get-in current-answer [:question :score]) "]: "
+                            (get-in current-answer [:question :text]))
+              (logger/info "Answer: " (first (get-in current-answer [:question :options])))
+              (logger/info "Choices: " (join " :: " (mapv #(% :text)
+                                                      (get-in current-answer [:question :shuffled-options]))))
 
-            (if (not (nil? (get current-answer :answers)))
-              (let [color (if (= (:state @game-state) :wait-answers) :bright-white :default)]
-                (logger/log :info color "Team answers: [" (join " " (mapv (fn [answer] (if (nil? answer) "-" (+ answer 1)))
-                                                                          (get current-answer :answers))) "]")))
+               (if (not (nil? (get current-answer :team-buzzed)))
+                (let [color (if (= (:state @game-state) :right-or-wrong) :bright-white :default)]
+                  (logger/log :info color "Team #" (+ (get current-answer :team-buzzed) 1)
+                                          " BUZZED in this question: " (case (get current-answer :good-buzz)
+                                                                          nil "THINKING"
+                                                                          true "CORRECT"
+                                                                          false "WRONG"))))
 
-            (let [color (if (= (:state @game-state) :show-question-results) :bright-white :default)]
-              (logger/log :info color "Scores (question): [" (join " " (get current-answer :scores)) "]")))))
+               (if (not (nil? (get current-answer :answers)))
+                (let [color (if (= (:state @game-state) :wait-answers) :bright-white :default)]
+                  (logger/log :info color "Team answers: [" (join " " (mapv (fn [answer] (if (nil? answer) "-" (+ answer 1)))
+                                                                            (get current-answer :answers))) "]")))
 
-      (patch-omg-team-scores! game-state)  ; ...see "omg-*" helper functions.
+               (let [color (if (= (:state @game-state) :show-question-results) :bright-white :default)]
+                (logger/log :info color "Scores (question): [" (join " " (get current-answer :scores)) "]")))))
 
-      ; Print the (maybe patched) current round scores...
-      (let [scores [:value :current-round :scores]]
-        (if (not (nil? (get-in @game-state scores)))
-          (let [color (if (= (:state @game-state) :between-questions) :bright-white :default)]
-            (logger/log :info color "Scores (round): [" (join " " (get-in @game-state scores)) "]"))))
+        (patch-omg-team-scores! game-state)  ; ...see "omg-*" helper functions.
 
-      (patch-omg-question-lists! game-state)  ; ...see "omg-*" helper functions.
+         ; Print the (maybe patched) current round scores...
+        (let [scores [:value :current-round :scores]]
+          (if (not (nil? (get-in @game-state scores)))
+            (let [color (if (= (:state @game-state) :between-questions) :bright-white :default)]
+              (logger/log :info color "Scores (round): [" (join " " (get-in @game-state scores)) "]"))))
 
-      ; Print the (maybe patched) current question lists (round and tiebreaker pool)...
-      (let [questions [:value :current-round :questions]
-            tiebreaker-pool [:value :tiebreaker-pool]
-            round-number [:value :current-round :number]]
-        (if (not (nil? (get-in @game-state round-number)))
-          (do
-            (logger/info "Round (" (count (get-in @game-state questions)) " questions):"
-                          " [" (join " " (get-in @game-state questions)) "]")
-            (logger/info "Tiebreakers (" (count (get-in @game-state tiebreaker-pool)) " questions):"
-                          " [" (join " " (get-in @game-state tiebreaker-pool)) "]"))))
+        (patch-omg-question-lists! game-state)  ; ...see "omg-*" helper functions.
 
-      (logger/info "State (bottom of game loop): " (:state @game-state))
+         ; Print the (maybe patched) current question lists (round and tiebreaker pool)...
+        (let [questions [:value :current-round :questions]
+              tiebreaker-pool [:value :tiebreaker-pool]
+              round-number [:value :current-round :number]]
+          (if (not (nil? (get-in @game-state round-number)))
+            (do
+              (logger/info "Round (" (count (get-in @game-state questions)) " questions):"
+                            " [" (join " " (get-in @game-state questions)) "]")
+              (logger/info "Tiebreakers (" (count (get-in @game-state tiebreaker-pool)) " questions):"
+                            " [" (join " " (get-in @game-state tiebreaker-pool)) "]"))))
+
+        (logger/info "State (bottom of game loop): " (:state @game-state)))
+
       (recur (fsm/fsm-event @game-state (<!! round-events))))))
 
 
