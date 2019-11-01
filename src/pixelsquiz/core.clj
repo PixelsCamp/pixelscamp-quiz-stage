@@ -221,7 +221,7 @@
         ; When there are no more questions in the tiebreaker pool, the luckiest team wins...
         (let [chance-index (count questions-repo)
               chance-question (Question. chance-index :multi 1 "Tiebreaker: It's down to luck now..."
-                                                               ["?", "?", "?", "?"]
+                                                               [\u200B, \u200B, \u200B, \u200B]  ; ...zero-width spaces, not blank.
                                                                (str "Ask the teams that are <b>not tied</b> to step aside. "
                                                                     "Immediately accept the team that presses the buzzer. "
                                                                     "All options look the same on multiple choice."))]
