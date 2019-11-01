@@ -87,7 +87,7 @@ function start() {
             if (msg.text === '') {
                 appearance.off();
                 appearance.score()
-            } else if ((/^\s*starting\s+round\s+[0-9]+/i).test(msg.text)) {
+            } else if ((/^\s*starting\s+(?:round\s+[0-9]+|final\s+round)/i).test(msg.text)) {
                 appearance.off();
                 content.html('<div class="team"><span class="hash">#</span>' + (team + 1) + '</div>');
             }
