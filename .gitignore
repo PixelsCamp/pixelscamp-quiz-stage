@@ -3,4 +3,5 @@
 game-state.edn*
 *.log
 *questions*.edn
+round-config*.edn
 tooling/*.csv

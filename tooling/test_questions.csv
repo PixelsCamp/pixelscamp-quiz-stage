@@ -1,0 +1,21 @@
+Question,Correct Answer,Wrong Option,Wrong Option,Wrong Option
+Test question: Is this the first test question?,#1 Correct,#1 Wrong 1,#1 Wrong 2,"#1 Wrong 3, with a comma",#1 trivia for the quizmaster.
+image:test.jpg #2 Does this question have an image on the left?,#2 Correct,#2 Wrong 1,#2 Wrong 2,#2 Wrong 3,#2 trivia for the quizmaster with some <b>bold</b> and <i>italic</i> tags.
+#3 Does this question have an image on the right? image:test.jpg,#3 Correct,#3 Wrong 1,#3 Wrong 2,#3 Wrong 3,#3 image should appear on the right in the main screen.
+#4 Does this question have sound on the quiz console (end of round)? sound:test.mp3,#4 Correct,#4 Wrong 1,#4 Wrong 2,#4 Wrong 3,#4 sound should appear on the right in the console.
+Test question: Is this the <i>second</i> test question? With an image? Maybe too long? image:test.jpg,#5 Correct,#5 Wrong 1,#5 Wrong 2,#5 Wrong 3,#5 The image should not affect the warmup label.
+"sound:test.mp3 #6 Does this question <b>also</b> have sound on the quiz console, and bold?",#5 Correct,#5 Wrong 1,#5 Wrong 2,#5 Wrong 3,<b>#5</b> sound should appear on the right in the console.
+"sound:test.mp3 image:test.jpg #7 Does this question also have sound on the quiz console, and an image?",#6 Correct,#6 Wrong 1,#6 Wrong 2,#6 Wrong 3,#6 has both sound on the right and an image on the left.
+#8 How about this one (end of round)? sound:test.mp3 image:test.jpg,#7 Correct,#7 Wrong 1,#7 Wrong 2,#7 Wrong 3,#7 has both sound and an image on the right.
+"This is <b><i>not</i></b> a test question, right?",#9 Correct,#9 Wrong 1,#9 Wrong 2,#9 Wrong 3,#9 trivia for the quizmaster.
+"sound:test.mp3 image:test.jpg #10 Does this question also have sound on the quiz console, and an image?",#10 Correct,#10 Wrong 1,#10 Wrong 2,#10 Wrong 3,#10 has both sound on the right and an image on the left, like #8 (but the annotations are in a different order).
+"#11 This question is just text. However, it is a very long question with should span a few lines. Yes?",#11 Correct,#11 Wrong 1,#11 Wrong 2,#11 Wrong 3,#11 has nothing interesting to say.
+"#12 Just two more questions to go, with no trivia?",#12 Correct,#12 Wrong 1,#12 Wrong 2,#12 Wrong 3.
+"#13 The last question before the last question, no?",#13 Correct,#13 Wrong 1,#13 Wrong 2,#13 Wrong 3,#13 The game is almost over.
+#14 Just another question (end of game)?,#14 Correct,#14 Wrong 1,#14 Wrong 2,#14 Wrong 3,#14 The game should be over if there are no ties.
+#15 The first tiebreaker question?,#15 Correct,#15 Wrong 1,#15 Wrong 2,#15 Wrong 3,#15 Should have a tiebreaker label, if not added manually using OMG.
+#16 The second tiebreaker question?,#16 Correct,#16 Wrong 1,#16 Wrong 2,#16 Wrong 3,#16 Should have a tiebreaker label, if not added manually using OMG.
+#17 The third tiebreaker question?,#17 Correct,#17 Wrong 1,#17 Wrong 2,#17 Wrong 3,#17 Should have a tiebreaker label, if not added manually using OMG.
+#18 The fourth tiebreaker question?,#18 Correct,#18 Wrong 1,#18 Wrong 2,#18 Wrong 3,#18 Should have a tiebreaker label, if not added manually using OMG.
+#19 The fifth tiebreaker question?,#19 Correct,#19 Wrong 1,#19 Wrong 2,#19 Wrong 3,#19 Should have a tiebreaker label, if not added manually using OMG.
+#20 The sixth (and last) tiebreaker question?,#20 Correct,#20 Wrong 1,#20 Wrong 2,#20 Wrong 3,#20 Should have a tiebreaker label, if not added manually using OMG.
