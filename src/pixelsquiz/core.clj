@@ -406,11 +406,12 @@
   (case what
     :game-config (merge (read-string (slurp config-file)) {:questions-repo (read-string (slurp questions-db))})
     :saved-state (let [saved (try
-                               (read-string (slurp game-state-file))
+                               (let [state (read-string (slurp game-state-file))]
+                                 (logger/warn "Crash recovery: Loaded '" game-state-file "' with previous state: " (:state state))
+                                 state)
                                (catch Exception e {:state :start
                                                    :value {:round-index -1}}))
                        state-fn (ns-resolve *ns* (symbol (name (:state saved))))]
-                   (logger/warn "Crash recovery: Loaded '" game-state-file "' with previous state: " (:state saved))
                    (if (ifn? state-fn)
                      (assoc saved :state (deref state-fn))
                      saved))))
