@@ -182,7 +182,15 @@
 
 (defn end-of-round
   [world]
+  (if (= (get-in world [:current-round :number]) (count (:rounds world)))
+    (async/go (>! game-channel (Event. :game-over {}))))
   (w-m-d world (Event. :end-of-round (:current-round world)))
+  false)
+
+
+(defn end-of-game
+  [world]
+  (logger/log :info :bright-red "Game is OVER!")
   false)
 
 
@@ -290,7 +298,9 @@
     [show-question-results {}
       {:kind :start-question} -> {:action prepare-for-next-question} :between-questions]
     [end-of-round {}
-      {:kind :start-round} -> {:action prepare-for-next-round} :start]
+      {:kind :start-round} -> {:action prepare-for-next-round} :start
+      {:kind :game-over} -> end-of-game]
+    [end-of-game {}]
   ]))
 
 
