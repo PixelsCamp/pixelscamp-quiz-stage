@@ -1,23 +1,31 @@
 <html>
-<head><title>Quizshow!</title></head>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <title>The Amazing Quizshow!</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/index.css" />
+</head>
 <body>
-    <h1>Quizshow Stage Components</h1>
+    <h1>The Amazing Quizshow!</h1>
     <ul>
-        <li><a href="quizconsole.html">Quizmaster Console</a></li>
-        <li><a href="mainscreen.html">Main Screen</a></li>
-        <li><a href="buzzes.html">Simulated Buzz Controllers</a></li>
-        <li>Player Screens (Status):</li>
+        <li><a href="/static/quizconsole.html">Quizmaster Console</a></li>
+        <li><a href="/static/mainscreen.html">Quiz Main Screen</a></li>
+        <li><a href="/static/buzzes.html">Buzz Controller Simulator</a> (for testing)</li>
+        <li>Player Screens (status on team stands):</li>
         <ul>
-            <li><a href="player.html#1">Team #1</a></li>
-            <li><a href="player.html#2">Team #2</a></li>
-            <li><a href="player.html#3">Team #3</a></li>
-            <li><a href="player.html#4">Team #4</a></li>
+            <li><a href="/static/player.html#1">Team #1</a></li>
+            <li><a href="/static/player.html#2">Team #2</a></li>
+            <li><a href="/static/player.html#3">Team #3</a></li>
+            <li><a href="/static/player.html#4">Team #4</a></li>
         </ul>
     </ul>
 
-    <h2>Known Issues</h2>
+    <h2>Caveats</h2>
     <ul>
         <li>Teams are numbered from 1-4 for display purposes, but are 0-3 internally. This may confuse you while debugging.</li>
+        <li>If the game engine is restarted while the timer is running, it will start over from 20 seconds.</li>
     </ul>
 
     <h2>Bill of Materials</h2>
@@ -34,8 +42,8 @@
         <li>4 Raspberry Pis and their SD cards;</li>
         <li>4 USB power supplies (for the Raspberry Pi);</li>
         <li>4 HDMI cables;</li>
-        <li>4 monitors (<b>1920x1080</b>, provided by Hipnose);</li>
-        <li>Projector (<b>1920x1080</b>, provided by Hipnose).</li>
+        <li>4 monitors (<b>1920x1080</b> &mdash; as set on the Raspberry Pis &mdash; provided by Hipnose);</li>
+        <li>Projector (<b>1920x1080</b> &mdash; or other <b>16:9</b> ratio &mdash; provided by Hipnose).</li>
     </ul>
 
     <h2>Assembly Checklist</h2>
@@ -49,22 +57,22 @@
         <li>Connect the powered USB hub to your laptop (using the <b>long cable</b>);</li>
         <li>Connect the Raspberry Pis to the <b>pulpit monitors</b>;</li>
         <li>Connect the Raspberry Pis to the <b>network</b> (ethernet switch);</li>
-        <li>Connect to the Raspberry Pis via SSH (<tt>pi@192.168.114.101</tt> to <tt>104</tt>)</li>
+        <li>Connect to the Raspberry Pis via SSH (<tt>pi@192.168.114.101 &hellip; 104</tt> &mdash; password is <i>raspberry</i>).</li>
     </ol>
 
     <h2>Pre-flight Checklist</h2>
     <ol>
-        <li>Remove the previous <b>game state</b>;</li>
-        <li>Symlink the actual stage questions into position;</li>
-        <li>Start the <b>game engine</b>: <tt>lein run</tt>;</li>
-        <li>Start the debug REPL to fix on-stage mistakes: <tt>lein repl :connect 7888</tt>;</li>
-        <li>Check all four <b>buzzers</b>;</li>
-        <li>Start the <b>player screens</b> on the four Raspberry Pis (<tt>./start_screen.sh</tt> over SSH);</li>
-        <li>Open the <a href="quizconsole.html">quiz console</a> (preferably in an incognito window)</li>
-        <li>Open the <a href="mainscreen.html">main screen</a> (requires <b>1920x1080</b> resolution);</li>
+        <li>Remove the previous <b>game state</b>: <tt>rm game-state.edn</tt></li>
+        <li>Symlink the actual <tt>questions.edn</tt> and <tt>round-config.edn</tt> into position;</li>
+        <li>Start the <b>game engine</b>: <tt>lein run</tt></li>
+        <li>Start the debug REPL to fix on-stage mistakes: <tt>lein repl :connect 7888</tt></li>
+        <li>Check all buttons in all four <b>buzzers</b>;</li>
+        <li>Start the <b>player screens</b> on the four Raspberry Pis over SSH: <tt>./start_screen.sh</tt></li>
+        <li>Open the <a href="/static/quizconsole.html">quiz console</a> (preferably in an incognito window);</li>
+        <li>Open the <a href="/static/mainscreen.html">main screen</a> (requires a 16:9 resolution, preferably <b>1920x1080</b>);</li>
         <li>Open your <b>team roster</b> spreadsheet (where winners will be recorded);</li>
         <li>...</li>
-        <li>Profit!</li>
+        <li><b>Profit!</b></li>
     </ol>
 
     <h2>In-Game Functions (REPL)</h2>

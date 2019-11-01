@@ -1,0 +1,75 @@
+Question,Correct Answer,Wrong Option,Wrong Option,Wrong Option,Trivia / Comments
+Test question: What is a monad?,Well...,@#&!,Please don't,Don't bother,
+"If I'm using Leiningen, that means I'm programming in...",Clojure,Elixir,Erlang,PHP,"""for automating Clojure projects without setting your hair on fire"""
+"In cars, what's a CAN?",a type of bus,a moving toilet,a sensor used in self-driving,none of the other options,Controller Area Network bus.
+"In ""Alien"" (1979), only Ripley and the ship's cat survive. What's the name of the cat?",Jones,Newt,Ash,Kane,"Also called ""Jonesy"" during the movie. It's the only original character to survive the original trilogy."
+What was Kubernetes' original name?,Project Seven,Project Locutus,Borg,Unimatrix Zero One,"Seven of Nine, a friendlier Borg."
+"Most ""International Atomic Time"" (TAI) clocks use which atomic element?",Caesium,Americium,Uranium,Trilithium,"The most common are Caesium-133 fountain clocks. It's used to keep a Quartz crystal stable, which is the actual clock part."
+"Which elusive figure wrote the legendary portuguese game ""Paradise Café""?",Damatta,Mafadã,Tony Silva,Cachucho,
+"Who designed ""The Thing"" (a spy device also known as ""The Great Seal Bug"")?",Leon Theremin,Igor Sikorsky,Mikhail Kalashnikov,Peter Carl Fabergé,"Unpowered microphone implanted by the soviets on a wooden carving of the US Great Seal, used to spy on the US embassador in Moscow."
+"Famous for its ""Seven Bridges"" problem, what's the present day name of Königsberg?",Kaliningrad,Gdansk,Murmansk,St. Petersburg,"Walk crossing each bridges once and only once. Proved impossible by Euler in 1736, kickstarting graph theory. German until WW2."
+Which company created TypeScript?,Microsoft,Mozilla,Google,Facebook,
+Which material was used for the hydrogen bags inside most Zeppelin airships?,Cow Guts,Sheep Skins,Pig Bladders,Vynil,"Called goldbeater's skin. It took about 100,000 cows to make the gas bags for a single WW1-era Zeppelin (later models were even bigger)."
+"Test question: In ""The Quest for the Holy Grail"", the Grail was hidden in the Castle of...",Aaarrrghhh,Urrrggghhh,Errrrrgghhh,Orrrrghhh,
+Who invented logarithms?,John Napier,Isaac Newton,Gottfried Leibniz,Gilbert Vernam,1614. Replacing multiplication with addition. Logarithm tables were a major driving force for building historical computers.
+"What has C. A. R. Hoare called his ""Billion-dollar Mistake""?",Null Reference,NPM,Quicksort,Hoare Logic,Invention of the null reference in 1965 for ALGOL W.
+How many digits (in US short scale) does the closest approximation of π to date have?,31.4 trillion,22.4 trillion,3.14 million,3.14159 billion,"By Emma Haruka Iwao, a Google employee on March 14."
+"The phrase ""I have come here to chew bubble gum and kick ass"" comes from...",They Live,Duke Nukem 3D,Terminator,Doom,"""I have come here to chew bubblegum and kick ass...and I'm all out of bubblegum."" Roddy Piper, 1988, John Carpenter (director)."
+What kind of memory did the AGC (Apollo Guidance Computer) use as ROM?,Core Rope,Diamonds,Delay Lines,Vinyl Records,
+"In ""Black Mirror: Bandersnatch"", Stefan is writing his game for which company?",Tuckersoft,A&F Software,Atari,Sinclair,
+Who's the author of Vim?,Bram Moolenaar,Bill Joy,Richard Stallman,Beelzebub,"Vim is a clone of Vi, not based on it."
+"The ship sent to Jupiter in ""2010: Odyssey Two"" to recover the Discovery One is the...",Alexei Leonov,Endeavour,Lewis and Clarke,Red Dwarf,Alexei Leonov was the first man to walk in space.
+"Which (compression) parameter would you use to create a "".tar.bz2"" archive?",(small) j,(small) z,(capital) Z,(small) x,
+What was Linux's original name?,Freax,Tux,Lynx,Finnix,The name was changed by Ari Lemmke after Linus uploaded the source to ftp.funet.fi
+Test question: What is widely regarded as the one true editor?,Emacs,Vi,Visual Studio Code,Eclipse,Ed is the standard editor.
+"What does the ""LZ"" in LZ77 (the compression algorithm) means?",Lempel-Ziv,Lossless Zip,Lerdorf-Zimmerman,Lamport-Zuse, Abraham Lempel and Jacob Ziv. Used in ZIP and PNG.
+The lowest numbered atomic element is Hydrogen. What's the highest?,Oganesson,Lithium,Hassium,Iron,Named after the nuclear scientist Yuri Oganessian. It's element 118 in the periodic table. Hassium is 108.
+Which IEEE standard covers floating-point numbers as used everywhere?,IEEE 754,IEEE 802,IEEE 1394,IEEE 1284,802: standards related to networks; 1394: Firewire; 1284: obsolete Centronics/Paralell port. Institute of Electrical and Electronics Engineers.
+"In 1968, Douglas Engelbart presented the... what?",Mother of All Demos,Xerox Alto,ARPANET,Oscars,
+In what year was Python 3.0 released?,2008,2015,2013,2010,"December 3, 2008. Python 2.7 will be retired in January 1, 2020."
+Both the Xbox One and the PS4 use CPUs from which manufacturer?,AMD,Intel,Toshiba,IBM,AMD Jaguar cores.
+Name the first interstellar object ever detected crossing our solar system...,Oumuamua,Rama,Vesta,Toutatis,Discovered in 19 October 2017.
+"In ""The Hunt for Red October"" which character orders ""one ping only"" (two names)?",Marko Ramius,Vasili Borodin,Andrei Sakharov,Sergei Korolev,
+A program that prints (only) its own source code is called a... what?,Quine,Zoot,Monad,Lambda,
+"In electronics, what does JTAG mean?",Joint Test Action Group,Junction Test Access Port,Jumper Terminal Access Gateway,Junction Transistor Access Gateway,Hint: standard protocol to debug chips and the likes
+"Test question: In CSS, what's the hex code for the color ""Papaya Whip""?",#FFEFD5,#F0F8FF,#6495ED,#FF00FF,"F0F8FF: aliceblue, 6495Ed: cornflowerblue, #FF00FF: fuchsia"
+What was the first supercomputer to reach 1 TFLOPS?,ASCI Red,Cray 1,IBM Blue Gene/L,Thinking Machines CM-5,"1996, Sandia National Laboratories, nuclear simulations. Over 9000 Pentium Pros at 200 MHz. Blue Gene/L first to 100 TFLOPS in 2005(?)."
+"Which famous hacker group coined the term ""31337"" (elite)?",Cult of the Dead Cow,Legion of Doom,Chaos Computer Club,Equation Group,"Formed in June 1984 at the Farm Pac slaughterhouse, in Lubbock, Texas. BackOrifice in the late 90s."
+The NSA has recently open-sourced a reverse engineering tool named... what?,Ghidra,Radare,Shibboleth,Burp,
+The ship built for the CIA's Project Azorian under Howard Hughes' cover was the...,Glomar Explorer,Benthic Explorer,Titanic,Spruce Goose,"K-129 sunk in 1968 in the Pacific. Recovery in 1974 by the Hughes Glomar Explorer built to extract ""manganese nodules""."
+Homey Airport (KXTA) is best known by which name?,Area 51,NORAD,Cape Canaveral,Cheyenne Mountain,
+In which ISA (Instruction Set Architecture) do you find the EIEIO instruction?,PowerPC,SPARC,ARM,AMD64,EIEIO: PowerPC. Enforce In-Order Execution of IO.
+Which unix shell shares its name with a major band active since 1993?,ksh,ash,fish,zsh,"ksh93 is the latest version still maintained by David Korn which, incidentally, is the same year that the band Korn started. Ash = Almquist Shell."
+"The spaceship in Christopher Nolan's ""Interstellar"" was called the...",Endurance,Roger Young,Prometheus,O'Neill,
+"The Soviets also had a ""Space Shuttle"" programme. What was its name?",Buran,Soyuz,Voskhod,Salyut,Voskhod preceded the Soyuz. Salyut was a space station programme. Also: VKK Space Orbiter programme.
+"In what year does the film ""Dune"" (1984) take place?",10191,2451,1935,3510,"Virginia Madsen / Princess Irulan:  ""A beginning is a very delicate time. Know then that it is the year ..."". Remake in 2020 by Dennis Villeneuve."
+"What is the closest planet to Earth, on average?",Mercury,Venus,Mars,Jupiter,"Closest to Earth 46% of the time; Venus is closest 36% of the time, while Mars is closest just 18% of the time."
+"In storytelling, a plot device that has no other purpose is called a... what?",MacGuffin,Chekov's Gun,Amplifier Artifact,Deus Ex Machina,A term popularized by Alfred Hitchcock.
+What is Mad Max's last name?,Rockatansky,Minkowski,Cohen,Payne,As seen on the side of his yellow interceptor. Max Cohen is from Pi.
+Which type of CPU was at the heart of the NeXTcube?,Motorola 68040,Intel 386,MIPS R5000,DEC Alpha,32-bit at 25 or 33 MHz. Accept Motorola 68000.
+Which famous scientist appeared in Apple's original logo?,Isaac Newton,Albert Einstein,Nikola Tesla,Claude Shannon,
+"The U-2 spy plane, in service since the mid-1950s, is also nicknamed the... what?",Dragon Lady,Oxcart,Aardvark,Cygnus,
+What was the name of Apollo 13's command module?,Odyssey,Eagle,Aquarius,Snoopy,"Named after ""2001: A Space Odyssey"". Snoopy was Apollo 10's lunar module."
+Pressing Control-C in the terminal triggers which POSIX signal?,SIGINT,SIGTERM,SIGHUP,SIGSEGV,
+"In DNS, what type of resource record resolves an IP address into a name?",PTR,A,CNAME,SRV,PTR means PoinTer Record.
+"Who wrote ""The Handmaid's Tale""?",Margaret Atwood,Mary Shelley,Ursula Le Guin,Doris Lessig,
+"Which character was played by Van Damme in the 1994 movie ""Street Fighter""?",Guile,Ken Masters,Sagat,Chun Li,Colonel Guile
+Who was the first woman to fly in space?,Valentina Tereshkova,Sally Ride,Eileen Collins,Svetlana Savitskaya,"Vostok 6, 16 June 1963. Sally first american, 1983. Svetlana second, 1982. Eileen first Space Shuttle pilot and commander."
+"Which author first coined ""robot"" as we understand it now (androids/machines)?",Karel Čapek,Isaac Azimov,Arthur C. Clarke,Stanislaw Lem,"From the 1920 play ""Rossum's Universal Robots"". ""Robota"" roughly means ""hard labourer"" in russian."
+What's the type number for ICMP echo-request... in IPv6?,128,129,3,2,"<= 127 are errors, >= 128 are informational, 129 is echo-reply"
+"What's the following number in this sequence: 1, 11, 21, 1211, 111221",312211,322111,11112211,1112211,"It's called the ""look-and-say sequence""."
+The first US manned space program was Project Mercury. Name 1 of its 3 rockets...,Redstone,Titan,Jupiter,Saturn I-B,"Atlas (orbital) and Redstone (suborbital) were the Project Mercury rockets, plus Little Joe for unmanned tests."
+Unix was first written for which line of computers?,PDP,VAX,UNIVAC,Altair 8800,PDP = DEC Programmable Data Processor. Unix was created for the PDP-7 and later PDP-11/20.
+"Who wrote ""Starship Troopers"" (the book)?",Robert A. Heinlein,Alastair Reynolds,Aldous Huxley,William Gibson,"Huxley wrote ""Brave New World""."
+"Which agency developed the ""Easy Chair"" bugs for the CIA?",Dutch Radar Laboratory (NRP),Staatssicherheitsdienst (Stasi),MI6,PIDE,Dutch Internal Security Service (BVD) / Dutch Radar Laboratory (NRP). Operation Easy Chair 1958/1959.
+What's the most common form of written Galactic Basic in the Star Wars universe?,Aurebesh,Shyriiwook,Ubese,Droidspeak,
+Ray Bradbury wrote which 1953 best-selling sci-fi novel?,Fahrenheit 451,The City and the Stars,Robot Dreams,Brave New World,
+What was the name of the algorithm that eventually became DES?,Lucifer,Rijndael,RC4,Skipjack,"Developed in the early 1970s, adopted in 1977 (modified) as the Data Encryption Standard. Publicly broken by the DESCHALL project in 1997."
+Name the capsule used by SpaceX to resupply the ISS?,Dragon,Cygnus,ATV,Progress,"Dragon's first flight contained a secret payload, which was actually a wheel of cheese."
+How many lines does Arnold Schwarzenegger have in the Terminator (1984)?,16,100,50,3,
+"Who composed for ""The Hunt for Red October"", ""Starship Troopers"", and ""RoboCop""?",Basil Poledouris,John Williams,Ramin Djawadi,Hans Zimmer,
+What is the Pantone Color of the Year for 2019?,Living Coral,Feldgrau,Mimosa,Marsala,Some sort of reddish pink.
+"In Star Trek, the training scenario that could not be won was called the...",Kobayashi Maru,Hakudo Maru,Yamato,Hyabusa,
+"Who's the author of the Spectrum game ""Nohzdyve"" in ""Black Mirror: Bandersnatch""?",Colin Ritman,Stefan Butler,Jerome F. Davies,John Tobias,
+"In Frank Herbert's ""Dune"", Paul Muad'Dib comes from which noble House?",House Atreides,House Harkonnen,House Corrino,House Richese,"Dune is getting a remake from Blade Runner 2049's Dennis Villeneuve, due 2020."
+The AES process had 15 candidate cipher algorithms. Name four of them...,"FROG, LOKI97, Twofish, DEAL","CAST-256, Rijndael, E2, Skipjack","DEAL, CRYPTON, RC6, Blowfish","Serpent, MARS, Twofish, Camellia","CAST-256, CRYPTON, DEAL, DFC, E2, FROG, HPC, LOKI97, MAGENTA, MARS*, RC6*, Rijndael**, SAFER+, Serpent*, and Twofish*."

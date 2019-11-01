@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: serif;
+}
+
+a {
+    color: #01a7ee;
+}
+
+pre, tt {
+    font-family: monospace;
+    color: #0c0;
+}

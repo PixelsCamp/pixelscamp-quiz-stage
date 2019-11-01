@@ -1,4 +1,6 @@
 function update_scores(scores) {
+    scores = (scores && scores.length) ? scores : [0, 0, 0, 0];
+
     for(var team = 0; team < 4; team++) {
         var tscore = $('#s' + team + ' .score');
         tscore.text(scores[team]);
@@ -33,11 +35,14 @@ function show_question(question, options) {
     var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
     var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i;
 
+    // Sound annotation has no use on the mainscreen (also assumes it never appears in the middle of the text)...
+    question = question.replace(/\s*sound:\s*[^\s]+/i, '');
+
     // The question container uses flex layout, so the text must always be properly wrapped...
     if (left_image.test(question)) {
-        q = question.replace(left_image, '<img class="$1" src="images/questions/$2"><span class="text">$3</span>');
+        q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
     } else if (right_image.test(question)) {
-        q = question.replace(right_image, '<span class="text">$1</span><img class="$2" src="images/questions/$3">');
+        q = question.replace(right_image, '<span class="text">$1</span><img class="$2" src="questions/$3">');
     } else {
         q = '<span class="text">' + question + '</span>'
     }
@@ -47,12 +52,14 @@ function show_question(question, options) {
     show_options(options);
 }
 
-function show_options(o) {
+function show_options(options) {
+    options = (options && options.length) ? options : ["", "", "", ""];
+
     for (i=0;i<4;i++) {
-        $('#r' + i + ' .optext').text(o[i]);
+        $('#r' + i + ' .optext').text(options[i]);
         $('#r' + i + ' .opinfo').empty();  // ...remove residue.
 
-        if (o[i].trim().length == 0) {
+        if (options[i].trim().length == 0) {
             $('#r' + i).addClass("blank");
         } else {
             $('#r' + i).removeClass("blank");

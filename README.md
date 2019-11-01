@@ -19,7 +19,7 @@ It was last known to work with OpenJDK 13 on macOS 10.13.6.
 
 Once you have these requirements installed, run `lein run` in the project directory. It will download the necessary dependencies and start an HTTP server on port `tcp/3000`.
 
-The engine serves webpages for the quizmaster console, main screen, team screens, Buzz! simulator (for testing), and handles input from the Buzz! controllers. See the checklist at `http://localhost:3000/static/` for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
+The engine serves webpages for the quizmaster console, main screen, team screens, Buzz! simulator (for testing), and handles input from the Buzz! controllers. See the checklist at `http://localhost:3000/` for assembly instructions and this [blog post](https://blog.pixels.camp/the-quizshow-stage-setup-def8ddf2dab2) for the overall architecture of the quiz setup.
 
 To get started you'll need, at a minimum:
 
@@ -35,11 +35,11 @@ Buzz! controllers are easy to get on eBay and, besides subtle differences in loo
 
 ## Running Your Own Quiz
 
-The [quizmaster checklist](http://localhost:3000/static/) is written for Pixels Camp (ie. assumes the contents of the "quizmaster kit" and a full setup), read it thoroughly and adapt it for your needs.
+The [quizmaster checklist](http://localhost:3000/) is written for Pixels Camp (ie. assumes the contents of the "quizmaster kit" and a full setup), read it thoroughly and adapt it for your needs.
 
-There's a Python script in the `tooling` directory to take a `.csv` and produce a questions file in `.edn` format (which you should place in the project root, with the name `questions.edn`, to be picked up by the engine on start). Look at the included examples to see what bits you'll need to come up with (ie. questions, answer options, and quizmaster notes).
+There's a `csv-to-questions.py` script in the `tooling` directory to take a `.csv` and produce a questions file and a round configuration file in `.edn` format (which you should place in the project root, with the names `questions.edn` and `round-config.edn`, to be picked up by the engine on start). Look at the included examples to see what bits you'll need to come up with (ie. questions, answer options, and quizmaster notes).
 
-The standard quiz model is comprised of four rounds to select four teams to compete in a fifth round (with more, and harder, questions). This can be adapted for fewer players (eg. two rounds selecting four teams to compete in a third round) by adjusting the `round-config.edn` file. You also need to edit this file to adjust the number of tie-breaker questions to match what's available in `questions.edn`.
+The standard quiz model is comprised of four rounds to select four teams to compete in a fifth round (with more, and harder, questions). This can be adapted for fewer players (eg. two rounds selecting four teams to compete in a third round) by adjusting the constants at the top of the `csv-to-questions.py` script.
 
 ## Usage Instructions
 

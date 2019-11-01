@@ -191,9 +191,10 @@
         ui-routes [(:routes (nth actors 0))
                    (:routes (nth actors 1))
                    (:routes (nth actors 2)) ; XXX humm ...
-                   (route/files "/static/" {:root "html/pixelsquiz/"})]
+                   (route/files "/static/" {:root "static/" :allow-symlinks? true})
+                   (route/files "/" {:root "static/index.html"})]
         ]
     (http/run-server (ring/wrap-defaults (apply compojure/routes ui-routes) ring/api-defaults) {:port 3000})
-    (logger/log :info :bright-white "Pixels Quiz game engine READY at: http://localhost:3000/static/")
+    (logger/log :info :bright-white "Game engine READY at: http://localhost:3000/")
     (apply merge (map #(assoc {} (:actor %) (:chan %)) actors))
     ))
