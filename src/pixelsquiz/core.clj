@@ -51,27 +51,27 @@
       )))
 
 
-(defmacro w-m-d
+(defmacro notify-displays
   [world form]
   `(>!! (-> ~world :stage :displays) ~form))
 
 
 (defn question-on-quizconsole
   [world]
-  (w-m-d world (Event. :for-quizmaster {:question (-> world :current-question :text)
-                                        :answer (get (-> world :current-question :options) 0)
-                                        :trivia (-> world :current-question :trivia)})))
+  (notify-displays world (Event. :for-quizmaster {:question (-> world :current-question :text)
+                                                  :answer (get (-> world :current-question :options) 0)
+                                                  :trivia (-> world :current-question :trivia)})))
 
 
 (defn show-question
   [world & _]
-  (w-m-d world (Event. :show-question (-> world :current-question)))
+  (notify-displays world (Event. :show-question (-> world :current-question)))
   world)
 
 
 (defn show-options
   [world & _]
-  (w-m-d world (Event. :show-options (:current-answer world)))  ; ...also shows the question.
+  (notify-displays world (Event. :show-options (:current-answer world)))  ; ...also shows the question.
   world)
 
 
@@ -98,7 +98,7 @@
 (defn show-question-results
   [world & _]
   (reset! timer-active false)
-  (w-m-d world (Event. :show-question-results (:current-answer world)))
+  (notify-displays world (Event. :show-question-results (:current-answer world)))
   false)
 
 
@@ -148,8 +148,8 @@
 (defn buzz-on-quizconsole
   [world event & _]
   (reset! timer-active false)
-  (w-m-d world (Event. :qm-choice {:team (get-in world [:current-answer :team-buzzed])
-                                   :right-wrong (:kind event)}))
+  (notify-displays world (Event. :qm-choice {:team (get-in world [:current-answer :team-buzzed])
+                                             :right-wrong (:kind event)}))
   (buzz-answer world event))
 
 
@@ -163,20 +163,20 @@
 (defn new-question
   [world]
   (question-on-quizconsole world)
-  (w-m-d world (Event. :question-starting {}))
+  (notify-displays world (Event. :question-starting {}))
   false)
 
 
 (defn right-or-wrong
   [world]
   (reset! timer-active false)  ;; ...the quizmaster allows out-of-time answers anyway!
-  (w-m-d world (Event. :buzzed (:current-answer world)))
+  (notify-displays world (Event. :buzzed (:current-answer world)))
   false)
 
 
 (defn wait-answers
   [world]
-  (w-m-d world (Event. :update-lights (:current-answer world) ))
+  (notify-displays world (Event. :update-lights (:current-answer world)))
   false)
 
 
@@ -184,7 +184,7 @@
   [world]
   (if (= (get-in world [:current-round :number]) (count (:rounds world)))
     (async/go (>! game-channel (Event. :game-over {}))))
-  (w-m-d world (Event. :end-of-round (:current-round world)))
+  (notify-displays world (Event. :end-of-round (:current-round world)))
   false)
 
 
@@ -241,8 +241,8 @@
                                                               :question-index question-index)
                          )
         ]
-    (w-m-d world (Event. :update-scores (:current-round new-world)))
-    (w-m-d world (Event. :show-question {:text ""}))
+    (notify-displays world (Event. :update-scores (:current-round new-world)))
+    (notify-displays world (Event. :show-question {:text ""}))
     (add-tiebreaker-question-if-necessary new-world)))
 
 
@@ -275,10 +275,10 @@
   [world event from-state to-state]
   (let [new-round-index (inc (:round-index world))
         new-round (get (:rounds world) new-round-index)]
-    (w-m-d world (Event. :show-question {:text (if (= (inc new-round-index) (count (:rounds world)))
-                                                 "Starting Final Round..."
-                                                 (str "Starting Round " (inc new-round-index) "..."))}))
-    (w-m-d world (Event. :update-scores {:scores [0 0 0 0] :questionnum 0}))
+    (notify-displays world (Event. :show-question {:text (if (= (inc new-round-index) (count (:rounds world)))
+                                                           "Starting Final Round..."
+                                                           (str "Starting Round " (inc new-round-index) "..."))}))
+    (notify-displays world (Event. :update-scores {:scores [0 0 0 0] :questionnum 0}))
     (assoc world :round-index new-round-index
                  :current-round (assoc new-round :question-index 0))))
 
@@ -482,9 +482,9 @@
     (omg-mainscreen question "" "" "" ""))
   ([question o1 o2 o3 o4]
     (let [world (:value @game-state)]
-      (w-m-d world {:kind :show-options
-                    :bag-of-props {:question {:text question
-                                              :shuffled-options (mapv #(assoc {} :text %) [o1 o2 o3 o4])}}}))))
+      (notify-displays world {:kind :show-options
+                              :bag-of-props {:question {:text question
+                                                        :shuffled-options (mapv #(assoc {} :text %) [o1 o2 o3 o4])}}}))))
 
 
 (defn omg-teams [t1 t2 t3 t4]
