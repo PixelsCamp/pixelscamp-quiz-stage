@@ -212,8 +212,8 @@
       (do
         (logger/log :info :bright-cyan "Appending tiebreaker question: " tiebreaker-index)
         (assoc world :current-round (assoc current-round :questions (conj (:questions current-round) tiebreaker-index))
-                      :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)
-                      :questions-repo (assoc questions-repo tiebreaker-index (update (get questions-repo tiebreaker-index) :text #(str "Tiebreaker: " %)))))
+                     :tiebreaker-pool (subvec (:tiebreaker-pool world) 1)
+                     :questions-repo (assoc questions-repo tiebreaker-index (update (get questions-repo tiebreaker-index) :text #(str "Tiebreaker: " %)))))
       world)))
 
 
@@ -284,7 +284,7 @@
       {:kind :show-question} -> {:action buzz-timer} :wait-buzz]
     [:wait-buzz {}
       {:kind :show-question} -> {:action show-question} :wait-buzz
-      {:kind :buzz-timeout} ->  :wait-before-options
+      {:kind :buzz-timeout} -> :wait-before-options
       {:kind :buzz-pressed} -> {:action buzz-answer} right-or-wrong]
     [right-or-wrong {}
       {:kind :select-right} -> {:action buzz-on-quizconsole} show-question-results
