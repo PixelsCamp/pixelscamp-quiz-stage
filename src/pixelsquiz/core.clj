@@ -197,8 +197,7 @@
 (defn round-tied?
   [round]
   (let [teamscores (sort-teams-by-scores (:scores round))]
-   (= (:score (first teamscores)) (:score (second teamscores)))
-  ))
+   (= (:score (first teamscores)) (:score (second teamscores)))))
 
 
 (defn add-tiebreaker-question-if-necessary
@@ -233,25 +232,22 @@
     (add-tiebreaker-question-if-necessary new-world)))
 
 
+(defn shuffle-question  ; ...returns the question with shuffled options.
+  [question]
+  (assoc question :shuffled-options (shuffle (mapv (fn [a b c] {:text a :original-pos b :score c})
+                                                   (:options question) [0 1 2 3] [(:score question) 0 0 0]))))
+
+
 (defn start-question
   [world event from-state to-state]
   (let [current-round (:current-round world)
         question-index (:question-index current-round)
         question-number (get (:questions current-round) question-index)
-        question (get (:questions-repo world) question-number)
-        shuffled-options (shuffle (mapv (fn [text original score]
-                                         {:text text
-                                          :original-pos original
-                                          :score score})
-                                       (:options question) (range 4) [(:score question) 0 0 0] ; XXX option scores
-                                       ))
-        ]
-    (if (nil? question)
+        next-question (get (:questions-repo world) question-number)]
+    (if (nil? next-question)  ; ...this should never happen, because there is *always* the failsafe tiebreaker.
       (>!! game-channel (Event. :out-of-questions {:question-index question-index})))
-    (assoc world
-           :current-question question
-           :current-answer (Answer. (assoc question :shuffled-options shuffled-options) nil nil [nil nil nil nil] [0 0 0 0])
-           )))
+    (assoc world :current-question next-question
+                 :current-answer (Answer. (shuffle-question next-question) nil nil [nil nil nil nil] [0 0 0 0]))))
 
 
 (defn prepare-for-next-round
