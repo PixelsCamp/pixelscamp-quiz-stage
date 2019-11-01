@@ -507,9 +507,13 @@
   (apply omg-adjust-scores (mapv - [0 0 0 0] (omg-last-question-scores))))
 
 (defn omg-append-question []
-  (reset! append-question true)
-  (logger/warn "OMG: Question " (first (get-in @game-state [:value :tiebreaker-pool])) " appended to current round.")
-  (omg-apply-now))
+  (let [tiebreaker-pool (get-in @game-state [:value :tiebreaker-pool])]
+    (if (empty? tiebreaker-pool)
+      (logger/error "OMG: No questions left in the tiebreaker pool!")
+      (do
+        (reset! append-question true)
+        (logger/warn "OMG: Question " (first tiebreaker-pool) " appended to current round.")
+        (omg-apply-now)))))
 
 (defn omg-replace-question []
   (omg-revert-scores)
