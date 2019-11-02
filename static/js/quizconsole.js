@@ -1,6 +1,6 @@
 function get_right_wrong(team) {
-    $("#buzzed .buzzed-team").text(team + 1);
-    $("#buzzed .buzzed-text").addClass("text-highlight");
+    $("#buzzed .buzzed-team").text("#" + (team + 1));
+    $("#buzzed").addClass("buzz-highlight");
 }
 
 function update_scores(scores) {
@@ -164,7 +164,7 @@ $(document).ready(function() {
     $("#buzzed button").each(function() {
         $(this).click(function(e) {
             $.post('/actions/' + $(e.target).attr('id'));
-            $("#buzzed .buzzed-text").removeClass("text-highlight");
+            $("#buzzed").removeClass("buzz-highlight");
         });
     })
 

@@ -52,19 +52,27 @@ div#buzzed .buzzed-text {
     vertical-align: middle;
     color: #333;
     margin-right: 1ch;
+    font-weight: bold;
 }
 
-div#buzzed .text-highlight {
+div#buzzed.buzz-highlight .buzzed-team {
+    color: #f80;
+    text-shadow: 0 0 0.8vh #f80;
+}
+
+div#buzzed.buzz-highlight .buzzed-text {
     color: ivory;
-    font-weight: bold;
     text-shadow: 0 0 0.8vh ivory;
 }
 
-div#buzzed .text-highlight:before {
-    content: '➡ ';
-    color: #f00;
-    font-weight: bold;
-    text-shadow: 0 0 0.8vh #f00;
+div#buzzed.buzz-highlight .buzzed-text:before {
+    font-family: 'FontAwesome';
+    font-weight: normal;
+    font-style: normal;
+    content: '\f0e7';  /* fa-bolt */
+    color: #01a7ee;
+    text-shadow: 0 0 0.8vh #01a7ee;
+    margin-right: 0.6ch;
 }
 
 div#buzzed .buttons {
@@ -75,18 +83,23 @@ div#buzzed button {
     width: 12vw;
     margin-left: 0.8vw;
     font-size: 2.4vh;
+    font-weight: 900;
+    background: none;
+    border: 3px solid #333;
+    color: #333;
+    padding: 1.75vh 1.75vw;
 }
 
-button#select-right {
-    border: 2px solid #0c0;
-    color: #0c0;
-    background: none;
+div#buzzed.buzz-highlight button#select-right {
+    border: 3px solid #0c0;
+    background: #0c0;
+    color: #222;
 }
 
-button#select-wrong {
-    border: 2px solid #ff2020;
-    color: #ff2020;
-    background: none;
+div#buzzed.buzz-highlight button#select-wrong {
+    border: 3px solid #ff2020;
+    background: #ff2020;
+    color: #222;
 }
 
 #timer_number {
@@ -98,35 +111,37 @@ button#select-wrong {
     text-align: center;
     margin-bottom: 3vh;
     margin-top: 1.5vh;
+    min-height: 9vh;
 }
 
 div#commands {
-    margin-top: 6vh;
+    margin-top: 5vh;
 }
 
 div#commands button {
-    height: 14vh;
-    margin-bottom: 3.8vh;
+    height: 14.5vh;
+    margin-bottom: 4vh;
+    color: #222;
 }
 
 button#start-round {
+    border: 6px solid #01a7ee;
     background: #01a7ee;
-    color: #222;
 }
 
 button#start-question {
+    border: 6px solid #f80;
     background: #f80;
-    color: #222;
 }
 
 button#show-question {
+    border: 6px solid #0c0;
     background: #0c0;
-    color: #222;
 }
 
 button#start-choice {
+    border: 6px solid #ff0;
     background: #ff0;
-    color: #222;
 }
 
 button:hover {
@@ -199,9 +214,11 @@ div#question .qz_answer:before {
 
 div#question .qz_trivia {
     display: block;
-    min-height: 6.5vh;
+    min-height: 10vh;
     margin-top: 1vh;
-    font-size: 0.5em;
+    font-size: 2.5vh;
+    font-weight: 300;
+    line-height: 1.3em;
     color: #888;
     padding: 1vh 0.8vw;
 }
@@ -242,6 +259,7 @@ div#question .qz_trivia {
 
 #question_trivia b {
     color: ivory;
+    font-weight: normal;
 }
 
 div#teams {
@@ -348,9 +366,9 @@ div#scores td.score-0 {
 
 #disconnected {
     position: fixed;
-    bottom: 0; right: 0;
+    bottom: 0; left: 0;
     color: red;
     font-family: 'FontAwesome';
-    font-size: 4vh;
-    margin: 4vh 7vh;
+    font-size: 5vh;
+    margin: 5vh;
 }
