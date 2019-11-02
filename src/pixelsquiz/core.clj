@@ -183,7 +183,7 @@
 (defn end-of-round
   [world]
   (if (= (get-in world [:current-round :number]) (count (:rounds world)))
-    (async/go (>! game-channel (Event. :game-over {}))))
+    (>!! game-channel (Event. :game-over {})))
   (notify-displays world (Event. :end-of-round (:current-round world)))
   false)
 
