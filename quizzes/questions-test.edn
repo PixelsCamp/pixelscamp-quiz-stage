@@ -1,5 +1,5 @@
 [
-  #pixelsquiz.types.Question{:id 0, :kind :multi, :score 0, :text "Test question: Is this the first test question?", :options ["#1 Correct" "#1 Wrong 1" "#1 Wrong 2" "#1 Wrong 3, with a comma"], :trivia "#1 trivia for the quizmaster."}
+  #pixelsquiz.types.Question{:id 0, :kind :multi, :score 0, :text "Test question: Is this the first test question?", :options ["#1 Correct" "#1 Wrong 1" "#1 Wrong 2" "#1 Wrong 3, with a comma, and long"], :trivia "#1 trivia for the quizmaster."}
   #pixelsquiz.types.Question{:id 1, :kind :multi, :score 1, :text "image:test.jpg #2 Does this question have an image on the left?", :options ["#2 Correct" "#2 Wrong 1" "#2 Wrong 2" "#2 Wrong 3"], :trivia "#2 trivia for the quizmaster with some <b>bold</b> and <i>italic</i> tags."}
   #pixelsquiz.types.Question{:id 2, :kind :multi, :score 1, :text "#3 Does this question have an image on the right? image:test.jpg", :options ["#3 Correct" "#3 Wrong 1" "#3 Wrong 2" "#3 Wrong 3"], :trivia "#3 image should appear on the right in the main screen."}
   #pixelsquiz.types.Question{:id 3, :kind :multi, :score 1, :text "#4 Does this question have sound on the quiz console (end of round)? sound:test.mp3", :options ["#4 Correct" "#4 Wrong 1" "#4 Wrong 2" "#4 Wrong 3"], :trivia "#4 sound should appear on the right in the console."}
