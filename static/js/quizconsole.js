@@ -37,18 +37,18 @@ function show_question(question, answer, trivia) {
     var question_text = question_node.html();
 
     // Insert an audio player, always on the right...
-    q = question_text.replace(/^(.*?)\s*sound:\s*([^\s]+)(.*)$/i, '$1$3<audio src="questions/$2" preload="auto" controls></audio>');
+    question_text = question_text.replace(/^(.*?)\s*sound:\s*([^\s]+)(.*)$/i, '$1$3<audio src="questions/$2" preload="auto" controls></audio>');
 
     var warmup = /^\s*(?:test|warmup)(?:\s+question)?:\s+/i;
     var tiebreaker = /^\s*tiebreaker(?:\s+question)?:\s*/i;
 
     if (warmup.test(question_text)) {
-        q = question_text.replace(warmup, '<span class="question_header">Warmup:</span><br>');
+        question_text = question_text.replace(warmup, '<span class="question_header">Warmup:</span><br>');
     } else if (tiebreaker.test(question_text)) {
-        q = question_text.replace(tiebreaker, '<span class="question_header">Tiebreaker:</span><br>');
+        question_text = question_text.replace(tiebreaker, '<span class="question_header">Tiebreaker:</span><br>');
     }
 
-    question_node.html(q);
+    question_node.html(question_text);
 
     $('#question_answer').text(answer);
     $('#question_trivia').html(trivia);
