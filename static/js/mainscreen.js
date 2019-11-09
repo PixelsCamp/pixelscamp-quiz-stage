@@ -31,7 +31,7 @@ function throb(secs) {
     }
 }
 
-function show_question(question, options) {
+function show_question(question, options, animate = false) {
     var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
     var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*$/i;
 
@@ -40,32 +40,53 @@ function show_question(question, options) {
 
     // The question container uses flex layout, so the text must always be properly wrapped...
     if (left_image.test(question)) {
-        q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
+        var q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');
     } else if (right_image.test(question)) {
-        q = question.replace(right_image, '<span class="text">$1</span><img class="$2" src="questions/$3">');
+        var q = question.replace(right_image, '<span class="text">$1</span><img class="$2" src="questions/$3">');
     } else {
-        q = '<span class="text">' + question + '</span>'
+        var q = '<span class="text">' + question + '</span>'
     }
 
     $('#question').html(q);
 
-    show_options(options);
+    show_options(options, animate);
 }
 
-function show_options(options) {
-    options = (options && options.length) ? options : ["", "", "", ""];
 
-    for (i=0;i<4;i++) {
-        $('#r' + i + ' .optext').text(options[i]);
-        $('#r' + i + ' .opinfo').empty();  // ...remove residue.
+function show_option(options, index) {
+    $('#r' + index + ' .optext').text(options[index]);
+    $('#r' + index + ' .opinfo').empty();  // ...remove residue.
 
-        if (options[i].trim().length == 0) {
-            $('#r' + i).addClass("blank");
-        } else {
-            $('#r' + i).removeClass("blank");
+    if (options[index].length === 0) {
+        $('#r' + index).addClass("blank");
+    } else {
+        $('#r' + index).removeClass("blank");
+    }
+}
+
+
+function show_options(options, animate = false) {
+    options = (options && options.length) ? options.map(o => o.trim()) : ["", "", "", ""];
+
+    if (animate) {
+        var option_idx = 0;
+        var show_next_option = function() {
+            show_option(options, option_idx);
+            option_idx++;
+
+            if (option_idx < options.length) {
+                setTimeout(show_next_option, 80);
+            }
+        };
+
+        show_next_option();
+    } else {
+        for (i = 0; i < options.length; i++) {
+            show_option(options, i);
         }
     }
 }
+
 
 function show_answers(answers) {
     var choices = [[], [], [], []];
@@ -198,16 +219,17 @@ function start() {
 
         } else if (msg.do === 'show-question') {
             if (msg.text) {
-                show_question(msg.text, msg.options);
+                let round_starting = (/^\s*starting\s+(?:round\s+[0-9]+|final\s+round)/i).test(msg.text);
 
-                if ((/^\s*starting\s+(?:round\s+[0-9]+|final\s+round)/i).test(msg.text)) {
+                if (round_starting) {
                     console.log("The round is starting.");
                     curr_question = 1;
                 }
 
                 curr_scores_title = 'Question ' + curr_question;
+                show_question(msg.text, msg.options, !round_starting);
             } else {
-                show_question("Let's add the scores...", ["", "", "",""])
+                show_question("Let's add the scores...", ["", "", "", ""]);
                 curr_scores_title = 'Total Scores';
                 update_lights();
                 throb(20);
