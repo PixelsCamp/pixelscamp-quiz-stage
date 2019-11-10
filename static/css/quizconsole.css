@@ -15,7 +15,7 @@ h1 {
 }
 
 
-div#side {
+#side {
     top: 0; right: 0;
     position: absolute;
     width: 19vw;
@@ -39,13 +39,13 @@ button {
     box-shadow: 0.3vw 0.5vh 1vh #000;
 }
 
-div#buzzed {
+#buzzed {
     margin-top: 4vh;
     font-size: 3.6vh;
     text-align: center;
 }
 
-div#buzzed .buzzed-text {
+#buzzed .buzzed-text {
     display: inline-block;
     width: 42vw;
     text-align: right;
@@ -55,17 +55,17 @@ div#buzzed .buzzed-text {
     font-weight: bold;
 }
 
-div#buzzed.buzz-highlight .buzzed-team {
+#buzzed.buzz-highlight .buzzed-team {
     color: #f80;
     text-shadow: 0 0 0.8vh #f80;
 }
 
-div#buzzed.buzz-highlight .buzzed-text {
+#buzzed.buzz-highlight .buzzed-text {
     color: ivory;
     text-shadow: 0 0 0.8vh ivory;
 }
 
-div#buzzed.buzz-highlight .buzzed-text:before {
+#buzzed.buzz-highlight .buzzed-text:before {
     font-family: 'FontAwesome';
     font-weight: normal;
     font-style: normal;
@@ -75,11 +75,11 @@ div#buzzed.buzz-highlight .buzzed-text:before {
     margin-right: 0.6ch;
 }
 
-div#buzzed .buttons {
+#buzzed .buttons {
     display: inline-block;
 }
 
-div#buzzed button {
+#buzzed button {
     width: 12vw;
     margin-left: 0.8vw;
     font-size: 2.4vh;
@@ -90,13 +90,13 @@ div#buzzed button {
     padding: 1.75vh 1.75vw;
 }
 
-div#buzzed.buzz-highlight button#select-right {
+#buzzed.buzz-highlight button#select-right {
     border: 3px solid #0c0;
     background: #0c0;
     color: #222;
 }
 
-div#buzzed.buzz-highlight button#select-wrong {
+#buzzed.buzz-highlight button#select-wrong {
     border: 3px solid #ff2020;
     background: #ff2020;
     color: #222;
@@ -114,11 +114,11 @@ div#buzzed.buzz-highlight button#select-wrong {
     min-height: 9vh;
 }
 
-div#commands {
+#commands {
     margin-top: 5vh;
 }
 
-div#commands button {
+#commands button {
     height: 14.5vh;
     margin-bottom: 4vh;
     color: #222;
@@ -158,12 +158,12 @@ button br {
     content: '';
     display: block;
     border-bottom: 1px solid #222222a0;
-    margin: 6px auto 2px auto;
+    margin: 1vh auto 1vh auto;
     width: 80%;
     height: 0;
 }
 
-div#main {
+#main {
     width: 70%;
     margin: 3vh;
     padding: 3vh;
@@ -171,14 +171,40 @@ div#main {
     top: 6vh; left: 0;
 }
 
-div#question {
+#question {
     font-size: 5.3vh;
     background: none;
     border-bottom: 2px dashed #333;
     padding: 3vh 0;
 }
 
-div#question .qz_question {
+#question .blue {
+    color: #01a7ee;
+}
+
+#question .orange {
+    color: #f80;
+}
+
+#question .green {
+    color: #0c0;
+}
+
+#question .yellow {
+    color: #ff0;
+}
+
+#question .red {
+    color: #ea282e;
+}
+
+#question .gray,
+#question .grey,
+#question .comment {
+    color: #777;
+}
+
+#question .qz_question {
     display: block;
     height: 3.8em;
     color: ivory;
@@ -190,11 +216,11 @@ div#question .qz_question {
     font-size: 0.9em;
 }
 
-div#question .qz_question b {
+#question .qz_question b {
     font-weight: 900;
 }
 
-div#question .qz_answer {
+#question .qz_answer {
     display: block;
     min-height: 5vh;
     margin-top: 1vh;
@@ -203,7 +229,7 @@ div#question .qz_answer {
     padding-left: 0.6vw;
 }
 
-div#question .qz_answer:before {
+#question .qz_answer:before {
     display: inline-block;
     content: 'Answer: ';
     color: #01a7ee;
@@ -212,7 +238,7 @@ div#question .qz_answer:before {
     font-size: 3.4vh;
 }
 
-div#question .qz_trivia {
+#question .qz_trivia {
     display: block;
     min-height: 10vh;
     margin-top: 1vh;
@@ -262,12 +288,12 @@ div#question .qz_trivia {
     font-weight: normal;
 }
 
-div#teams {
+#teams {
     padding: 1.5vh;
     text-align: center;
 }
 
-div#teams span {
+#teams span {
     display: inline-block;
     width: 16vh;
     height: 16vh;
@@ -276,66 +302,66 @@ div#teams span {
     border-radius: 1vh;
 }
 
-div#teams span.blue {
+#teams span.blue {
     background: #01a7ee;
     color: #222;
 }
 
-div#teams span.orange {
+#teams span.orange {
     background: #f80;
     color: #222;
 }
 
-div#teams span.green {
+#teams span.green {
     background: #0c0;
     color: #222;
 }
 
-div#teams span.yellow {
+#teams span.yellow {
     background: #ff0;
     color: #222;
 }
 
-div#teams span.wrong {
+#teams span.wrong {
     background: #ea282e url('../images/x-icon.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 70% 70%;
 }
 
-div#teams span.right {
+#teams span.right {
     background: #0c0 url('../images/heart-icon.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 70% 70%;
 }
 
-div#teams span.highlight {
+#teams span.highlight {
     background: #01A7EE url('../images/invader-icon.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 70% 70%;
 }
 
-div#teams span.winner {
+#teams span.winner {
     background: #000 url('../images/cup-icon.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 70% 70%;
 }
 
-div#teams span.no-bg {
+#teams span.no-bg {
     background: none;
 }
 
-div#scores {
+#scores {
     float: right;
     width: 14vw;
     height: 18vh;
     margin: 3.2vh 1.5vw 1.5vh 2vw;
 }
 
-div#scores table {
+#scores table {
     table-layout: fixed;
     border-collapse: collapse;
     width: 100%;
@@ -343,7 +369,7 @@ div#scores table {
     border-bottom: 1px dashed #333;
 }
 
-div#scores td {
+#scores td {
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
@@ -352,15 +378,15 @@ div#scores td {
     font-size: 2.5vh;
 }
 
-div#scores tr:first-of-type {
+#scores tr:first-of-type {
     outline: 1px solid #333;
 }
 
-div#scores tr:first-of-type td {
+#scores tr:first-of-type td {
     color: #fdcf1a;
 }
 
-div#scores td.score-0 {
+#scores td.score-0 {
     color: #333 !important;
 }
 

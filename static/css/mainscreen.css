@@ -12,20 +12,20 @@ div {
     text-align: left;
 }
 
-div#main {
+#main {
     position: absolute;
     top: 6vh; left: 9vh;
     width: 62vw; height: 91vh;
     display: table-row;
 }
 
-div#side {
+#side {
     position: absolute;
     top: 6vh; right: 7vh;
     width: 28vw; height: 91vh;
 }
 
-div#question {
+#question {
     color: ivory;
     background: none;
     font-size: 7vh;
@@ -38,31 +38,56 @@ div#question {
     align-items: center;
 }
 
-div#question .text {
+#question .text {
     padding: 0 1.5vw 0 0.5vw;
 }
 
-div#question b {
+#question b {
     color: #01a7ee;
     font-weight: 900;
 }
 
-div#question img {
+#question img {
     height: 95%;
     margin-top: 2%;
 }
 
-div#question img:first-child {
+#question img:first-child {
     margin-right: 1.2ch;
 }
 
-div#question img:last-child {
+#question img:last-child {
     margin-left: 1.2ch;
 }
 
-div#question img.frame {
+#question img.frame {
     border: 6px solid ivory;
     background: ivory;
+}
+
+#question .blue {
+    color: #01a7ee;
+}
+
+#question .orange {
+    color: #f80;
+}
+
+#question .green {
+    color: #0c0;
+}
+
+#question .yellow {
+    color: #ff0;
+}
+
+#question .red {
+    color: #ea282e;
+}
+
+#question .gray,
+#question .grey {
+    color: #777;
 }
 
 #question_header {
@@ -126,7 +151,7 @@ div#question img.frame {
     font-weight: bold;
 }
 
-div .answer {
+#options .answer {
     font-size: 5.75vh;
     padding: 1.3vh 1.4vw;
     margin: 1.3vh 0;
@@ -135,16 +160,16 @@ div .answer {
     letter-spacing: -1px;
 }
 
-.answer.wrong {
+#options .answer.wrong {
     background: #555 !important;
     color: #222 !important;
 }
 
-.answer.blank {
+#options .answer.blank {
     background: #333;
 }
 
-div#timer {
+#timer {
     position: absolute;
     top: 5vh; right: 0;
     padding: 1vh 0.5vw;
@@ -176,13 +201,13 @@ div#timer {
     color: #444;
 }
 
-div#scoreboard {
+#scoreboard {
     position: absolute;
     right: 0.5vw; bottom: 9.5vh;
     text-align: center;
 }
 
-div#scoreboard p {
+#scoreboard p {
     margin: 3.5vh 0 6.5vh 0;
     font-family: 'Avant Pixel';
     font-size: 4.5vh;
@@ -191,7 +216,7 @@ div#scoreboard p {
     opacity: 0.85;
 }
 
-div#scoreboard table {
+#scoreboard table {
     background: none;
     box-shadow: none;
     border-spacing: 0;
@@ -200,11 +225,11 @@ div#scoreboard table {
     padding: 0.2vh 0.3vw;
 }
 
-div#scoreboard tr {
+#scoreboard tr {
     height: 6.8vh;
 }
 
-div#scoreboard td {
+#scoreboard td {
     position: relative;
     text-align: center;
     vertical-align: middle;
@@ -217,50 +242,50 @@ div#scoreboard td {
     font-weight: 600;
 }
 
-div#scoreboard td:nth-child(1) {
+#scoreboard td:nth-child(1) {
     padding-left: 0.7vw;
     padding-right: 1.05vw;
     text-align: right;
 }
 
-div#scoreboard td:nth-child(2) {
+#scoreboard td:nth-child(2) {
     font-weight: bold;
     text-align: right;
     width: 2.3ch;
     padding-right: 0.6ch;
 }
 
-div#scoreboard td:nth-child(3) {
+#scoreboard td:nth-child(3) {
     padding-right: 0.7vw;
     text-align: left;
 }
 
-div#scoreboard .score {
+#scoreboard .score {
     color: #fdcf1a;
 }
 
-div#scoreboard .score-0 {
+#scoreboard .score-0 {
     color: #777;
 }
 
-div#scoreboard .name .hash {
+#scoreboard .name .hash {
     font-size: 90%;
     opacity: 0.90;
 }
 
-div#scoreboard td:nth-child(1):before {
+#scoreboard td:nth-child(1):before {
     position: absolute;
     font-family: 'FontAwesome';
     font-weight: normal;
     font-style: normal;
 }
 
-div#scoreboard .highlight td:nth-child(1) {
+#scoreboard .highlight td:nth-child(1) {
     color: ivory;
     text-shadow: 0 0 1.5vh;
 }
 
-div#scoreboard .highlight td:nth-child(1):before {
+#scoreboard .highlight td:nth-child(1):before {
     left: -1.7vh;
     bottom: 1.9vh;
     font-size: 0.8em;
@@ -268,68 +293,68 @@ div#scoreboard .highlight td:nth-child(1):before {
     color: #01a7ee;
 }
 
-div#scoreboard .option-selected td:nth-child(1) {
+#scoreboard .option-selected td:nth-child(1) {
     color: ivory;
     text-shadow: 0 0 1.5vh;
 }
 
-div#scoreboard .right td:nth-child(1) {
+#scoreboard .right td:nth-child(1) {
     color: #0f0;
     text-shadow: 0 0 1.5vh;
 }
 
-div#scoreboard .right td:nth-child(1):before {
+#scoreboard .right td:nth-child(1):before {
     left: -2.2vh;
     bottom: 2vh;
     font-size: 0.7em;
     content: '\f00c';  /* fa-check */
 }
 
-div#scoreboard .wrong td:nth-child(1) {
+#scoreboard .wrong td:nth-child(1) {
     color: #f00;
     text-shadow: 0 0 1.5vh;
 }
 
-div#scoreboard .wrong td:nth-child(1):before {
+#scoreboard .wrong td:nth-child(1):before {
     left: -2.3vh;
     bottom: 1.85vh;
     font-size: 0.9em;
     content: '\f00d';  /* fa-times */
 }
 
-.blue {
+#options .blue {
     background: #01a7ee;
     color: #222;
 }
 
-.orange {
+#options .orange {
     background: #f80;
     color: #222;
 }
 
-.green {
+#options .green {
     background: #0c0;
     color: #222;
 }
 
-.yellow {
+#options .yellow {
     background: #ff0;
     color: #222;
 }
 
-.blue.blank {
+#options .blue.blank {
     border-left: 5.1vw solid #01a7ee;
 }
 
-.orange.blank {
+#options .orange.blank {
     border-left: 5.1vw solid #f80;
 }
 
-.green.blank {
+#options .green.blank {
     border-left: 5.1vw solid #0c0;
 }
 
-.yellow.blank {
+#options .yellow.blank {
     border-left: 5.1vw solid #ff0;
 }
 
