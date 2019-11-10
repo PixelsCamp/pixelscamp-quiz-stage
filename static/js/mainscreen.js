@@ -38,6 +38,9 @@ function show_question(question, options, animate = false) {
     // Sound annotation has no use on the mainscreen (also assumes it never appears in the middle of the text)...
     question = question.replace(/\s*sound:\s*[^\s]+/i, '');
 
+    // Remove quizmaster-only annotations (used to shorten the question)...
+    question = question.replace(/(\s*)\[comment:\s*[^\]]+\]\s*/ig, '$1');
+
     // The question container uses flex layout, so the text must always be properly wrapped...
     if (left_image.test(question)) {
         var q = question.replace(left_image, '<img class="$1" src="questions/$2"><span class="text">$3</span>');

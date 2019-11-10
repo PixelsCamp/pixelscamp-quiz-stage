@@ -19,6 +19,9 @@ function update_scores(scores) {
 }
 
 function show_question(question, answer, trivia) {
+    // Clean quizmaster-only annotations (used to shorten the question)...
+    question = question.replace(/(\s*)\[comment:\s*([^\]]+)\](\s*)/ig, '$1<span class="comment">$2</span>$3');
+
     var left_image = /^(\s*sound:\s*[^\s]+\b)?\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
     var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)(\s+sound:\s*[^\s]+)?\s*$/i;
 
