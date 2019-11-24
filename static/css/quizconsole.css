@@ -265,6 +265,10 @@ button br {
     font-weight: bold;
 }
 
+#question_text sup {
+    font-size: 60%;
+}
+
 #question_text audio {
     display: inline-block;
     margin: 0 1ch;

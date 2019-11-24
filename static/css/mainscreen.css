@@ -47,6 +47,10 @@ div {
     font-weight: 900;
 }
 
+#question sup {
+    font-size: 60%;
+}
+
 #question img {
     height: 95%;
     margin-top: 2%;
