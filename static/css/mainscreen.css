@@ -8,6 +8,11 @@ body {
     overflow: hidden;
 }
 
+tt, pre {
+    font-family: 'Overpass Mono';
+    letter-spacing: -0.125ch;
+}
+
 div {
     text-align: left;
 }
@@ -49,6 +54,11 @@ div {
 
 #question sup {
     font-size: 60%;
+}
+
+#question tt {
+    font-weight: normal;
+    color: #f80;
 }
 
 #question img {
