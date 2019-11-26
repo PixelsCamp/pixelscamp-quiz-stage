@@ -482,6 +482,8 @@
 
 
 (defn omg-mainscreen
+  ([]
+    (omg-mainscreen "<span id=\"main_title\"></span>" "" "" "" ""))  ; ...clear the screen.
   ([question]
     (omg-mainscreen question "" "" "" ""))
   ([question o1 o2 o3 o4]
