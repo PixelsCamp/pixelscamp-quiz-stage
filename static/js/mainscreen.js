@@ -57,13 +57,15 @@ function show_question(question, options, animate = false) {
 
 
 function show_option(options, index) {
-    $('#r' + index + ' .optext').text(options[index]);
-    $('#r' + index + ' .opinfo').empty();  // ...remove residue.
+    var slot = $('#r' + index);
+
+    slot.find('.optext').text(options[index]);
+    slot.find('.opinfo').empty();  // ...remove residue.
 
     if (options[index].length === 0) {
-        $('#r' + index).addClass("blank");
+        slot.addClass("blank");
     } else {
-        $('#r' + index).removeClass("blank");
+        slot.removeClass("blank");
     }
 }
 
@@ -78,7 +80,7 @@ function show_options(options, animate = false) {
             option_idx++;
 
             if (option_idx < options.length) {
-                setTimeout(show_next_option, 80);
+                setTimeout(show_next_option, 50);
             }
         };
 

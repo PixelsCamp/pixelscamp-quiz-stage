@@ -150,6 +150,10 @@ div {
     border: none;
 }
 
+#options .optext {
+    font-weight: normal;
+}
+
 #options .opinfo {
     position: absolute;
     right: 1.05vw;
