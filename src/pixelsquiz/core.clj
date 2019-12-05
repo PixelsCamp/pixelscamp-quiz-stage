@@ -60,6 +60,7 @@
   [world]
   (notify-displays world (Event. :for-quizmaster {:question (-> world :current-question :text)
                                                   :answer (get (-> world :current-question :options) 0)
+                                                  :options (mapv #(:text %) (-> world :current-answer :question :shuffled-options))
                                                   :trivia (-> world :current-question :trivia)})))
 
 

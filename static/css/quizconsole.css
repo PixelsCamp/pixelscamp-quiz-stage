@@ -44,7 +44,7 @@ button {
 }
 
 #buzzed {
-    margin-top: 4vh;
+    margin-top: 3vh;
     font-size: 3.6vh;
     text-align: center;
 }
@@ -86,6 +86,7 @@ button {
 #buzzed button {
     width: 12vw;
     margin-left: 0.8vw;
+    margin-bottom: 2vh;
     font-size: 2.4vh;
     font-weight: 900;
     background: none;
@@ -242,6 +243,15 @@ button br {
     font-size: 3.4vh;
 }
 
+#question .qz_options {
+    display: block;
+    min-height: 3.5vh;
+    margin-top: 1vh;
+    font-size: 2.5vh;
+    color: #888;
+    padding: 1vh 0.8vw 0 0.8vw;
+}
+
 #question .qz_trivia {
     display: block;
     min-height: 10vh;
@@ -294,6 +304,7 @@ button br {
     margin-bottom: 1vh;
     font-family: 'Avant Pixel';
     font-size: 3.4vh;
+    font-weight: normal;  /* match other headers close by */
 }
 
 #question_trivia b {
@@ -301,15 +312,20 @@ button br {
     font-weight: normal;
 }
 
+#question_options .spacer {
+    display: inline-block;
+    padding: 0 1ch;
+}
+
 #teams {
-    padding: 1.5vh;
+    padding: 1vh;
     text-align: center;
 }
 
 #teams span {
     display: inline-block;
-    width: 16vh;
-    height: 16vh;
+    width: 14vh;
+    height: 14vh;
     margin: 2.5vh 1vw;
     background: #222;
     border-radius: 1vh;
@@ -369,8 +385,8 @@ button br {
 
 #scores {
     float: right;
-    width: 14vw;
-    height: 18vh;
+    width: 12vw;
+    height: 15vh;
     margin: 3.2vh 1.5vw 1.5vh 2vw;
 }
 
@@ -388,7 +404,7 @@ button br {
     font-weight: bold;
     font-family: 'Courier', 'Courier New', monospace;
     color: #888;
-    font-size: 2.5vh;
+    font-size: 2.3vh;
 }
 
 #scores tr:first-of-type {

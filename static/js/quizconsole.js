@@ -18,7 +18,7 @@ function update_scores(scores) {
     table.prepend("<tr>" + scores_line.join("") + "</tr>");
 }
 
-function show_question(question, answer, trivia) {
+function show_question(question, answer, trivia, options) {
     // Clean quizmaster-only annotations (used to shorten the question)...
     question = question.replace(/(\s*)\[comment:\s*([^\]]+)\](\s*)/ig, '$1<span class="comment">$2</span>$3');
 
@@ -55,6 +55,21 @@ function show_question(question, answer, trivia) {
 
     $('#question_answer').text(answer);
     $('#question_trivia').html(trivia);
+
+    if (!options || options.length < 4 || !options.some(e => e.trim().length > 0)) {
+        $('#question_options').html('');
+        return;
+    }
+
+    var options_text = [];
+    var option_index = 0;
+
+    for (var cls of ["blue", "orange", "green", "yellow"]) {
+        options_text.push('<span class="question_option ' + cls + '">' + options[option_index] + '</span>');
+        option_index++;
+    }
+
+    $('#question_options').html(options_text.join('<span class="spacer">:</span>'));
 }
 
 var ws = null;
@@ -101,14 +116,14 @@ function start() {
          *        used in the main screen) let's use it only as another state change hint...
          */
         if ("questionnum" in msg) {
-            show_question("", "", "");
+            show_question("", "", "", []);
         }
 
         if (msg.do === 'quizmaster-only') {
             if ('getrightwrong' in msg) {
                 get_right_wrong(msg.getrightwrong);
             } else {
-                show_question(msg.question || "", msg.answer || "", msg.trivia || "");
+                show_question(msg.question || "", msg.answer || "", msg.trivia || "", msg.options || []);
             }
 
         } else if (msg.do === 'timer-update') {
