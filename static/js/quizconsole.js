@@ -25,11 +25,11 @@ function show_question(question, answer, trivia, options) {
     var left_image = /^(\s*sound:\s*[^\s]+\b)?\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
     var right_image = /^(.+)\s+image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)(\s+sound:\s*[^\s]+)?\s*$/i;
 
-    // Keep the image on the left regardless, since it's just to remind the quizmaster...
+    // Keep the image on the right regardless, since it's just to remind the quizmaster...
     if (left_image.test(question)) {
-        q = question.replace(left_image, '<img class="$2" src="questions/$3"><span class="text">$4$1</span>');
+        q = question.replace(left_image, '<span class="text">$4$1</span><img class="$2" src="questions/$3">');
     } else if (right_image.test(question)) {
-        q = question.replace(right_image, '<img class="$2" src="questions/$3"><span class="text">$1$4</span>');
+        q = question.replace(right_image, '<span class="text">$1$4</span><img class="$2" src="questions/$3">');
     } else {
         q = '<span class="text">' + question + '</span>'
     }

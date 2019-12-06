@@ -4,6 +4,7 @@ body {
     font-family: 'Lato';
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 h1 {
@@ -86,7 +87,7 @@ button {
 #buzzed button {
     width: 12vw;
     margin-left: 0.8vw;
-    margin-bottom: 2vh;
+    margin-bottom: 1.5vh;
     font-size: 2.4vh;
     font-weight: 900;
     background: none;
@@ -180,7 +181,7 @@ button br {
     font-size: 5.3vh;
     background: none;
     border-bottom: 2px dashed #333;
-    padding: 3vh 0;
+    padding: 4vh 0 3vh 0;
 }
 
 #question .blue {
@@ -218,7 +219,7 @@ button br {
     width: 100%;
     box-sizing: border-box;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 4.2vh;
 }
 
 #question .qz_question b {
@@ -228,20 +229,24 @@ button br {
 #question .qz_answer {
     display: block;
     min-height: 5vh;
-    margin-top: 1vh;
-    font-size: 0.7em;
+    margin-top: 2.5vh;
+    font-size: 3.2vh;
     color: #888;
     padding-left: 0.6vw;
+    border-top: 2px dashed #333;
+    padding-top: 2vh;
 }
 
+/*
 #question .qz_answer:before {
     display: inline-block;
     content: 'Answer: ';
     color: #01a7ee;
     margin: 1.1vh 0.3ch 0 0.1vw;
     font-family: 'Avant Pixel';
-    font-size: 3.4vh;
+    font-size: 3.2vh;
 }
+*/
 
 #question .qz_options {
     display: block;
@@ -256,11 +261,11 @@ button br {
     display: block;
     min-height: 10vh;
     margin-top: 1vh;
-    font-size: 2.5vh;
+    font-size: 2.3vh;
     font-weight: 300;
     line-height: 1.3em;
     color: #888;
-    padding: 1vh 0.8vw;
+    padding: 0 0.8vw;
 }
 
 #question_text {
@@ -270,7 +275,7 @@ button br {
 }
 
 #question_text img {
-    margin-right: 1ch;
+    margin: 0 0 0 2ch;
     height: 100%;
 }
 
@@ -289,12 +294,13 @@ button br {
 }
 
 #question_text audio {
-    display: inline-block;
-    margin: 0 1ch;
-    height: 5vh;
-    width: 40vh;
-    vertical-align: bottom;
-    opacity: 0.25;
+    display: block;
+    margin: 1vh 50% 1vh 0;
+    height: 3.6vh;
+    width: 50%;
+    opacity: 0.4;
+    float: left;
+    clear: both;
 }
 
 #question_text .question_header {
@@ -303,7 +309,7 @@ button br {
     margin-top: -4vh;
     margin-bottom: 1vh;
     font-family: 'Avant Pixel';
-    font-size: 3.4vh;
+    font-size: 3.2vh;
     font-weight: normal;  /* match other headers close by */
 }
 

@@ -1,3 +1,6 @@
+var enable_animations = false;
+
+
 function update_scores(scores) {
     scores = (scores && scores.length) ? scores : [0, 0, 0, 0];
 
@@ -12,6 +15,7 @@ function update_scores(scores) {
         }
     }
 }
+
 
 function throb(secs) {
     var timer = $('#timer-number');
@@ -30,6 +34,7 @@ function throb(secs) {
         timer.removeClass('timer-20');
     }
 }
+
 
 function show_question(question, options, animate = false) {
     var left_image = /^\s*image(?:\[([a-z0-9_-]+)\])?:\s*([^\s]+)\s*(.+)$/i;
@@ -232,7 +237,7 @@ function start() {
                 }
 
                 curr_scores_title = 'Question ' + curr_question;
-                show_question(msg.text, msg.options, !round_starting);
+                show_question(msg.text, msg.options, enable_animations && !round_starting);
             } else {
                 show_question("Let's add the scores...", ["", "", "", ""]);
                 curr_scores_title = 'Total Scores';
@@ -343,7 +348,7 @@ $(document).ready(function() {
     });
 
     // Let the resolution outlines appear without triggering text select...
-    body = $(document.body);
+    var body = $(document.body);
     body.attr('unselectable', 'on');
     body.css('user-select', 'none');
     body.on('selectstart dragstart', false);
