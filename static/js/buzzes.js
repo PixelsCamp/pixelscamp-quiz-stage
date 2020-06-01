@@ -12,7 +12,15 @@ function send_command(ev) {
 }
 
 var buttons = ['red', 'blue', 'orange', 'green', 'yellow'];
-teams = [0,1,2,3];
+var team_match = window.location.search.match(/\?team=([1-4])$/);
+
+if (team_match) {
+    var teams = [team_match[1] - 1];
+} else if (document.location.hash[1] >= 1 && document.location.hash[1] <= 4) {
+    var teams = [document.location.hash[1] - 1];
+} else {
+    var teams = [0, 1, 2, 3];
+}
 
 var topdiv = $('#buzzes');
 teams.map(function(t) {
