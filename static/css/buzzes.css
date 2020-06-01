@@ -58,3 +58,9 @@ body {
 .yellow {
     background: #ff0;
 }
+
+.error {
+    background: #ff2020;
+    color: #fff;
+    padding: 1em;
+}

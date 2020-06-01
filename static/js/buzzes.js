@@ -18,30 +18,37 @@ if (team_match) {
     var teams = [team_match[1] - 1];
 } else if (document.location.hash[1] >= 1 && document.location.hash[1] <= 4) {
     var teams = [document.location.hash[1] - 1];
-} else {
+} else if (document.location.href.match(/\/buzzes(?:\.html|\/?)$/i)) {
     var teams = [0, 1, 2, 3];
+} else {
+    var teams = [];
 }
 
 var topdiv = $('#buzzes');
-teams.map(function(t) {
-    var contdiv = document.createElement('div');
-    contdiv.id = 'buzz'+t;
-    contdiv.className = 'buzz';
-    contdiv.innerHTML = 'TEAM #'+(t+1);
-    buttons.map(function(b) {
-        var but = document.createElement('a');
-        var signal = b === 'red' ? 'playerbuzzed' : 'playermulti';
-        but.href="#";
-        but.className = 'button ' + b;
-        but.innerHTML = b;
-        $(but).data('team', t);
-        $(but).data('button', b)
-        but.onclick = send_command
-        return but;
+
+if (teams.length) {
+    teams.map(function(t) {
+        var contdiv = document.createElement('div');
+        contdiv.id = 'buzz'+t;
+        contdiv.className = 'buzz';
+        contdiv.innerHTML = 'TEAM #'+(t+1);
+        buttons.map(function(b) {
+            var but = document.createElement('a');
+            var signal = b === 'red' ? 'playerbuzzed' : 'playermulti';
+            but.href="#";
+            but.className = 'button ' + b;
+            but.innerHTML = b;
+            $(but).data('team', t);
+            $(but).data('button', b)
+            but.onclick = send_command
+            return but;
+        }).forEach(function(x) {
+            contdiv.appendChild(x);
+        });
+        return contdiv;
     }).forEach(function(x) {
-        contdiv.appendChild(x);
+        topdiv.append(x);
     });
-    return contdiv;
-}).forEach(function(x) {
-    topdiv.append(x);
-});
+} else {
+    topdiv.html("<p class='error'><b>ERROR:</b> Invalid team number (1-4).</p>");
+}
