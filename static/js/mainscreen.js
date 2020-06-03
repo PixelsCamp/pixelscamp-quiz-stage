@@ -147,7 +147,7 @@ function update_lights(lights) {
 }
 
 var ws = null;
-var secure = new Boolean(document.location.protocol.match(/^https/i));
+var secure = (new Boolean(document.location.protocol.match(/^https/i))).valueOf();
 var curr_question = 1;
 
 function start() {

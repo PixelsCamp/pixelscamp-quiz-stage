@@ -73,7 +73,7 @@ function show_question(question, answer, trivia, options) {
 }
 
 var ws = null;
-var secure = new Boolean(document.location.protocol.match(/^https/i));
+var secure = (new Boolean(document.location.protocol.match(/^https/i)).valueOf());
 
 function start() {
     console.log('Connecting to game engine...');
